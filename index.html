@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irfan Rafeek — Product Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================================================
+           DESIGN SYSTEM TOKENS - W3C DTCG COMPLIANT
+           ============================================================================ */
+
+        :root {
+          /* TIER 1: PRIMITIVES - COLOR NEUTRAL */
+          --primitive-color-neutral-0: #ffffff;
+          --primitive-color-neutral-50: #f8f8f6;
+          --primitive-color-neutral-100: #f0f0ed;
+          --primitive-color-neutral-200: #e8e8e5;
+          --primitive-color-neutral-300: #d9d9d5;
+          --primitive-color-neutral-400: #bfbfba;
+          --primitive-color-neutral-500: #999994;
+          --primitive-color-neutral-600: #666666;
+          --primitive-color-neutral-700: #444444;
+          --primitive-color-neutral-800: #2a2a2a;
+          --primitive-color-neutral-900: #1a1a1a;
+          --primitive-color-neutral-1000: #000000;
+
+          /* TIER 1: PRIMITIVES - COLOR ACCENT */
+          --primitive-color-accent-50: #fff4f0;
+          --primitive-color-accent-100: #ffe8dc;
+          --primitive-color-accent-200: #ffd4bf;
+          --primitive-color-accent-300: #ffbd9f;
+          --primitive-color-accent-400: #ffa57f;
+          --primitive-color-accent-500: #ff6b47;
+          --primitive-color-accent-600: #e55a3a;
+          --primitive-color-accent-700: #cc4a2e;
+          --primitive-color-accent-800: #b23a22;
+
+          /* TIER 1: PRIMITIVES - COLOR STATUS */
+          --primitive-color-success-50: #f0fdf4;
+          --primitive-color-success-500: #22c55e;
+          --primitive-color-success-600: #16a34a;
+          --primitive-color-error-50: #fef2f2;
+          --primitive-color-error-500: #ef4444;
+          --primitive-color-error-600: #dc2626;
+          --primitive-color-warning-50: #fefce8;
+          --primitive-color-warning-500: #eab308;
+          --primitive-color-warning-600: #ca8a04;
+
+          /* TIER 1: PRIMITIVES - SPACING */
+          --primitive-spacing-0: 0px;
+          --primitive-spacing-xs: 4px;
+          --primitive-spacing-sm: 8px;
+          --primitive-spacing-md: 16px;
+          --primitive-spacing-lg: 24px;
+          --primitive-spacing-xl: 32px;
+          --primitive-spacing-2xl: 48px;
+          --primitive-spacing-3xl: 64px;
+          --primitive-spacing-4xl: 80px;
+
+          /* TIER 1: PRIMITIVES - RADIUS */
+          --primitive-radius-none: 0px;
+          --primitive-radius-sm: 4px;
+          --primitive-radius-md: 8px;
+          --primitive-radius-lg: 12px;
+          --primitive-radius-xl: 16px;
+          --primitive-radius-full: 9999px;
+
+          /* TIER 1: PRIMITIVES - TYPOGRAPHY */
+          --primitive-font-serif: 'EB Garamond', 'Georgia', serif;
+          --primitive-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          --primitive-font-size-xs: 10px;
+          --primitive-font-size-sm: 12px;
+          --primitive-font-size-base: 14px;
+          --primitive-font-size-md: 16px;
+          --primitive-font-size-lg: 18px;
+          --primitive-font-size-xl: 24px;
+          --primitive-font-size-2xl: 28px;
+          --primitive-font-size-3xl: 32px;
+          --primitive-font-size-4xl: 48px;
+          --primitive-font-size-5xl: 56px;
+
+          --primitive-font-weight-regular: 400;
+          --primitive-font-weight-medium: 500;
+          --primitive-font-weight-semibold: 600;
+          --primitive-font-weight-bold: 700;
+          --primitive-font-weight-extrabold: 800;
+
+          --primitive-line-height-tight: 1.1;
+          --primitive-line-height-snug: 1.25;
+          --primitive-line-height-normal: 1.5;
+          --primitive-line-height-relaxed: 1.6;
+          --primitive-line-height-loose: 1.8;
+
+          --primitive-letter-spacing-tight: -0.02em;
+          --primitive-letter-spacing-normal: 0em;
+          --primitive-letter-spacing-wide: 0.05em;
+          --primitive-letter-spacing-wider: 0.1em;
+          --primitive-letter-spacing-widest: 0.15em;
+
+          /* TIER 1: PRIMITIVES - SHADOWS */
+          --primitive-shadow-none: 0px 0px 0px rgba(0, 0, 0, 0);
+          --primitive-shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.05);
+          --primitive-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+          --primitive-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          --primitive-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.1);
+          --primitive-shadow-xl: 0px 20px 25px rgba(0, 0, 0, 0.1);
+
+          /* TIER 2: SEMANTIC TOKENS - LIGHT MODE */
+          --semantic-color-background-primary: var(--primitive-color-neutral-50);
+          --semantic-color-background-secondary: var(--primitive-color-neutral-100);
+          --semantic-color-background-tertiary: var(--primitive-color-neutral-200);
+          --semantic-color-text-primary: var(--primitive-color-neutral-900);
+          --semantic-color-text-secondary: var(--primitive-color-neutral-600);
+          --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
+          --semantic-color-text-inverse: var(--primitive-color-neutral-0);
+          --semantic-color-border-primary: var(--primitive-color-neutral-200);
+          --semantic-color-border-secondary: var(--primitive-color-neutral-100);
+          --semantic-color-border-strong: var(--primitive-color-neutral-400);
+          --semantic-color-interactive-primary: var(--primitive-color-accent-500);
+          --semantic-color-interactive-primary-hover: var(--primitive-color-accent-600);
+          --semantic-color-interactive-primary-active: var(--primitive-color-accent-700);
+          --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-300);
+          --semantic-color-status-success: var(--primitive-color-success-500);
+          --semantic-color-status-error: var(--primitive-color-error-500);
+          --semantic-color-status-warning: var(--primitive-color-warning-500);
+
+          --semantic-spacing-xs: var(--primitive-spacing-xs);
+          --semantic-spacing-sm: var(--primitive-spacing-sm);
+          --semantic-spacing-md: var(--primitive-spacing-md);
+          --semantic-spacing-lg: var(--primitive-spacing-lg);
+          --semantic-spacing-xl: var(--primitive-spacing-xl);
+          --semantic-spacing-2xl: var(--primitive-spacing-2xl);
+          --semantic-spacing-3xl: var(--primitive-spacing-3xl);
+          --semantic-spacing-4xl: var(--primitive-spacing-4xl);
+
+          --semantic-radius-none: var(--primitive-radius-none);
+          --semantic-radius-sm: var(--primitive-radius-sm);
+          --semantic-radius-md: var(--primitive-radius-md);
+          --semantic-radius-lg: var(--primitive-radius-lg);
+          --semantic-radius-full: var(--primitive-radius-full);
+
+          --semantic-shadow-none: var(--primitive-shadow-none);
+          --semantic-shadow-sm: var(--primitive-shadow-sm);
+          --semantic-shadow-md: var(--primitive-shadow-md);
+          --semantic-shadow-lg: var(--primitive-shadow-lg);
+
+          --semantic-font-serif: var(--primitive-font-serif);
+          --semantic-font-sans: var(--primitive-font-sans);
+        }
+
+        /* DARK MODE */
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --semantic-color-background-primary: var(--primitive-color-neutral-900);
+            --semantic-color-background-secondary: var(--primitive-color-neutral-800);
+            --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+            --semantic-color-text-primary: var(--primitive-color-neutral-0);
+            --semantic-color-text-secondary: var(--primitive-color-neutral-300);
+            --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
+            --semantic-color-text-inverse: var(--primitive-color-neutral-900);
+            --semantic-color-border-primary: var(--primitive-color-neutral-700);
+            --semantic-color-border-secondary: var(--primitive-color-neutral-800);
+            --semantic-color-border-strong: var(--primitive-color-neutral-500);
+            --semantic-color-interactive-primary: var(--primitive-color-accent-400);
+            --semantic-color-interactive-primary-hover: var(--primitive-color-accent-300);
+            --semantic-color-interactive-primary-active: var(--primitive-color-accent-200);
+            --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-600);
+            --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
+            --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
+            --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+          }
+        }
+
+        [data-theme='dark'] {
+          --semantic-color-background-primary: var(--primitive-color-neutral-900);
+          --semantic-color-background-secondary: var(--primitive-color-neutral-800);
+          --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+          --semantic-color-text-primary: var(--primitive-color-neutral-0);
+          --semantic-color-text-secondary: var(--primitive-color-neutral-300);
+          --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
+          --semantic-color-text-inverse: var(--primitive-color-neutral-900);
+          --semantic-color-border-primary: var(--primitive-color-neutral-700);
+          --semantic-color-border-secondary: var(--primitive-color-neutral-800);
+          --semantic-color-border-strong: var(--primitive-color-neutral-500);
+          --semantic-color-interactive-primary: var(--primitive-color-accent-400);
+          --semantic-color-interactive-primary-hover: var(--primitive-color-accent-300);
+          --semantic-color-interactive-primary-active: var(--primitive-color-accent-200);
+          --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-600);
+          --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
+          --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
+          --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ============================================================================
+           RESET & BASE STYLES
+           ============================================================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--semantic-font-sans);
+            background-color: var(--semantic-color-background-primary);
+            color: var(--semantic-color-text-primary);
+            line-height: var(--primitive-line-height-normal);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--semantic-spacing-lg) var(--semantic-spacing-xl);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--semantic-color-background-primary);
+            z-index: 1000;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            border-bottom: 1px solid var(--semantic-color-border-primary);
+        }
+
+        .logo {
+            font-size: var(--primitive-font-size-sm);
+            font-weight: var(--primitive-font-weight-semibold);
+            letter-spacing: var(--primitive-letter-spacing-widest);
+            text-transform: uppercase;
+            color: var(--semantic-color-text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--semantic-spacing-2xl);
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--semantic-color-text-primary);
+            font-size: var(--primitive-font-size-sm);
+            font-weight: var(--primitive-font-weight-medium);
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--semantic-color-interactive-primary);
+        }
+
+        .nav-links a.cta-button {
+            background-color: var(--semantic-color-text-primary);
+            color: var(--semantic-color-background-primary);
+            padding: var(--semantic-spacing-sm) var(--semantic-spacing-lg);
+            border-radius: var(--semantic-radius-none);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: var(--primitive-font-weight-medium);
+        }
+
+        .nav-links a.cta-button:hover {
+            transform: translateY(-2px);
+            color: var(--semantic-color-background-primary);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        main {
+            padding-top: 120px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--semantic-spacing-xl);
+        }
+
+        /* ===== LOCATION HEADER ===== */
+        .location-header {
+            font-size: var(--primitive-font-size-sm);
+            font-weight: var(--primitive-font-weight-medium);
+            letter-spacing: var(--primitive-letter-spacing-wide);
+            text-transform: uppercase;
+            color: var(--semantic-color-text-secondary);
+            margin-bottom: var(--semantic-spacing-3xl);
+            padding-top: var(--semantic-spacing-2xl);
+        }
+
+        .availability {
+            margin-left: var(--semantic-spacing-sm);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            margin-bottom: var(--semantic-spacing-4xl);
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-family: var(--semantic-font-serif);
+            font-size: 42px;
+            font-weight: var(--primitive-font-weight-bold);
+            line-height: 1.15;
+            color: var(--semantic-color-text-primary);
+            margin-bottom: var(--semantic-spacing-lg);
+            letter-spacing: -0.01em;
+        }
+
+        .underline {
+            border-bottom: 3px solid var(--semantic-color-interactive-primary);
+            padding-bottom: 0.1rem;
+        }
+
+        .accent-dot {
+            color: var(--semantic-color-interactive-primary);
+        }
+
+        .hero-description {
+            font-size: var(--primitive-font-size-base);
+            line-height: 1.65;
+            color: var(--semantic-color-text-secondary);
+            max-width: 800px;
+        }
+
+        /* ===== CATEGORY TAGS ===== */
+        .category-scroll {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding: var(--semantic-spacing-2xl) 0;
+            margin-bottom: var(--semantic-spacing-4xl);
+            scroll-behavior: smooth;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .category-tag {
+            font-family: var(--semantic-font-serif);
+            font-size: 16px;
+            font-weight: var(--primitive-font-weight-bold);
+            color: var(--semantic-color-text-primary);
+            background: none;
+            border: none;
+            padding: 0;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .category-tag:not(:last-child)::after {
+            content: " • ";
+            margin: 0 var(--semantic-spacing-md);
+            color: var(--semantic-color-interactive-primary);
+            font-weight: var(--primitive-font-weight-regular);
+        }
+
+        .category-tag:hover {
+            color: var(--semantic-color-interactive-primary);
+        }
+
+        /* ===== SECTION HEADER ===== */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--semantic-spacing-2xl);
+            gap: var(--semantic-spacing-lg);
+        }
+
+        .section-number {
+            font-family: var(--semantic-font-serif);
+            font-size: 48px;
+            font-weight: var(--primitive-font-weight-bold);
+            color: var(--semantic-color-text-tertiary);
+            margin-bottom: var(--semantic-spacing-md);
+            line-height: 1;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title {
+            font-family: var(--semantic-font-serif);
+            font-size: 36px;
+            font-weight: var(--primitive-font-weight-bold);
+            color: var(--semantic-color-text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .view-all {
+            color: var(--semantic-color-interactive-primary);
+            text-decoration: none;
+            font-size: var(--primitive-font-size-sm);
+            font-weight: var(--primitive-font-weight-medium);
+            transition: color 0.3s ease;
+            margin-top: var(--semantic-spacing-sm);
+        }
+
+        .view-all:hover {
+            color: var(--semantic-color-interactive-primary-hover);
+        }
+
+        /* ===== SERVICES SECTION ===== */
+        #services {
+            margin-bottom: var(--semantic-spacing-4xl);
+            padding: var(--semantic-spacing-4xl) 0;
+            border-top: 1px solid var(--semantic-color-border-secondary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--semantic-spacing-3xl);
+        }
+
+        .service {
+            display: flex;
+            flex-direction: column;
+            gap: var(--semantic-spacing-md);
+        }
+
+        .service-title {
+            font-family: var(--semantic-font-serif);
+            font-size: 18px;
+            font-weight: var(--primitive-font-weight-bold);
+            color: var(--semantic-color-text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .service-description {
+            font-size: var(--primitive-font-size-base);
+            line-height: 1.65;
+            color: var(--semantic-color-text-secondary);
+        }
+
+        /* ===== WORK SECTION ===== */
+        #work {
+            margin-bottom: var(--semantic-spacing-4xl);
+            padding: var(--semantic-spacing-4xl) 0;
+            border-top: 1px solid var(--semantic-color-border-secondary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--semantic-spacing-3xl);
+        }
+
+        .project-card {
+            display: flex;
+            gap: var(--semantic-spacing-xl);
+            padding: var(--semantic-spacing-xl);
+            background-color: var(--semantic-color-background-secondary);
+            border: 1px solid var(--semantic-color-border-primary);
+            border-radius: var(--semantic-radius-md);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--semantic-color-border-strong);
+            box-shadow: var(--semantic-shadow-md);
+        }
+
+        .project-image {
+            font-size: var(--primitive-font-size-5xl);
+            min-width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--semantic-spacing-md);
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: baseline;
+            gap: var(--semantic-spacing-md);
+        }
+
+        .project-title {
+            font-family: var(--semantic-font-serif);
+            font-size: 18px;
+            font-weight: var(--primitive-font-weight-bold);
+            color: var(--semantic-color-text-primary);
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .project-year {
+            font-size: var(--primitive-font-size-sm);
+            color: var(--semantic-color-text-tertiary);
+            font-weight: var(--primitive-font-weight-medium);
+        }
+
+        .project-description {
+            font-size: var(--primitive-font-size-base);
+            line-height: 1.65;
+            color: var(--semantic-color-text-secondary);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: var(--semantic-spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: var(--semantic-spacing-xs) var(--semantic-spacing-sm);
+            background-color: var(--semantic-color-background-primary);
+            border: 1px solid var(--semantic-color-border-primary);
+            border-radius: var(--semantic-radius-full);
+            font-size: var(--primitive-font-size-xs);
+            color: var(--semantic-color-text-secondary);
+            text-transform: lowercase;
+            letter-spacing: var(--primitive-letter-spacing-wide);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: var(--semantic-spacing-4xl) 0;
+            margin: var(--semantic-spacing-4xl) 0;
+            border-top: 1px solid var(--semantic-color-border-secondary);
+            border-bottom: 1px solid var(--semantic-color-border-secondary);
+        }
+
+        .cta-label {
+            font-size: var(--primitive-font-size-sm);
+            font-weight: var(--primitive-font-weight-medium);
+            text-transform: uppercase;
+            letter-spacing: var(--primitive-letter-spacing-wide);
+            color: var(--semantic-color-text-secondary);
+            margin-bottom: var(--semantic-spacing-md);
+        }
+
+        .cta-title {
+            font-family: var(--semantic-font-serif);
+            font-size: 36px;
+            font-weight: var(--primitive-font-weight-bold);
+            color: var(--semantic-color-text-primary);
+            margin-bottom: var(--semantic-spacing-lg);
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+        }
+
+        .cta-email {
+            font-family: var(--semantic-font-serif);
+            font-size: 20px;
+            color: var(--semantic-color-interactive-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: var(--primitive-font-weight-bold);
+            letter-spacing: -0.01em;
+        }
+
+        .cta-email:hover {
+            color: var(--semantic-color-interactive-primary-hover);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--semantic-spacing-2xl) var(--semantic-spacing-xl);
+            border-top: 1px solid var(--semantic-color-border-secondary);
+            color: var(--semantic-color-text-secondary);
+            font-size: var(--primitive-font-size-sm);
+            background-color: var(--semantic-color-background-primary);
+            transition: all 0.3s ease;
+        }
+
+        .copyright {
+            color: var(--semantic-color-text-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--semantic-spacing-xl);
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: var(--semantic-color-text-secondary);
+            font-size: var(--primitive-font-size-sm);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--semantic-color-interactive-primary);
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: var(--semantic-spacing-xl);
+            right: var(--semantic-spacing-xl);
+            width: 50px;
+            height: 50px;
+            border-radius: var(--semantic-radius-full);
+            background-color: var(--semantic-color-interactive-primary);
+            color: var(--semantic-color-text-inverse);
+            border: none;
+            cursor: pointer;
+            font-size: var(--primitive-font-size-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--semantic-shadow-lg);
+            z-index: 999;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--semantic-color-interactive-primary-hover);
+            transform: scale(1.1);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: var(--semantic-spacing-2xl);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: var(--semantic-spacing-2xl);
+            }
+        }
+
+        @media (max-width: 968px) {
+            nav,
+            .container,
+            footer {
+                padding-left: var(--semantic-spacing-lg);
+                padding-right: var(--semantic-spacing-lg);
+            }
+
+            .project-card {
+                gap: var(--semantic-spacing-lg);
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cta-title {
+                font-size: 28px;
+            }
+
+            .cta-email {
+                font-size: 18px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: var(--semantic-spacing-lg);
+                text-align: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: var(--semantic-spacing-md) var(--semantic-spacing-lg);
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                gap: var(--semantic-spacing-lg);
+                font-size: var(--primitive-font-size-xs);
+            }
+
+            .hero-title {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .cta-title {
+                font-size: 20px;
+            }
+
+            .cta-email {
+                font-size: 16px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-scroll {
+                margin-bottom: var(--semantic-spacing-2xl);
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: var(--primitive-font-size-base);
+            }
+
+            .category-tag {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="logo">IRFAN RAFEEK</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact" class="cta-button">Work With Me</a></li>
+        </ul>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <main>
+        <div class="container">
+            <div class="location-header">
+                BANGALORE, INDIA
+                <span class="availability">• AVAILABLE FOR SELECT WORK</span>
+            </div>
+
+            <section class="hero">
+                <h1 class="hero-title">
+                    I design <span class="underline">scalable products</span> and <span class="underline">systems</span> that unify global teams — and help 
+                    companies grow faster<span class="accent-dot">.</span>
+                </h1>
+                <p class="hero-description">
+                    Nine years of product design and one corner of the internet that's finally mine. 
+                    Previously shaping digital experiences at Condé Nast, Quintype, and YourStory. 
+                    Currently partnering with startups to build their early products and design foundations.
+                </p>
+            </section>
+
+            <div class="category-scroll">
+                <div class="category-tag">Product Design</div>
+                <div class="category-tag">Design Systems</div>
+                <div class="category-tag">Design Ops</div>
+                <div class="category-tag">Token Architecture</div>
+                <div class="category-tag">Component Libraries</div>
+                <div class="category-tag">UX Strategy</div>
+            </div>
+
+            <section id="services">
+                <div class="section-header">
+                    <div>
+                        <div class="section-number">01</div>
+                        <h2 class="section-title">What I Do</h2>
+                    </div>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service">
+                        <h3 class="service-title">Product design</h3>
+                        <p class="service-description">
+                            End-to-end product work — from research and strategy to UI to systems and shipping. 
+                            I'm most useful when problems are gnarly and stakes are real.
+                        </p>
+                    </div>
+
+                    <div class="service">
+                        <h3 class="service-title">Design systems</h3>
+                        <p class="service-description">
+                            Building component libraries, tokens, and design infrastructure that help teams at 
+                            design and engineering can move at the same pace without arguing.
+                        </p>
+                    </div>
+
+                    <div class="service">
+                        <h3 class="service-title">Design ops</h3>
+                        <p class="service-description">
+                            Working with designers earlier in their careers — sharpening their craft, 
+                            solving portfolio reviews, and the kind of feedback you wish your last 
+                            manager had given you.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="work">
+                <div class="section-header">
+                    <div>
+                        <div class="section-number">02</div>
+                        <h2 class="section-title">Selected Work</h2>
+                    </div>
+                    <a href="#" class="view-all">All work</a>
+                </div>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">📱</div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <h3 class="project-title">Building Ambo</h3>
+                                <span class="project-year">2024</span>
+                            </div>
+                            <p class="project-description">
+                                Transforming an early-stage employee advocacy platform from a simple post-sharing tool 
+                                into a flexible content distribution system. Redefining content workflows for scale.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">product design</span>
+                                <span class="tag">ux</span>
+                                <span class="tag">systems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">🎨</div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <h3 class="project-title">Condé Nast Verso</h3>
+                                <span class="project-year">2023</span>
+                            </div>
+                            <p class="project-description">
+                                Reimagining color theming for Condé Nast's unified design system, powering brands like 
+                                Vogue, GQ, and The New Yorker with flexible, token-based color architecture.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">design systems</span>
+                                <span class="tag">tokens</span>
+                                <span class="tag">theming</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="cta-section">
+                <div class="cta-label">Get In Touch</div>
+                <h2 class="cta-title">
+                    Have a project that deserves the time?
+                </h2>
+                <a href="mailto:dizeno.ir@gmail.com" class="cta-email">dizeno.ir@gmail.com</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">© 2024 Irfan Rafeek. All rights reserved.</div>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/irfan-rafeek-70246455/" target="_blank">LinkedIn</a>
+            <a href="https://www.instagram.com/irfanrafeek" target="_blank">Instagram</a>
+            <a href="mailto:dizeno.ir@gmail.com">Email</a>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const theme = html.getAttribute('data-theme');
+            if (theme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        if (!localStorage.getItem('theme')) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        }
+    </script>
+</body>
+</html>

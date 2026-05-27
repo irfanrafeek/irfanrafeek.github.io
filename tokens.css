@@ -1,0 +1,250 @@
+/**
+ * Design System Tokens - W3C Design Tokens Community Group Compliant
+ * Light Mode: Default
+ * Dark Mode: Automatic via prefers-color-scheme and data-theme attribute
+ */
+
+/* ============================================================================
+   TIER 1: PRIMITIVE TOKENS
+   Raw design values with no semantic meaning. These are the source of truth.
+   ============================================================================ */
+
+:root {
+  /* COLOR PRIMITIVES - Neutral Scale */
+  --primitive-color-neutral-0: #ffffff;
+  --primitive-color-neutral-50: #f8f8f6;
+  --primitive-color-neutral-100: #f0f0ed;
+  --primitive-color-neutral-200: #e8e8e5;
+  --primitive-color-neutral-300: #d9d9d5;
+  --primitive-color-neutral-400: #bfbfba;
+  --primitive-color-neutral-500: #999994;
+  --primitive-color-neutral-600: #666666;
+  --primitive-color-neutral-700: #444444;
+  --primitive-color-neutral-800: #2a2a2a;
+  --primitive-color-neutral-900: #1a1a1a;
+  --primitive-color-neutral-1000: #000000;
+
+  /* COLOR PRIMITIVES - Accent (Orange) */
+  --primitive-color-accent-50: #fff4f0;
+  --primitive-color-accent-100: #ffe8dc;
+  --primitive-color-accent-200: #ffd4bf;
+  --primitive-color-accent-300: #ffbd9f;
+  --primitive-color-accent-400: #ffa57f;
+  --primitive-color-accent-500: #ff6b47;
+  --primitive-color-accent-600: #e55a3a;
+  --primitive-color-accent-700: #cc4a2e;
+  --primitive-color-accent-800: #b23a22;
+
+  /* COLOR PRIMITIVES - Status Colors */
+  --primitive-color-success-50: #f0fdf4;
+  --primitive-color-success-500: #22c55e;
+  --primitive-color-success-600: #16a34a;
+  --primitive-color-error-50: #fef2f2;
+  --primitive-color-error-500: #ef4444;
+  --primitive-color-error-600: #dc2626;
+  --primitive-color-warning-50: #fefce8;
+  --primitive-color-warning-500: #eab308;
+  --primitive-color-warning-600: #ca8a04;
+
+  /* SPACING PRIMITIVES - 4px Grid Scale */
+  --primitive-spacing-0: 0px;
+  --primitive-spacing-xs: 4px;
+  --primitive-spacing-sm: 8px;
+  --primitive-spacing-md: 16px;
+  --primitive-spacing-lg: 24px;
+  --primitive-spacing-xl: 32px;
+  --primitive-spacing-2xl: 48px;
+  --primitive-spacing-3xl: 64px;
+  --primitive-spacing-4xl: 80px;
+
+  /* BORDER RADIUS PRIMITIVES */
+  --primitive-radius-none: 0px;
+  --primitive-radius-sm: 4px;
+  --primitive-radius-md: 8px;
+  --primitive-radius-lg: 12px;
+  --primitive-radius-xl: 16px;
+  --primitive-radius-full: 9999px;
+
+  /* TYPOGRAPHY PRIMITIVES - Font Families */
+  --primitive-font-serif: 'EB Garamond', 'Georgia', serif;
+  --primitive-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* TYPOGRAPHY PRIMITIVES - Font Sizes */
+  --primitive-font-size-xs: 10px;
+  --primitive-font-size-sm: 12px;
+  --primitive-font-size-base: 14px;
+  --primitive-font-size-md: 16px;
+  --primitive-font-size-lg: 18px;
+  --primitive-font-size-xl: 24px;
+  --primitive-font-size-2xl: 28px;
+  --primitive-font-size-3xl: 32px;
+  --primitive-font-size-4xl: 48px;
+  --primitive-font-size-5xl: 56px;
+
+  /* TYPOGRAPHY PRIMITIVES - Font Weights */
+  --primitive-font-weight-regular: 400;
+  --primitive-font-weight-medium: 500;
+  --primitive-font-weight-semibold: 600;
+  --primitive-font-weight-bold: 700;
+  --primitive-font-weight-extrabold: 800;
+
+  /* TYPOGRAPHY PRIMITIVES - Line Heights */
+  --primitive-line-height-tight: 1.1;
+  --primitive-line-height-snug: 1.25;
+  --primitive-line-height-normal: 1.5;
+  --primitive-line-height-relaxed: 1.6;
+  --primitive-line-height-loose: 1.8;
+
+  /* TYPOGRAPHY PRIMITIVES - Letter Spacing */
+  --primitive-letter-spacing-tight: -0.02em;
+  --primitive-letter-spacing-normal: 0em;
+  --primitive-letter-spacing-wide: 0.05em;
+  --primitive-letter-spacing-wider: 0.1em;
+  --primitive-letter-spacing-widest: 0.15em;
+
+  /* SHADOW PRIMITIVES */
+  --primitive-shadow-none: 0px 0px 0px rgba(0, 0, 0, 0);
+  --primitive-shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --primitive-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  --primitive-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  --primitive-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.1);
+  --primitive-shadow-xl: 0px 20px 25px rgba(0, 0, 0, 0.1);
+
+  /* OPACITY PRIMITIVES */
+  --primitive-opacity-0: 0;
+  --primitive-opacity-10: 0.1;
+  --primitive-opacity-20: 0.2;
+  --primitive-opacity-30: 0.3;
+  --primitive-opacity-40: 0.4;
+  --primitive-opacity-50: 0.5;
+  --primitive-opacity-60: 0.6;
+  --primitive-opacity-70: 0.7;
+  --primitive-opacity-80: 0.8;
+  --primitive-opacity-90: 0.9;
+  --primitive-opacity-100: 1;
+
+  /* ============================================================================
+     TIER 2: SEMANTIC TOKENS - LIGHT MODE (Default)
+     Intent-based aliases that reference Primitives. These change by theme.
+     ============================================================================ */
+
+  /* SEMANTIC COLORS - Background */
+  --semantic-color-background-primary: var(--primitive-color-neutral-50);
+  --semantic-color-background-secondary: var(--primitive-color-neutral-100);
+  --semantic-color-background-tertiary: var(--primitive-color-neutral-200);
+
+  /* SEMANTIC COLORS - Text */
+  --semantic-color-text-primary: var(--primitive-color-neutral-900);
+  --semantic-color-text-secondary: var(--primitive-color-neutral-600);
+  --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
+  --semantic-color-text-inverse: var(--primitive-color-neutral-0);
+
+  /* SEMANTIC COLORS - Border */
+  --semantic-color-border-primary: var(--primitive-color-neutral-200);
+  --semantic-color-border-secondary: var(--primitive-color-neutral-100);
+  --semantic-color-border-strong: var(--primitive-color-neutral-400);
+
+  /* SEMANTIC COLORS - Interactive */
+  --semantic-color-interactive-primary: var(--primitive-color-accent-500);
+  --semantic-color-interactive-primary-hover: var(--primitive-color-accent-600);
+  --semantic-color-interactive-primary-active: var(--primitive-color-accent-700);
+  --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-300);
+
+  /* SEMANTIC COLORS - Status */
+  --semantic-color-status-success: var(--primitive-color-success-500);
+  --semantic-color-status-error: var(--primitive-color-error-500);
+  --semantic-color-status-warning: var(--primitive-color-warning-500);
+
+  /* SEMANTIC SPACING - Aliased from Primitives */
+  --semantic-spacing-xs: var(--primitive-spacing-xs);
+  --semantic-spacing-sm: var(--primitive-spacing-sm);
+  --semantic-spacing-md: var(--primitive-spacing-md);
+  --semantic-spacing-lg: var(--primitive-spacing-lg);
+  --semantic-spacing-xl: var(--primitive-spacing-xl);
+  --semantic-spacing-2xl: var(--primitive-spacing-2xl);
+  --semantic-spacing-3xl: var(--primitive-spacing-3xl);
+  --semantic-spacing-4xl: var(--primitive-spacing-4xl);
+
+  /* SEMANTIC RADIUS - Aliased from Primitives */
+  --semantic-radius-none: var(--primitive-radius-none);
+  --semantic-radius-sm: var(--primitive-radius-sm);
+  --semantic-radius-md: var(--primitive-radius-md);
+  --semantic-radius-lg: var(--primitive-radius-lg);
+  --semantic-radius-full: var(--primitive-radius-full);
+
+  /* SEMANTIC SHADOWS - Light Mode */
+  --semantic-shadow-none: var(--primitive-shadow-none);
+  --semantic-shadow-sm: var(--primitive-shadow-sm);
+  --semantic-shadow-md: var(--primitive-shadow-md);
+  --semantic-shadow-lg: var(--primitive-shadow-lg);
+
+  /* SEMANTIC TYPOGRAPHY */
+  --semantic-font-serif: var(--primitive-font-serif);
+  --semantic-font-sans: var(--primitive-font-sans);
+}
+
+/* ============================================================================
+   DARK MODE TOKENS
+   Override semantic tokens for dark mode. Primitives stay the same.
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* SEMANTIC COLORS - Background (Dark) */
+    --semantic-color-background-primary: var(--primitive-color-neutral-900);
+    --semantic-color-background-secondary: var(--primitive-color-neutral-800);
+    --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+
+    /* SEMANTIC COLORS - Text (Dark) */
+    --semantic-color-text-primary: var(--primitive-color-neutral-0);
+    --semantic-color-text-secondary: var(--primitive-color-neutral-300);
+    --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
+    --semantic-color-text-inverse: var(--primitive-color-neutral-900);
+
+    /* SEMANTIC COLORS - Border (Dark) */
+    --semantic-color-border-primary: var(--primitive-color-neutral-700);
+    --semantic-color-border-secondary: var(--primitive-color-neutral-800);
+    --semantic-color-border-strong: var(--primitive-color-neutral-500);
+
+    /* SEMANTIC COLORS - Interactive (Dark - Lighter for contrast) */
+    --semantic-color-interactive-primary: var(--primitive-color-accent-400);
+    --semantic-color-interactive-primary-hover: var(--primitive-color-accent-300);
+    --semantic-color-interactive-primary-active: var(--primitive-color-accent-200);
+    --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-600);
+
+    /* SEMANTIC SHADOWS - Dark Mode (Stronger) */
+    --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Alternative: Data Attribute for Manual Theme Control */
+[data-theme='dark'] {
+  /* SEMANTIC COLORS - Background (Dark) */
+  --semantic-color-background-primary: var(--primitive-color-neutral-900);
+  --semantic-color-background-secondary: var(--primitive-color-neutral-800);
+  --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+
+  /* SEMANTIC COLORS - Text (Dark) */
+  --semantic-color-text-primary: var(--primitive-color-neutral-0);
+  --semantic-color-text-secondary: var(--primitive-color-neutral-300);
+  --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
+  --semantic-color-text-inverse: var(--primitive-color-neutral-900);
+
+  /* SEMANTIC COLORS - Border (Dark) */
+  --semantic-color-border-primary: var(--primitive-color-neutral-700);
+  --semantic-color-border-secondary: var(--primitive-color-neutral-800);
+  --semantic-color-border-strong: var(--primitive-color-neutral-500);
+
+  /* SEMANTIC COLORS - Interactive (Dark - Lighter for contrast) */
+  --semantic-color-interactive-primary: var(--primitive-color-accent-400);
+  --semantic-color-interactive-primary-hover: var(--primitive-color-accent-300);
+  --semantic-color-interactive-primary-active: var(--primitive-color-accent-200);
+  --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-600);
+
+  /* SEMANTIC SHADOWS - Dark Mode (Stronger) */
+  --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+}

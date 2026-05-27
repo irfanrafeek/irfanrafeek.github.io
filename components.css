@@ -1,0 +1,610 @@
+/**
+ * Design System Components
+ * Built using semantic tokens for consistency and theme support
+ */
+
+/* ============================================================================
+   COMPONENT: BUTTON
+   Primary button component with states
+   ============================================================================ */
+
+.button,
+button,
+.btn {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--semantic-spacing-sm) var(--semantic-spacing-lg);
+
+  /* Typography */
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-sm);
+  font-weight: var(--primitive-font-weight-medium);
+  line-height: var(--primitive-line-height-normal);
+  text-decoration: none;
+
+  /* Colors */
+  background-color: var(--semantic-color-interactive-primary);
+  color: var(--semantic-color-text-inverse);
+  border: none;
+
+  /* Styling */
+  border-radius: var(--semantic-radius-none);
+  cursor: pointer;
+
+  /* Transitions */
+  transition: all 0.3s ease;
+
+  /* Reset defaults */
+  margin: 0;
+}
+
+.button:hover,
+button:hover,
+.btn:hover {
+  background-color: var(--semantic-color-interactive-primary-hover);
+  transform: translateY(-2px);
+}
+
+.button:active,
+button:active,
+.btn:active {
+  background-color: var(--semantic-color-interactive-primary-active);
+  transform: translateY(0);
+}
+
+.button:disabled,
+button:disabled,
+.btn:disabled {
+  background-color: var(--semantic-color-interactive-primary-disabled);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button Variants */
+
+.button.secondary,
+button.secondary,
+.btn.secondary {
+  background-color: var(--semantic-color-background-secondary);
+  color: var(--semantic-color-text-primary);
+  border: 1px solid var(--semantic-color-border-primary);
+}
+
+.button.secondary:hover,
+button.secondary:hover,
+.btn.secondary:hover {
+  background-color: var(--semantic-color-background-tertiary);
+}
+
+.button.ghost,
+button.ghost,
+.btn.ghost {
+  background-color: transparent;
+  color: var(--semantic-color-interactive-primary);
+  border: 1px solid var(--semantic-color-interactive-primary);
+}
+
+.button.ghost:hover,
+button.ghost:hover,
+.btn.ghost:hover {
+  background-color: var(--semantic-color-interactive-primary);
+  color: var(--semantic-color-text-inverse);
+}
+
+/* ============================================================================
+   COMPONENT: HEADING
+   Semantic heading components with typography tokens
+   ============================================================================ */
+
+.heading-1,
+h1 {
+  font-family: var(--semantic-font-serif);
+  font-size: var(--primitive-font-size-4xl);
+  font-weight: var(--primitive-font-weight-extrabold);
+  line-height: var(--primitive-line-height-tight);
+  color: var(--semantic-color-text-primary);
+  letter-spacing: var(--primitive-letter-spacing-tight);
+  margin: 0;
+  padding: 0;
+}
+
+.heading-2,
+h2 {
+  font-family: var(--semantic-font-serif);
+  font-size: var(--primitive-font-size-3xl);
+  font-weight: var(--primitive-font-weight-extrabold);
+  line-height: var(--primitive-line-height-tight);
+  color: var(--semantic-color-text-primary);
+  letter-spacing: var(--primitive-letter-spacing-tight);
+  margin: 0;
+  padding: 0;
+}
+
+.heading-3,
+h3 {
+  font-family: var(--semantic-font-serif);
+  font-size: var(--primitive-font-size-xl);
+  font-weight: var(--primitive-font-weight-bold);
+  line-height: var(--primitive-line-height-snug);
+  color: var(--semantic-color-text-primary);
+  letter-spacing: var(--primitive-letter-spacing-tight);
+  margin: 0;
+  padding: 0;
+}
+
+.heading-4,
+h4 {
+  font-family: var(--semantic-font-serif);
+  font-size: var(--primitive-font-size-lg);
+  font-weight: var(--primitive-font-weight-bold);
+  line-height: var(--primitive-line-height-snug);
+  color: var(--semantic-color-text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================================
+   COMPONENT: TEXT
+   Semantic text components with hierarchy
+   ============================================================================ */
+
+.text-primary,
+.text-body {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-base);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+.text-secondary {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-base);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-secondary);
+  margin: 0;
+  padding: 0;
+}
+
+.text-tertiary {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-sm);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-tertiary);
+  margin: 0;
+  padding: 0;
+}
+
+.text-sm {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-sm);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+.text-xs {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-xs);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-tertiary);
+  margin: 0;
+  padding: 0;
+}
+
+.text-md {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-md);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+.text-lg {
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-lg);
+  font-weight: var(--primitive-font-weight-regular);
+  line-height: var(--primitive-line-height-normal);
+  color: var(--semantic-color-text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================================
+   COMPONENT: CARD
+   Container component for content grouping
+   ============================================================================ */
+
+.card {
+  background-color: var(--semantic-color-background-secondary);
+  border: 1px solid var(--semantic-color-border-primary);
+  border-radius: var(--semantic-radius-md);
+  padding: var(--semantic-spacing-lg);
+  box-shadow: var(--semantic-shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--semantic-shadow-md);
+  border-color: var(--semantic-color-border-strong);
+}
+
+.card.elevated {
+  box-shadow: var(--semantic-shadow-lg);
+}
+
+/* ============================================================================
+   COMPONENT: BADGE / TAG
+   Small label component
+   ============================================================================ */
+
+.badge,
+.tag {
+  display: inline-block;
+  font-family: var(--semantic-font-sans);
+  font-size: var(--primitive-font-size-xs);
+  font-weight: var(--primitive-font-weight-medium);
+  padding: var(--semantic-spacing-xs) var(--semantic-spacing-sm);
+  background-color: var(--semantic-color-background-secondary);
+  color: var(--semantic-color-text-secondary);
+  border: 1px solid var(--semantic-color-border-primary);
+  border-radius: var(--semantic-radius-full);
+  text-transform: lowercase;
+  letter-spacing: var(--primitive-letter-spacing-wide);
+}
+
+.badge.primary,
+.tag.primary {
+  background-color: var(--semantic-color-interactive-primary);
+  color: var(--semantic-color-text-inverse);
+  border: none;
+}
+
+/* ============================================================================
+   COMPONENT: DIVIDER
+   Visual separator
+   ============================================================================ */
+
+.divider,
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--semantic-color-border-primary);
+  margin: var(--semantic-spacing-lg) 0;
+}
+
+.divider.subtle,
+hr.subtle {
+  background-color: var(--semantic-color-border-secondary);
+}
+
+.divider.strong,
+hr.strong {
+  background-color: var(--semantic-color-border-strong);
+}
+
+/* ============================================================================
+   COMPONENT: LINK
+   Semantic link styling
+   ============================================================================ */
+
+.link,
+a {
+  color: var(--semantic-color-interactive-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.link:hover,
+a:hover {
+  color: var(--semantic-color-interactive-primary-hover);
+}
+
+.link:active,
+a:active {
+  color: var(--semantic-color-interactive-primary-active);
+}
+
+/* ============================================================================
+   COMPONENT: SECTION
+   Container for page sections with consistent spacing
+   ============================================================================ */
+
+.section {
+  padding: var(--semantic-spacing-4xl) 0;
+}
+
+.section.compact {
+  padding: var(--semantic-spacing-2xl) 0;
+}
+
+.section.spacious {
+  padding: var(--semantic-spacing-4xl) 0;
+}
+
+/* ============================================================================
+   COMPONENT: CONTAINER
+   Max-width wrapper for content
+   ============================================================================ */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--semantic-spacing-lg);
+}
+
+.container.compact {
+  max-width: 800px;
+}
+
+.container.wide {
+  max-width: 1400px;
+}
+
+/* ============================================================================
+   COMPONENT: GRID
+   Flexible grid layouts using CSS Grid
+   ============================================================================ */
+
+.grid {
+  display: grid;
+  gap: var(--semantic-spacing-lg);
+}
+
+.grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1200px) {
+  .grid.cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid.cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid.cols-4,
+  .grid.cols-3,
+  .grid.cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
+   COMPONENT: FLEX
+   Flexbox utilities
+   ============================================================================ */
+
+.flex {
+  display: flex;
+  gap: var(--semantic-spacing-md);
+}
+
+.flex.column {
+  flex-direction: column;
+}
+
+.flex.between {
+  justify-content: space-between;
+}
+
+.flex.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex.gap-sm {
+  gap: var(--semantic-spacing-sm);
+}
+
+.flex.gap-lg {
+  gap: var(--semantic-spacing-lg);
+}
+
+/* ============================================================================
+   UTILITY: SPACING
+   Margin and padding utilities using tokens
+   ============================================================================ */
+
+.m-0 { margin: 0; }
+.m-xs { margin: var(--semantic-spacing-xs); }
+.m-sm { margin: var(--semantic-spacing-sm); }
+.m-md { margin: var(--semantic-spacing-md); }
+.m-lg { margin: var(--semantic-spacing-lg); }
+.m-xl { margin: var(--semantic-spacing-xl); }
+.m-2xl { margin: var(--semantic-spacing-2xl); }
+.m-3xl { margin: var(--semantic-spacing-3xl); }
+.m-4xl { margin: var(--semantic-spacing-4xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-xs { margin-top: var(--semantic-spacing-xs); }
+.mt-sm { margin-top: var(--semantic-spacing-sm); }
+.mt-md { margin-top: var(--semantic-spacing-md); }
+.mt-lg { margin-top: var(--semantic-spacing-lg); }
+.mt-xl { margin-top: var(--semantic-spacing-xl); }
+.mt-2xl { margin-top: var(--semantic-spacing-2xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-xs { margin-bottom: var(--semantic-spacing-xs); }
+.mb-sm { margin-bottom: var(--semantic-spacing-sm); }
+.mb-md { margin-bottom: var(--semantic-spacing-md); }
+.mb-lg { margin-bottom: var(--semantic-spacing-lg); }
+.mb-xl { margin-bottom: var(--semantic-spacing-xl); }
+.mb-2xl { margin-bottom: var(--semantic-spacing-2xl); }
+
+.p-0 { padding: 0; }
+.p-xs { padding: var(--semantic-spacing-xs); }
+.p-sm { padding: var(--semantic-spacing-sm); }
+.p-md { padding: var(--semantic-spacing-md); }
+.p-lg { padding: var(--semantic-spacing-lg); }
+.p-xl { padding: var(--semantic-spacing-xl); }
+.p-2xl { padding: var(--semantic-spacing-2xl); }
+
+/* ============================================================================
+   UTILITY: COLORS
+   Text and background color utilities
+   ============================================================================ */
+
+.text-primary {
+  color: var(--semantic-color-text-primary);
+}
+
+.text-secondary {
+  color: var(--semantic-color-text-secondary);
+}
+
+.text-tertiary {
+  color: var(--semantic-color-text-tertiary);
+}
+
+.text-accent {
+  color: var(--semantic-color-interactive-primary);
+}
+
+.bg-primary {
+  background-color: var(--semantic-color-background-primary);
+}
+
+.bg-secondary {
+  background-color: var(--semantic-color-background-secondary);
+}
+
+.bg-accent {
+  background-color: var(--semantic-color-interactive-primary);
+}
+
+.border-primary {
+  border-color: var(--semantic-color-border-primary);
+}
+
+.border-secondary {
+  border-color: var(--semantic-color-border-secondary);
+}
+
+/* ============================================================================
+   UTILITY: TYPOGRAPHY
+   Text styling utilities
+   ============================================================================ */
+
+.font-serif {
+  font-family: var(--semantic-font-serif);
+}
+
+.font-sans {
+  font-family: var(--semantic-font-sans);
+}
+
+.font-bold {
+  font-weight: var(--primitive-font-weight-bold);
+}
+
+.font-semibold {
+  font-weight: var(--primitive-font-weight-semibold);
+}
+
+.font-medium {
+  font-weight: var(--primitive-font-weight-medium);
+}
+
+.font-regular {
+  font-weight: var(--primitive-font-weight-regular);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* ============================================================================
+   UTILITY: DISPLAY & VISIBILITY
+   Display and visibility utilities
+   ============================================================================ */
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   Responsive design helpers
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none;
+  }
+}
+
+/* ============================================================================
+   TRANSITIONS & ANIMATIONS
+   Utility transitions using design tokens
+   ============================================================================ */
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.transition-colors {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
