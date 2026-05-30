@@ -6,7 +6,7 @@
     <title>Irfan Rafeek — Product Designer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* ============================================================================
@@ -258,6 +258,32 @@
           --semantic-type-caption-sm-line-height: 1.4;
           --semantic-type-caption-sm-letter-spacing: var(--primitive-letter-spacing-normal);
 
+          /* ────────────────────────────────────────────────────────────────────────
+             SEMANTIC: TYPOGRAPHY TOKENS - EYEBROW (Small Uppercase Section Labels)
+             Use for: section numbers (01, 02), section labels (WHAT I DO),
+             eyebrow text above hero, category markers.
+             ──────────────────────────────────────────────────────────────────────── */
+          --semantic-type-eyebrow-lg-font-family: var(--semantic-font-sans);
+          --semantic-type-eyebrow-lg-font-size: var(--primitive-font-size-base);
+          --semantic-type-eyebrow-lg-font-weight: var(--primitive-font-weight-semibold);
+          --semantic-type-eyebrow-lg-line-height: var(--primitive-line-height-normal);
+          --semantic-type-eyebrow-lg-letter-spacing: var(--primitive-letter-spacing-wide);
+          --semantic-type-eyebrow-lg-text-transform: uppercase;
+
+          --semantic-type-eyebrow-md-font-family: var(--semantic-font-sans);
+          --semantic-type-eyebrow-md-font-size: var(--primitive-font-size-sm);
+          --semantic-type-eyebrow-md-font-weight: var(--primitive-font-weight-semibold);
+          --semantic-type-eyebrow-md-line-height: var(--primitive-line-height-normal);
+          --semantic-type-eyebrow-md-letter-spacing: var(--primitive-letter-spacing-wide);
+          --semantic-type-eyebrow-md-text-transform: uppercase;
+
+          --semantic-type-eyebrow-sm-font-family: var(--semantic-font-sans);
+          --semantic-type-eyebrow-sm-font-size: var(--primitive-font-size-xs);
+          --semantic-type-eyebrow-sm-font-weight: var(--primitive-font-weight-medium);
+          --semantic-type-eyebrow-sm-line-height: var(--primitive-line-height-normal);
+          --semantic-type-eyebrow-sm-letter-spacing: var(--primitive-letter-spacing-wider);
+          --semantic-type-eyebrow-sm-text-transform: uppercase;
+
           /* TIER 1: PRIMITIVES - SHADOWS */
           --primitive-shadow-none: 0px 0px 0px rgba(0, 0, 0, 0);
           --primitive-shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.05);
@@ -453,6 +479,7 @@
 
         /* ===== LOCATION HEADER ===== */
         .location-header {
+            font-family: var(--semantic-font-sans);
             font-size: var(--primitive-font-size-sm);
             font-weight: var(--primitive-font-weight-medium);
             letter-spacing: var(--primitive-letter-spacing-wide);
@@ -544,21 +571,23 @@
         }
 
         .section-number {
-            font-family: var(--semantic-font-serif);
-            font-size: var(--semantic-type-display-md-font-size);
-            font-weight: var(--primitive-font-weight-bold);
+            font-family: var(--semantic-type-eyebrow-md-font-family);
+            font-size: var(--semantic-type-eyebrow-md-font-size);
+            font-weight: var(--semantic-type-eyebrow-md-font-weight);
             color: var(--semantic-color-text-tertiary);
-            margin-bottom: var(--semantic-spacing-md);
-            line-height: var(--primitive-line-height-tight);
-            letter-spacing: var(--semantic-type-display-md-letter-spacing);
+            margin-bottom: var(--semantic-spacing-xs);
+            line-height: var(--semantic-type-eyebrow-md-line-height);
+            letter-spacing: var(--semantic-type-eyebrow-md-letter-spacing);
         }
 
         .section-title {
-            font-family: var(--semantic-font-serif);
-            font-size: var(--semantic-type-heading-lg-font-size);
+            font-family: var(--semantic-type-eyebrow-md-font-family);
+            font-size: var(--semantic-type-eyebrow-md-font-size);
             font-weight: var(--primitive-font-weight-bold);
             color: var(--semantic-color-text-primary);
-            letter-spacing: var(--semantic-type-heading-lg-letter-spacing);
+            letter-spacing: var(--semantic-type-eyebrow-md-letter-spacing);
+            text-transform: uppercase;
+            line-height: var(--semantic-type-eyebrow-md-line-height);
         }
 
         .view-all {
@@ -824,10 +853,6 @@
                 font-size: var(--primitive-font-size-3xl);
             }
 
-            .section-title {
-                font-size: var(--semantic-type-heading-md-font-size);
-            }
-
             .cta-title {
                 font-size: var(--semantic-type-heading-md-font-size);
             }
@@ -860,10 +885,6 @@
 
             .hero-title {
                 font-size: var(--semantic-type-heading-sm-font-size);
-            }
-
-            .section-title {
-                font-size: var(--primitive-font-size-xl-sm);
             }
 
             .cta-title {
