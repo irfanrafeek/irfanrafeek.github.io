@@ -130,7 +130,7 @@ main {
 
 .hero-title {
     font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-display-sm-font-size);
+    font-size: var(--semantic-type-display-md-font-size);
     font-weight: var(--primitive-font-weight-bold);
     line-height: var(--semantic-type-display-sm-line-height);
     color: var(--semantic-color-text-primary);
@@ -253,7 +253,7 @@ main {
 
 .service-title {
     font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-heading-xs-font-size);
+    font-size: var(--semantic-type-heading-sm-font-size);
     font-weight: var(--primitive-font-weight-bold);
     color: var(--semantic-color-text-primary);
     letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
@@ -275,7 +275,7 @@ main {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--semantic-spacing-3xl);
+    gap: var(--semantic-spacing-xl);
 }
 
 .project-card {
@@ -316,7 +316,7 @@ main {
 
 .project-title {
     font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-heading-xs-font-size);
+    font-size: var(--semantic-type-heading-sm-font-size);
     font-weight: var(--primitive-font-weight-bold);
     color: var(--semantic-color-text-primary);
     margin: 0;
@@ -345,7 +345,7 @@ main {
     padding: var(--semantic-spacing-xs) var(--semantic-spacing-sm);
     background-color: var(--semantic-color-background-primary);
     border: 1px solid var(--semantic-color-border-primary);
-    border-radius: var(--semantic-radius-full);
+    border-radius: var(--semantic-radius-sm);
     font-size: var(--primitive-font-size-xs);
     color: var(--semantic-color-text-secondary);
     text-transform: lowercase;
