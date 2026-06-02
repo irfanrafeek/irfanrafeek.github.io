@@ -356,6 +356,14 @@ main {
     justify-content: center;
 }
 
+/* When a card uses an uploaded image instead of an emoji, keep it in the 80px slot */
+.project-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--semantic-radius-sm);
+}
+
 .project-content {
     display: flex;
     flex-direction: column;
@@ -743,4 +751,117 @@ footer {
     .experience-company {
         font-size: var(--semantic-type-heading-md-font-size);
     }
+}
+
+/* ===== CLICKABLE PROJECT CARD ===== */
+/* project-card is rendered as an <a> when it links to a case study */
+a.project-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* ===== CASE STUDY (functional baseline — refine later) ===== */
+.case-study {
+    padding: var(--semantic-spacing-3xl) 0;
+}
+
+.case-back {
+    display: inline-block;
+    margin-bottom: var(--semantic-spacing-xl);
+    font-size: var(--primitive-font-size-sm);
+    color: var(--semantic-color-text-tertiary);
+    text-decoration: none;
+}
+
+.case-back:hover {
+    color: var(--semantic-color-text-primary);
+}
+
+.case-header {
+    margin-bottom: var(--semantic-spacing-2xl);
+    padding-bottom: var(--semantic-spacing-xl);
+    border-bottom: 1px solid var(--semantic-color-border-secondary);
+}
+
+.case-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--semantic-spacing-md);
+    flex-wrap: wrap;
+}
+
+.case-title {
+    font-family: var(--semantic-font-serif);
+    font-size: var(--semantic-type-heading-lg-font-size);
+    font-weight: var(--primitive-font-weight-bold);
+    color: var(--semantic-color-text-primary);
+    margin: 0;
+}
+
+.case-summary {
+    margin-top: var(--semantic-spacing-md);
+    margin-bottom: var(--semantic-spacing-md);
+    font-size: var(--primitive-font-size-lg);
+    line-height: var(--semantic-type-body-md-line-height);
+    color: var(--semantic-color-text-secondary);
+}
+
+.case-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--semantic-spacing-lg);
+}
+
+.case-heading {
+    font-family: var(--semantic-font-serif);
+    font-size: var(--semantic-type-heading-sm-font-size);
+    font-weight: var(--primitive-font-weight-bold);
+    color: var(--semantic-color-text-primary);
+    margin: var(--semantic-spacing-lg) 0 0;
+}
+
+.case-paragraph {
+    font-size: var(--primitive-font-size-base);
+    line-height: var(--semantic-type-body-md-line-height);
+    color: var(--semantic-color-text-secondary);
+    margin: 0;
+}
+
+.case-figure {
+    margin: var(--semantic-spacing-md) 0;
+}
+
+.case-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--semantic-radius-md);
+    border: 1px solid var(--semantic-color-border-primary);
+}
+
+.case-caption {
+    margin-top: var(--semantic-spacing-sm);
+    font-size: var(--primitive-font-size-sm);
+    color: var(--semantic-color-text-tertiary);
+}
+
+.case-quote {
+    margin: var(--semantic-spacing-md) 0;
+    padding-left: var(--semantic-spacing-lg);
+    border-left: 3px solid var(--semantic-color-border-strong);
+}
+
+.case-quote p {
+    font-family: var(--semantic-font-serif);
+    font-size: var(--semantic-type-heading-xs-font-size);
+    color: var(--semantic-color-text-primary);
+    margin: 0;
+}
+
+.case-cite {
+    display: block;
+    margin-top: var(--semantic-spacing-sm);
+    font-size: var(--primitive-font-size-sm);
+    font-style: normal;
+    color: var(--semantic-color-text-tertiary);
 }

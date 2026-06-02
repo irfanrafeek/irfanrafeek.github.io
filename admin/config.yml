@@ -1,0 +1,75 @@
+backend:
+  name: github
+  repo: irfanrafeek/portfolio-test
+  branch: main
+
+# Images uploaded in the CMS land in Assets/ and are referenced relative to the site root.
+media_folder: "Assets"
+public_folder: "Assets"
+
+collections:
+  - name: site
+    label: "Site Content"
+    files:
+      - name: projects
+        label: "Projects"
+        file: "projects.json"
+        format: json
+        description: "Projects shown on the homepage and the All Work page."
+        fields:
+          - name: projects
+            label: "Projects"
+            label_singular: "Project"
+            widget: list
+            summary: "{{fields.title}} ({{fields.year}})"
+            fields:
+              - { name: title, label: "Title", widget: string }
+              - name: slug
+                label: "Slug"
+                widget: string
+                hint: "URL id for the case study, e.g. building-ambo (lowercase, dashes)"
+                pattern: ["^[a-z0-9-]+$", "Use lowercase letters, numbers, and dashes only"]
+              - { name: year, label: "Year", widget: string }
+              - name: image
+                label: "Image"
+                widget: string
+                hint: "An emoji (e.g. 📱) or an image path like Assets/ambo.png"
+              - { name: description, label: "Card description", widget: text }
+              - name: tags
+                label: "Tags"
+                widget: list
+                default: []
+                field: { name: tag, label: "Tag", widget: string }
+              - name: featured
+                label: "Show in Selected Work (homepage)"
+                widget: boolean
+                default: false
+              - name: blocks
+                label: "Case Study Sections"
+                label_singular: "Section"
+                widget: list
+                default: []
+                types:
+                  - name: heading
+                    label: "Heading"
+                    summary: "Heading: {{fields.text}}"
+                    fields:
+                      - { name: text, label: "Text", widget: string }
+                  - name: paragraph
+                    label: "Paragraph"
+                    summary: "{{fields.text}}"
+                    fields:
+                      - { name: text, label: "Text", widget: text }
+                  - name: image
+                    label: "Image"
+                    summary: "Image: {{fields.src}}"
+                    fields:
+                      - { name: src, label: "Image", widget: image }
+                      - { name: alt, label: "Alt text", widget: string, required: false }
+                      - { name: caption, label: "Caption", widget: string, required: false }
+                  - name: quote
+                    label: "Quote"
+                    summary: "Quote: {{fields.text}}"
+                    fields:
+                      - { name: text, label: "Quote", widget: text }
+                      - { name: attribution, label: "Attribution", widget: string, required: false }

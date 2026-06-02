@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work — Irfan Rafeek</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="components.css">
+</head>
+<body>
+    <nav id="navbar">
+        <a href="index.html" class="logo">IRFAN RAFEEK</a>
+        <ul class="nav-links">
+            <li><a href="index.html#work" class="active">Work</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="index.html#contact" class="cta-button">Work With Me</a></li>
+        </ul>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/>
+            <path d="M12 20v2"/>
+            <path d="m4.93 4.93 1.41 1.41"/>
+            <path d="m17.66 17.66 1.41 1.41"/>
+            <path d="M2 12h2"/>
+            <path d="M20 12h2"/>
+            <path d="m6.34 17.66-1.41 1.41"/>
+            <path d="m19.07 4.93-1.41 1.41"/>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </button>
+
+    <main>
+        <div class="container">
+            <div class="location-header">
+                BANGALORE, INDIA
+                <span class="availability">• AVAILABLE FOR WORK</span>
+            </div>
+
+            <section class="hero">
+                <div class="page-eyebrow">Selected Work</div>
+                <h1 class="hero-title">
+                    Projects, case studies, and the <span class="underline">systems</span> behind them<span class="accent-dot">.</span>
+                </h1>
+            </section>
+
+            <section id="work">
+                <div class="projects-grid" data-projects></div>
+            </section>
+
+            <section id="contact" class="cta-section">
+                <div class="cta-label">Get In Touch</div>
+                <h2 class="cta-title">
+                    Have a project that deserves the time?
+                </h2>
+                <a href="mailto:dizeno.ir@gmail.com" class="cta-email">dizeno.ir@gmail.com</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">© 2024 Irfan Rafeek. All rights reserved.</div>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/irfan-rafeek-70246455/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.instagram.com/irfanrafeek" target="_blank" rel="noopener">Instagram</a>
+            <a href="mailto:dizeno.ir@gmail.com">Email</a>
+        </div>
+    </footer>
+
+    <script src="scripts/projects.js" defer></script>
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Dark mode toggle (icon swap is CSS-driven; JS only manages data-theme + localStorage)
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark' || storedTheme === 'light') {
+            html.setAttribute('data-theme', storedTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = html.getAttribute('data-theme') === 'dark'
+                || (!html.hasAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            const next = isDark ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+</html>

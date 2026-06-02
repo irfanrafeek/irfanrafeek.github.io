@@ -136,48 +136,10 @@
                         <div class="section-number">03</div>
                         <h2 class="section-title">Selected Work</h2>
                     </div>
-                    <a href="#" class="view-all">All work</a>
+                    <a href="work.html" class="view-all">All work</a>
                 </div>
 
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">📱</div>
-                        <div class="project-content">
-                            <div class="project-meta">
-                                <h3 class="project-title">Building Ambo</h3>
-                                <span class="project-year">2024</span>
-                            </div>
-                            <p class="project-description">
-                                Transforming an early-stage employee advocacy platform from a simple post-sharing tool 
-                                into a flexible content distribution system. Redefining content workflows for scale.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">product design</span>
-                                <span class="tag">ux</span>
-                                <span class="tag">systems</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">🎨</div>
-                        <div class="project-content">
-                            <div class="project-meta">
-                                <h3 class="project-title">Condé Nast Verso</h3>
-                                <span class="project-year">2023</span>
-                            </div>
-                            <p class="project-description">
-                                Reimagining color theming for Condé Nast's unified design system, powering brands like 
-                                Vogue, GQ, and The New Yorker with flexible, token-based color architecture.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">design systems</span>
-                                <span class="tag">tokens</span>
-                                <span class="tag">theming</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="projects-grid" data-projects="featured"></div>
             </section>
 
             <section id="contact" class="cta-section">
@@ -199,6 +161,7 @@
         </div>
     </footer>
 
+    <script src="scripts/projects.js" defer></script>
     <script>
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
