@@ -906,6 +906,14 @@ a.project-card {
     height: auto;
 }
 
+.case-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--semantic-radius-md);
+    background-color: var(--semantic-color-background-secondary);
+}
+
 .case-caption {
     margin-top: var(--semantic-spacing-sm);
     font-size: var(--primitive-font-size-sm);

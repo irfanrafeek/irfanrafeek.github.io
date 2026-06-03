@@ -28,6 +28,14 @@
                         <p>${escapeHtml(block.text)}</p>
                         ${block.attribution ? `<cite class="case-cite">${escapeHtml(block.attribution)}</cite>` : ''}
                     </blockquote>`;
+            case 'video':
+                return `
+                    <figure class="case-figure">
+                        <video class="case-video" src="${escapeHtml(block.src)}"
+                            ${block.poster ? `poster="${escapeHtml(block.poster)}"` : ''}
+                            controls playsinline preload="metadata"></video>
+                        ${block.caption ? `<figcaption class="case-caption">${escapeHtml(block.caption)}</figcaption>` : ''}
+                    </figure>`;
             default:
                 return '';
         }

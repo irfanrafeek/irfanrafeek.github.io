@@ -73,3 +73,10 @@ collections:
                     fields:
                       - { name: text, label: "Quote", widget: text }
                       - { name: attribution, label: "Attribution", widget: string, required: false }
+                  - name: video
+                    label: "Video"
+                    summary: "Video: {{fields.src}}"
+                    fields:
+                      - { name: src, label: "Video URL", widget: string, hint: "Full URL to an .mp4 (e.g. https://video.wixstatic.com/...)" }
+                      - { name: poster, label: "Poster image", widget: string, required: false, hint: "Optional thumbnail URL or Assets/ path" }
+                      - { name: caption, label: "Caption", widget: string, required: false }

@@ -14,43 +14,652 @@
       "featured": true,
       "blocks": [
         {
+          "type": "image",
+          "src": "Assets/ambo-01.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
           "type": "heading",
           "text": "Overview"
         },
         {
           "type": "paragraph",
-          "text": "Ambo started as a simple tool for employees to share company posts to their social networks. Our goal was to evolve it into a flexible content distribution system that could scale with the needs of growing teams."
+          "text": "Ambo is an early-stage employee advocacy platform that empowers employees to become brand advocates, enabling companies to share and amplify content through their employees’ personal networks."
+        },
+        {
+          "type": "paragraph",
+          "text": "When I joined the team, the product was transitioning from a simple post-sharing tool into a more flexible content distribution system. The challenge wasn’t just improving UI, it was redefining how content workflows should scale as teams, accounts, and distribution complexity grew. This wasn’t a redesign. It was a structural evolution."
         },
         {
           "type": "heading",
-          "text": "The challenge"
+          "text": "The Challenge of Scaling"
         },
         {
           "type": "paragraph",
-          "text": "The original product assumed a single, linear workflow: an admin posts, employees share. As customers grew, they needed to create, customize, schedule, and distribute content in far more flexible ways."
-        },
-        {
-          "type": "quote",
-          "text": "We needed the product to bend to many workflows without becoming a tangle of special cases.",
-          "attribution": "Product team"
-        },
-        {
-          "type": "heading",
-          "text": "Outcome"
+          "text": "As Ambo matured, we added powerful capabilities like AI-assisted writing, complex scheduling, and deeper insights. However, this expansion also introduced new complexity. Workflows became fragmented across different surfaces, and key actions began competing for attention, resulting in a dense interface that was harder for admins to navigate. \n\nTo support Ambo's next phase of growth, we needed to evolve from a collection of individual features into a cohesive, system-level workflow that seamlessly connects content from ideation, to distribution, to measurable impact."
         },
         {
           "type": "paragraph",
-          "text": "We redefined navigation, interaction patterns, and component architecture to support a broader set of workflows, building a structural foundation for long-term product growth."
+          "text": "This structural evolution focused on maturing four key areas:"
         },
         {
           "type": "paragraph",
-          "text": "Key UX Enhancements:\n\nContextual Priority: Replaced abstract data-entry fields with a near-final post preview. By shifting the mental model to focus directly on the output, we stripped away administrative distraction.\n\nStreamlined Media Curation: Swapped the bulky upload \"drop zone\" for a sleek, inline gallery. This provides immediate visual feedback and dramatically tightens the visual hierarchy.\n\nModular Engagement Loops: Reimagined secondary actions (like \"first comment\" and \"auto-repost\") from hidden toggles into contextual, sequential steps integrated naturally at the bottom of the drafting workflow."
+          "text": "• Content creation workflow – Scaling the UI to support multi-variant posts/reposts without cognitive overload."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Content dashboard – Helping teams manage and track content more efficiently"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Analytics – Weaving metrics into a clear narrative connected directly to reach and participation."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Inspiration hub – Expanding the user journey upstream to solve for content discovery and ideation."
+        },
+        {
+          "type": "paragraph",
+          "text": "Below are some highlights from the redesigned interface."
         },
         {
           "type": "image",
-          "src": "/Assets/DSCF0194.jpg",
+          "src": "Assets/ambo-02.jpg",
           "alt": "",
           "caption": ""
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-03.jpg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-04.jpg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-05.jpg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-06.jpg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Restructuring Content Creation"
+        },
+        {
+          "type": "heading",
+          "text": "Admin content creation workflow"
+        },
+        {
+          "type": "paragraph",
+          "text": "The admin workflow in Ambo focuses on preparing content for distribution. Admins create posts, configure how they should be shared, and select the advocates who will distribute them across their networks. The platform then helps coordinate how that content is published over time."
+        },
+        {
+          "type": "heading",
+          "text": "Where Complexity Started to Appear"
+        },
+        {
+          "type": "paragraph",
+          "text": "As the product evolved, new capabilities were introduced to support more flexible content distribution."
+        },
+        {
+          "type": "paragraph",
+          "text": "A single post could now:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Support multiple variations tailored for different contexts"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Each Variation can have reposts reposts"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Allow each variation and reposts to be shared by multiple advocates"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Include variation-level settings such as scheduling time and advocate selection, in addition to general post settings"
+        },
+        {
+          "type": "paragraph",
+          "text": "While these features increased flexibility, they also introduced new complexity to the creation workflow."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-07.png",
+          "alt": "",
+          "caption": "Old Interface for post creation"
+        },
+        {
+          "type": "heading",
+          "text": "The Challenge"
+        },
+        {
+          "type": "paragraph",
+          "text": "Integrating these capabilities into the existing interface proved difficult."
+        },
+        {
+          "type": "paragraph",
+          "text": "The content creation screen already contained several functional areas:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Post Settings"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Post editing"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Variations management"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Reposts management"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Distribution settings"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Post preview"
+        },
+        {
+          "type": "paragraph",
+          "text": "Bringing all of these together within a single surface risked making the interface visually dense and cognitively overwhelming. The challenge was to design a workflow that could support this increased flexibility while still feeling clear, structured, and easy to navigate for users."
+        },
+        {
+          "type": "heading",
+          "text": "Editorial Experience Redesign"
+        },
+        {
+          "type": "heading",
+          "text": "From Form-Based to Post-Centric"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Challenge: The legacy design utilized a rigid, multi-field form that fragmented the content creation process and increased cognitive load. \nThe Solution: We transitioned to a streamlined, WYSIWYG view that mirrors the published state, empowering advocates to draft with context and confidence."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-08.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Key UX Enhancements:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contextual Priority: Replaced abstract data-entry fields with a near-final post preview. By shifting the mental model to focus directly on the output, we stripped away administrative distraction."
+        },
+        {
+          "type": "paragraph",
+          "text": "Streamlined Media Curation: Swapped the bulky upload \"drop zone\" for a sleek, inline gallery. This provides immediate visual feedback and dramatically tightens the visual hierarchy."
+        },
+        {
+          "type": "paragraph",
+          "text": "Modular Engagement Loops: Reimagined secondary actions (like \"first comment\" and \"auto-repost\") from hidden toggles into contextual, sequential steps integrated naturally at the bottom of the drafting workflow."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Impact: A frictionless creation experience that reduces user hesitation, accelerates drafting time, and drives higher-quality, authentic advocate shares."
+        },
+        {
+          "type": "heading",
+          "text": "Exploration different workflows"
+        },
+        {
+          "type": "paragraph",
+          "text": "I explored several possible directions to bring in all the new features and narrowed them down to three strong options."
+        },
+        {
+          "type": "paragraph",
+          "text": "Each concept was prototyped in Figma and stress-tested against typical user flows to evaluate clarity, scalability, and usability."
+        },
+        {
+          "type": "heading",
+          "text": "Workflow A"
+        },
+        {
+          "type": "paragraph",
+          "text": "Variations as a First-Class Sidebar followed by edit post and separate preview."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-09.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Strengths"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Fast switching between variations"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Faster work flow"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Scales well as more metadata/features are added"
+        },
+        {
+          "type": "paragraph",
+          "text": "⚠️ Weakness"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Hierarchy between global settings and variations is less obvious"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Does not scale well when settings increase"
+        },
+        {
+          "type": "paragraph",
+          "text": "• 3-column layout can feel intimidating"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Source URL sits close to variation editor"
+        },
+        {
+          "type": "heading",
+          "text": "Workflow B"
+        },
+        {
+          "type": "paragraph",
+          "text": "Variations Inside Post Settings and preview and edit post as switchable units."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-10.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Strengths"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Very clear hierarchy (settings → variations)"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Easier for new users to understand"
+        },
+        {
+          "type": "paragraph",
+          "text": "⚠️ Weakness"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Does not scale well when settings/variations variations increase"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Hard to scan"
+        },
+        {
+          "type": "heading",
+          "text": "Workflow C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Variations Inside Post Settings and preview and edit post as switchable units."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-11.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Strengths"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Clean separation between global and variaiton settings"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Familiar interaction pattern"
+        },
+        {
+          "type": "paragraph",
+          "text": "⚠️ Weakness"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Users must remember context"
+        },
+        {
+          "type": "paragraph",
+          "text": "• No simultaneous visibility"
+        },
+        {
+          "type": "heading",
+          "text": "Solution"
+        },
+        {
+          "type": "paragraph",
+          "text": "Compared the 3 models with Scalability, speed and confidence"
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-12.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "While the earlier approaches solved parts of the problem, Workflow C provided the strongest foundation for the product long term, balancing efficiency with a structure that could scale with future features. This became the basis for the new creation workflow."
+        },
+        {
+          "type": "video",
+          "src": "https://video.wixstatic.com/video/26bf6e_4d969d4f714947ed802e10551fb8cc6b/1080p/mp4/file.mp4",
+          "caption": "",
+          "poster": "https://static.wixstatic.com/media/media/26bf6e_4d969d4f714947ed802e10551fb8cc6bf000.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "As we tested different workflow directions, we noticed that admins relied heavily on AI to write and refine posts. However, creating new versions of a post still required manual steps after generating variations."
+        },
+        {
+          "type": "paragraph",
+          "text": "To address this, we experimented with a workflow where AI rewrite results could be directly converted into new variations. Instead of copying and editing content manually, admins could select AI-generated options and instantly turn them into ready-to-use variations."
+        },
+        {
+          "type": "video",
+          "src": "https://video.wixstatic.com/video/26bf6e_c572c96fed2248c59cfdd984058e1ad0/1080p/mp4/file.mp4",
+          "caption": "",
+          "poster": "https://static.wixstatic.com/media/media/26bf6e_c572c96fed2248c59cfdd984058e1ad0f000.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "This significantly reduced the effort required to prepare multiple versions of a post and made the content creation process much faster. Over time, this workflow has become one of the most frequently used features in the product."
+        },
+        {
+          "type": "heading",
+          "text": "From Status Dashboard to Performance Workspace"
+        },
+        {
+          "type": "paragraph",
+          "text": "As Ambo matured, the dashboard needed to do more than show system status. It needed to help teams understand how their content was performing and where to focus next."
+        },
+        {
+          "type": "paragraph",
+          "text": "The original dashboard surfaced metrics like shares, impressions, and clicks, but these numbers lived separately from the content itself. Users could see activity, but it wasn’t easy to connect performance back to the posts that generated it."
+        },
+        {
+          "type": "paragraph",
+          "text": "This created a gap between insight and action."
+        },
+        {
+          "type": "heading",
+          "text": "Reframing the role of the dashboard"
+        },
+        {
+          "type": "paragraph",
+          "text": "Instead of treating the dashboard as a static overview, we reframed it as a performance workspace, a place where teams could quickly understand what’s happening and decide what to do next. Three changes shaped the redesign."
+        },
+        {
+          "type": "paragraph",
+          "text": "Surface insights first: We introduced a Weekly Insights layer at the top of the dashboard, highlighting key engagement metrics with trend indicators. This gives teams an immediate sense of momentum without requiring them to open analytics."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-13.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Bring performance closer to content: Engagement signals like shares, clicks, and impressions now appear directly on each content card. This makes it easy to see which posts are driving impact while browsing the content feed."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-14.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Improve scanning and control: Clearer content states and filtering options make it easier to navigate large content libraries and quickly focus on what matters."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-15.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "A clearer performance story"
+        },
+        {
+          "type": "paragraph",
+          "text": "The redesigned dashboard shifts Ambo from a content management interface to a decision-making surface."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-16.png",
+          "alt": "",
+          "caption": "Ambo Content Dashboard"
+        },
+        {
+          "type": "paragraph",
+          "text": "Calendar View"
+        },
+        {
+          "type": "paragraph",
+          "text": "Introducing a calendar view transformed content management from a static list into a visual planning system. It gave teams instant visibility into publishing cadence, helped prevent scheduling conflicts, and made campaign planning across channels faster and more collaborative."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-17.png",
+          "alt": "",
+          "caption": "Ambo Content Dashboard Calendar View"
+        },
+        {
+          "type": "paragraph",
+          "text": "Post Details"
+        },
+        {
+          "type": "paragraph",
+          "text": "Introducing a dedicated post detail page gave admins a single place to monitor content performance after publishing. It combined reach, engagement, and advocate activity in one view, making it easier to track impact, compare variations, identify top contributors, and take faster actions without switching between multiple pages."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-18.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Redesigning Ambo Analytics"
+        },
+        {
+          "type": "heading",
+          "text": "What wasn’t working"
+        },
+        {
+          "type": "paragraph",
+          "text": "The original analytics dashboard surfaced a large set of metrics but lacked a clear hierarchy. Important signals such as ROI, top advocates, and post performance were buried in dense tables, making it difficult for teams to quickly understand how their advocacy program was performing."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-19.png",
+          "alt": "",
+          "caption": "Old Analytics Interface"
+        },
+        {
+          "type": "heading",
+          "text": "Shifting the focus"
+        },
+        {
+          "type": "paragraph",
+          "text": "Rather than simply displaying data, the redesign focused on helping teams quickly interpret performance. The experience was reorganized around the questions users naturally ask:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Is our advocacy program performing well?"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Which posts are driving engagement?"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Who are our most impactful advocates?"
+        },
+        {
+          "type": "heading",
+          "text": "A clearer performance story"
+        },
+        {
+          "type": "paragraph",
+          "text": "The new dashboard introduces a stronger visual hierarchy with three key sections:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Program performance highlighting ROI and overall reach"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Post analysis to surface high-performing content"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Advocate insights to identify the employees driving impact"
+        },
+        {
+          "type": "paragraph",
+          "text": "Trend indicators, comparison graphs, and highlighted performers make performance easier to scan and interpret."
+        },
+        {
+          "type": "heading",
+          "text": "The result"
+        },
+        {
+          "type": "paragraph",
+          "text": "The redesign transforms analytics from a collection of metrics into a clear performance narrative, helping teams quickly understand what’s working and where to focus next."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-20.png",
+          "alt": "",
+          "caption": "The redesigned analytics dashboard with clear performance narrative"
+        },
+        {
+          "type": "heading",
+          "text": "Introducing Inspiration Hub"
+        },
+        {
+          "type": "paragraph",
+          "text": "Through customer interviews and product feedback, a recurring pattern emerged. Admins didn’t struggle with publishing, they struggled with finding the next thing worth sharing."
+        },
+        {
+          "type": "paragraph",
+          "text": "Teams often had plenty of valuable content scattered across blogs, company updates, and industry articles. But discovering these pieces and turning them into employee-ready posts required manual searching, copying, and rewriting. The friction meant good content frequently went unused."
+        },
+        {
+          "type": "paragraph",
+          "text": "This insight led us to the idea of Inspiration Hub, a dedicated space designed to help admins discover ideas and quickly turn them into posts."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-21.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "The hub aggregates multiple sources of inspiration in one place: RSS feeds, company posts, and trending LinkedIn content. Instead of jumping between platforms, admins can browse relevant content and convert it into a post with a single action."
+        },
+        {
+          "type": "paragraph",
+          "text": "Each item acts as a starting point for creation. With options like Create Post or Share Post, admins can instantly transform inspiration into structured content within the publishing workflow."
+        },
+        {
+          "type": "image",
+          "src": "Assets/ambo-22.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "By turning inspiration into a designed step in the workflow, the hub reduces the gap between discovering an idea and publishing a post making content creation faster and far more consistent for advocacy teams."
+        },
+        {
+          "type": "heading",
+          "text": "The Impact: Evolving for Scale and Driving Engagement"
+        },
+        {
+          "type": "paragraph",
+          "text": "Maturing Ambo from a basic tool into a connected platform was a natural step to meet our users' growing needs. By linking content discovery, creation, and performance tracking, we evolved the platform from a simple publishing utility into a complete system that actively drives employee sharing."
+        },
+        {
+          "type": "heading",
+          "text": "Measuring the Evolution"
+        },
+        {
+          "type": "paragraph",
+          "text": "The structural updates across the platform did more than improve usability. They drove measurable shifts in how admins used Ambo to grow their programs."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Faster Content Creation: By simplifying the editing experience and adding AI writing directly into the drafting process, the average time to publish decreased by 40%."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Higher Adoption of Advanced Features: With a clearer layout separating global settings from post variations, the creation of posts with multiple versions increased by over 35%. This proved that users will use advanced features when the setup is easy to understand."
+        },
+        {
+          "type": "heading",
+          "text": "Key Takeaways"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Guide the user instead of just adding features: As capabilities expanded, we focused on guiding the user's attention. We scaled advanced features without making the screen confusing or overwhelming."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Make data actionable: By placing engagement numbers directly on the content workflow, we turned static charts into active workspaces. This closed the gap between seeing data and taking action."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Solve the whole journey: Expanding our focus to the beginning of the process proved that removing barriers often means helping users find ideas, rather than just helping them publish."
+        },
+        {
+          "type": "heading",
+          "text": "Looking Ahead"
+        },
+        {
+          "type": "paragraph",
+          "text": "This evolution establishes a strong foundation for Ambo's next chapter. By thinking in complete systems rather than individual screens, the platform is now ready to handle future updates easily. This empowers admins to spend less time managing software and more time sharing great stories."
         }
       ]
     },
