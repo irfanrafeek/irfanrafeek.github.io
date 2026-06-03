@@ -934,6 +934,83 @@ a.project-card {
     color: var(--semantic-color-interactive-primary);
 }
 
+/* Image carousel — transform-based slider with prev/next controls */
+.case-gallery {
+    margin: var(--semantic-spacing-md) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--semantic-spacing-md);
+}
+
+.case-gallery__viewport {
+    overflow: hidden;
+    border-radius: var(--semantic-radius-md);
+}
+
+.case-gallery__track {
+    display: flex;
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
+
+.case-gallery__item {
+    flex: 0 0 100%;
+    margin: 0;
+}
+
+.case-gallery__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--semantic-radius-md);
+    border: 1px solid var(--semantic-color-border-primary);
+}
+
+.case-gallery__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--semantic-spacing-md);
+}
+
+.case-gallery__nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--semantic-spacing-xl);
+    height: var(--semantic-spacing-xl);
+    padding: 0;
+    border-radius: var(--semantic-radius-full);
+    border: 1px solid var(--semantic-color-border-primary);
+    background-color: var(--semantic-color-background-primary);
+    color: var(--semantic-color-text-primary);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.case-gallery__nav:hover {
+    border-color: var(--semantic-color-border-strong);
+    background-color: var(--semantic-color-background-secondary);
+}
+
+.case-gallery__nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.case-gallery__nav svg {
+    width: var(--semantic-spacing-md);
+    height: var(--semantic-spacing-md);
+}
+
+.case-gallery__counter {
+    font-size: var(--primitive-font-size-sm);
+    color: var(--semantic-color-text-tertiary);
+    min-width: var(--semantic-spacing-3xl);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
 .case-caption {
     margin-top: var(--semantic-spacing-sm);
     font-size: var(--primitive-font-size-sm);

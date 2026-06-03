@@ -89,3 +89,15 @@ collections:
                         widget: list
                         default: []
                         field: { name: item, label: "Item", widget: string }
+                  - name: gallery
+                    label: "Image carousel"
+                    summary: "Carousel ({{fields.items.length}} images)"
+                    fields:
+                      - name: items
+                        label: "Images"
+                        widget: list
+                        default: []
+                        fields:
+                          - { name: src, label: "Image", widget: image }
+                          - { name: alt, label: "Alt text", widget: string, required: false }
+                          - { name: caption, label: "Caption", widget: string, required: false }

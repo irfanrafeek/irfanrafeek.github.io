@@ -57,34 +57,34 @@
           "text": "Below are some highlights from the redesigned interface."
         },
         {
-          "type": "image",
-          "src": "Assets/ambo-02.jpg",
-          "alt": "",
-          "caption": ""
-        },
-        {
-          "type": "image",
-          "src": "Assets/ambo-03.jpg",
-          "alt": "",
-          "caption": ""
-        },
-        {
-          "type": "image",
-          "src": "Assets/ambo-04.jpg",
-          "alt": "",
-          "caption": ""
-        },
-        {
-          "type": "image",
-          "src": "Assets/ambo-05.jpg",
-          "alt": "",
-          "caption": ""
-        },
-        {
-          "type": "image",
-          "src": "Assets/ambo-06.jpg",
-          "alt": "",
-          "caption": ""
+          "type": "gallery",
+          "items": [
+            {
+              "src": "Assets/ambo-02.jpg",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "src": "Assets/ambo-03.jpg",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "src": "Assets/ambo-04.jpg",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "src": "Assets/ambo-05.jpg",
+              "alt": "",
+              "caption": ""
+            },
+            {
+              "src": "Assets/ambo-06.jpg",
+              "alt": "",
+              "caption": ""
+            }
+          ]
         },
         {
           "type": "heading",

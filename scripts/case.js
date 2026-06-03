@@ -42,6 +42,27 @@
                     .join('');
                 return `<ul class="case-list">${items}</ul>`;
             }
+            case 'gallery': {
+                const items = Array.isArray(block.items) ? block.items : [];
+                if (!items.length) return '';
+                const itemsHtml = items.map((item) => `
+                    <figure class="case-gallery__item">
+                        <img class="case-gallery__image" src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || '')}" loading="lazy">
+                        ${item.caption ? `<figcaption class="case-caption">${escapeHtml(item.caption)}</figcaption>` : ''}
+                    </figure>`).join('');
+                const navIcon = (dir) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="${dir==='prev'?'15 18 9 12 15 6':'9 18 15 12 9 6'}"/></svg>`;
+                return `
+                    <div class="case-gallery" data-gallery>
+                        <div class="case-gallery__viewport">
+                            <div class="case-gallery__track" data-gallery-track>${itemsHtml}</div>
+                        </div>
+                        <div class="case-gallery__controls">
+                            <button class="case-gallery__nav" type="button" data-gallery-prev aria-label="Previous image">${navIcon('prev')}</button>
+                            <span class="case-gallery__counter" data-gallery-counter>1 / ${items.length}</span>
+                            <button class="case-gallery__nav" type="button" data-gallery-next aria-label="Next image">${navIcon('next')}</button>
+                        </div>
+                    </div>`;
+            }
             default:
                 return '';
         }
@@ -101,6 +122,31 @@
 
         document.title = `${project.title} — Irfan Rafeek`;
         root.innerHTML = renderArticle(project);
+        initGalleries(root);
+    }
+
+    function initGalleries(root) {
+        root.querySelectorAll('[data-gallery]').forEach((gallery) => {
+            const track = gallery.querySelector('[data-gallery-track]');
+            const counter = gallery.querySelector('[data-gallery-counter]');
+            const prev = gallery.querySelector('[data-gallery-prev]');
+            const next = gallery.querySelector('[data-gallery-next]');
+            const total = track.children.length;
+            if (total <= 1) {
+                prev.disabled = next.disabled = true;
+                return;
+            }
+            let index = 0;
+            const update = () => {
+                track.style.transform = `translateX(-${index * 100}%)`;
+                counter.textContent = `${index + 1} / ${total}`;
+                prev.disabled = index === 0;
+                next.disabled = index === total - 1;
+            };
+            prev.addEventListener('click', () => { if (index > 0) { index--; update(); } });
+            next.addEventListener('click', () => { if (index < total - 1) { index++; update(); } });
+            update();
+        });
     }
 
     if (document.readyState === 'loading') {
