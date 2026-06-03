@@ -58,7 +58,7 @@
       "title": "Condé Nast Verso",
       "slug": "conde-nast-verso",
       "year": "2023",
-      "image": "🎨",
+      "image": "Assets/verso-01.jpg",
       "description": "Reimagining color theming for Condé Nast's unified design system, powering brands like Vogue, GQ, and The New Yorker with flexible, token-based color architecture.",
       "tags": [
         "design systems",
@@ -68,28 +68,372 @@
       "featured": true,
       "blocks": [
         {
-          "type": "heading",
-          "text": "Overview"
+          "type": "image",
+          "src": "Assets/verso-01.jpg",
+          "alt": "",
+          "caption": ""
         },
         {
           "type": "paragraph",
-          "text": "Verso is Condé Nast's unified design system, powering iconic brands like Vogue, GQ, Wired, and The New Yorker. I reimagined its color theming to give each brand flexible, token-based color while keeping a single shared architecture."
-        },
-        {
-          "type": "heading",
-          "text": "Token architecture"
+          "text": "Condé Nast is home to a diverse portfolio of iconic global brands — including The New Yorker, Vogue, GQ, Bon Appétit, Condé Nast Traveler, Wired, and Vanity Fair — each with its own distinctive visual identity and editorial voice. The digital experiences we create must honor and amplify the uniqueness of each brand."
         },
         {
           "type": "paragraph",
-          "text": "I implemented a new token structure that enabled sub-brand and component-level color theming, adopted across more than 20 brands and multiple markets to standardize layouts while preserving each brand's identity."
+          "text": "At the foundation of all these experiences is Verso, Condé Nast’s unified, token-based design system. Verso powers every brand interface with the flexibility to support highly personalized and often complex brand expressions at scale."
         },
         {
           "type": "heading",
-          "text": "Impact"
+          "text": "The Existing Workflow"
         },
         {
           "type": "paragraph",
-          "text": "The new system accelerated feature delivery and doubled design-system adoption across product teams through clearer governance, documentation, and advocacy."
+          "text": "Each Condé Nast brand has a unique Brand Identity (BI) file that defines its visual language. These BI files exist in both Figma and production as JSON. Designers start by building screens using the default component which uses \"brandless\" theme. Then use our in-house Figma plugin to instantly apply any brand’s visual style by swapping in the corresponding BI token set."
+        },
+        {
+          "type": "paragraph",
+          "text": "To update the visual identity, designers edit the Figma BI file, export the tokens via plugin, and hand off the generated JSON to engineers for implementation."
+        },
+        {
+          "type": "heading",
+          "text": "The Problem"
+        },
+        {
+          "type": "paragraph",
+          "text": "Verso is currently more than 5 years old. Over time, as we supported increasingly personalised brand needs, Verso grew significantly and with that, so did the complexity as well. Supporting unique brand expressions led to a rapid and unsustainable growth in token count."
+        },
+        {
+          "type": "paragraph",
+          "text": "Whenever existing tokens didn’t fully support a specific design need, the go-to solution became creating new ones. For example, if a brand wanted a distinct accent color for a “story collection” module, a new set of tokens would be added. Similar duplications happened across sections like navigation, story cards, and page modules — resulting in multiple overlapping token groups within the same BI file."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-02.gif",
+          "alt": "",
+          "caption": "Multiple copies of same token group was created within same Brand Identity file."
+        },
+        {
+          "type": "paragraph",
+          "text": "To make things worse, brands often started mixing tokens across groups, combining background tokens from one set with foreground tokens from another. This led to semantic inconsistencies, accessibility risks, and growing confusion among designers, especially when working on new components or layouts."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-03.png",
+          "alt": "",
+          "caption": "An example of a semantic mismatch, using the background from one token set and the title color from another."
+        },
+        {
+          "type": "paragraph",
+          "text": "Over time, a single BI file expanded to more than 200 color tokens, making it increasingly difficult to maintain and scale. Many brands didn’t even require such a large set, yet they were still forced to manage the entire collection."
+        },
+        {
+          "type": "paragraph",
+          "text": "In cases where new pages needed a completely different theme, such as events, sub-brands, or seasonal campaigns — teams would spin up entirely new BI files, effectively doubling the token count. For example, there are currently 10 separate BI files just for The New Yorker, each created to address different visual needs and only less 10% of the tokens were used in each theme."
+        },
+        {
+          "type": "paragraph",
+          "text": "Beyond theming, other challenges emerged:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Overly complex naming — Tokens like discovery.body.white.accreditation were difficult to interpret and apply correctly."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Engineer dependency — Token updates required manual involvement from developers, slowing down iteration and increasing the cost of change.Current theming workflow"
+        },
+        {
+          "type": "heading",
+          "text": "The Opportunity: Reimagining Theming"
+        },
+        {
+          "type": "paragraph",
+          "text": "We held multiple workshops with brand teams to explore how they wanted to evolve their designs. We saw a wide range of ideas which was heavily bulit on wide range of color usages. Color played a central role in storytelling. But our system needed a better structure to support these evolving needs."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-04.png",
+          "alt": "",
+          "caption": "A glimpse from our Miro workshop from a Miro session mapping out brand priorities."
+        },
+        {
+          "type": "paragraph",
+          "text": "Our design goals:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Support theming at multiple levels starting from component to layout to page."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Simplify theming for designers"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Improve maintainability for design and engineering"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Support flexible brand expressions without bloating token files"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Preserve accessibility"
+        },
+        {
+          "type": "paragraph",
+          "text": "We explored multiple concepts, eventually narrowing down to the model named on core pricipal One Surface, One Theme"
+        },
+        {
+          "type": "paragraph",
+          "text": "• A theme is centered on a single surface (background)"
+        },
+        {
+          "type": "paragraph",
+          "text": "• All associated foreground tokens are designed to work in harmony with that background"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Every scalable component should by default use the theme background color"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Exceptions allowed only for smaller interaction components like buttons or action bars"
+        },
+        {
+          "type": "heading",
+          "text": "Team"
+        },
+        {
+          "type": "paragraph",
+          "text": "This work was made possible through the efforts of a truly global team, with members based across the UK, US, and India. Our core group included three designers, a product manager, two developers, and a content designer — each bringing unique expertise to the table. Strong cross-functional collaboration was at the heart of our process, enabling us to move quickly, solve complex challenges, and ensure the solution worked seamlessly across both design and engineering workflows."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-05.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "The New Model"
+        },
+        {
+          "type": "paragraph",
+          "text": "The newly designed BI file can support multiple themes. Designers can now create any new themes within the same BI file and use it flexibly across any components, layouts or pages."
+        },
+        {
+          "type": "paragraph",
+          "text": "Under the new system, every brand will have only one Brand Identity file. A BI file is a collection of design decisions used to style components for our iconic brands. Themes are be defined under modes. A mode is collection of design decisions to help users control their experience based on their needs, environment, or visual preferences. For ex: light mode/dark mode."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-06.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Theme: A collection of design decisions that express a brand’s color preferences, special content, sub-brands, and brand events. Under the new model a theme is defined by a single background (surface) color and set of on-surface tokens that visually pair with that background."
+        },
+        {
+          "type": "paragraph",
+          "text": "All brands will have two token sets:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Primitive color tokens: A set of all foundation colors used by a brand, stored as HEX or RGB. These shouldn’t be used directly — instead, primitive tokens are referenced by semantic tokens. While there are no strict rules for naming, we recommend following a color ramp for predictability and to help designers choose tokens more easily."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-07.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Semantic color tokens: Contextualised, purpose-driven aliases for primitive tokens. They provide meaning and intent for how design values should be used in the user interface."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Semantic color tokens are further categorised into two groups"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Core Tokens: General-purpose tokens shared across instances. Includes all color tokens for generic use case, utility, interactions and feedbacks."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Contextual Tokens: Specific tokens tailored to specific use cases"
+        },
+        {
+          "type": "heading",
+          "text": "How it works"
+        },
+        {
+          "type": "paragraph",
+          "text": "The new approach allows us to have a page level and component specific themes."
+        },
+        {
+          "type": "paragraph",
+          "text": "Page level theme - a theme that applies to an entire page. The page level theme should be the most prominent or dominant theme on a page. Component specific theme - a theme that is applied to a specific component on a page and is different from the page-level theme."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-08.gif",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "All brand identities share a Standard Theme that defines the complete token set, ensuring consistency across the Condé Nast ecosystem. The real advantage of the new system comes into play when a brand wants to theme a specific instance. Previously, theming was restricted to a fixed set of tokens, bringing many limitations."
+        },
+        {
+          "type": "paragraph",
+          "text": "In the new approach, brands only need to define the tokens relevant to their use case, no more copying the full set for smaller theming needs. This makes the system highly flexible, lightweight, and far easier to manage."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-09.png",
+          "alt": "",
+          "caption": "An example of how The New Yorker BI structure changes with the new model."
+        },
+        {
+          "type": "paragraph",
+          "text": "For example: If The New Yorker wants to introduce a special theme for the The NewYorker Fiction section, they can now create a lightweight called “Fiction” that only defines a background color and need foreground tokens for navigation For the Fiction section."
+        },
+        {
+          "type": "paragraph",
+          "text": "Now with the new Fiction theme, it can be pulled to any component in the New Yorker Brand Website. The rest of the design continues to fall back on the Standard Theme. Instead of duplicating hundreds of tokens, the brand adds just a handful, keeping the system flexible, scalable, and easy to maintain."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-10.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "The New Design Process"
+        },
+        {
+          "type": "paragraph",
+          "text": "In the new system, theme creation and management is completely controlled in Figma. We created a new structure to define the whole new tokens within a frame. When a brand wants to introduce a new theme, they simply duplicate the frame and include only the tokens they need for the theme. This lightweight approach avoids unnecessary duplication and keeps BI files focused and manageable."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-11.png",
+          "alt": "",
+          "caption": "A screen grab of the new color token structure with multiple themes organized in Figma."
+        },
+        {
+          "type": "paragraph",
+          "text": "Once the library is published, the update automatically flows into Verso Settings - our internal application. Here, designers and product managers can preview the new theme, apply it at different levels (brand-wide, page-specific, or even at the component level), and make overrides where needed."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-12.png",
+          "alt": "",
+          "caption": "New theming workflow"
+        },
+        {
+          "type": "paragraph",
+          "text": "Verso Settings also provides options to review and publish changes, giving stakeholders visibility and control without requiring engineering support. As a result, the entire lifecycle of managing and updating tokens and themes - from definition in Figma to live deployment - can now be handled by designers and product managers with near-zero engineering involvement."
+        },
+        {
+          "type": "heading",
+          "text": "The new token naming structure"
+        },
+        {
+          "type": "paragraph",
+          "text": "The new token naming was designed by sticking to these principles-"
+        },
+        {
+          "type": "paragraph",
+          "text": "Clarity: Simple, clear, and human-readable names."
+        },
+        {
+          "type": "paragraph",
+          "text": "Consistency: The same structure and language throughout."
+        },
+        {
+          "type": "paragraph",
+          "text": "Confidence: Minimize onboarding and cognitive load."
+        },
+        {
+          "type": "paragraph",
+          "text": "Flexibility: Adaptable to each brand’s unique needs."
+        },
+        {
+          "type": "paragraph",
+          "text": "The primitive tokens will follow structure color.name. Where the brand would choose the name based on how they conceive primitives. Ex.color.c1, color.grey-02. Semantic tokens are grouped into two Core tokens and Contextual tokens."
+        },
+        {
+          "type": "paragraph",
+          "text": "Both types of semantic tokens follow the same naming strategy of broad -> specific."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-13.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "The name is grouped into 4 parts. Foundation, Object, Context and Modifier."
+        },
+        {
+          "type": "image",
+          "src": "Assets/verso-14.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Foundation defines the type of token. Currently Verso supports Color, Type, Spacing, Motion, Decoration"
+        },
+        {
+          "type": "paragraph",
+          "text": "Object: Defines the element that the design decision applies to color token objects: Text, Surface, Icon, Border"
+        },
+        {
+          "type": "paragraph",
+          "text": "Context: Defines contextual token names by identifying the category or component where the object is applied. There are many possibilities for Context words. They may be specific to a component or a group of components. Some possible context words: Rubric, Card, List, Title, Button, Status, Chip"
+        },
+        {
+          "type": "paragraph",
+          "text": "Modifier: Defines the attribute of the Object or Context. It identifies how the Object or Context has changed from the default. While there are many possible words for modifiers, they should be limited to relationships, scales, states, and component variations. Some possible modifier words: subtle, strong, hard, lg, md, sm, 1x, 2x, hover, disabled, active…"
+        },
+        {
+          "type": "heading",
+          "text": "What we achieved"
+        },
+        {
+          "type": "paragraph",
+          "text": "This new model has led to several key improvements:"
+        },
+        {
+          "type": "paragraph",
+          "text": "• A new BI file that support theming at multiple levels starting from component to layout to page preserving accessibility"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Significantly reduced the number of tokens by eliminating duplication"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Cut down engineering effort to nearly zero. Designers can now create or test new color expressions without engineering support."
+        },
+        {
+          "type": "paragraph",
+          "text": "• Brought clarity to token structure and naming, with 85% of tokens correctly mapped by designers during testing"
+        },
+        {
+          "type": "paragraph",
+          "text": "• Strengthened accessibility by keeping surface–foreground pairings tightly scoped and intentional"
+        },
+        {
+          "type": "paragraph",
+          "text": "More importantly, it empowers our brands to experiment and evolve their visual identity, without compromising system integrity."
         }
       ]
     },
