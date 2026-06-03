@@ -828,6 +828,8 @@ a.project-card {
 
 /* ===== CASE STUDY (functional baseline — refine later) ===== */
 .case-study {
+    max-width: var(--semantic-layout-container-max-width-reading);
+    margin-inline: auto;
     padding: var(--semantic-spacing-3xl) 0;
 }
 
@@ -900,8 +902,6 @@ a.project-card {
 .case-image {
     width: 100%;
     height: auto;
-    border-radius: var(--semantic-radius-md);
-    border: 1px solid var(--semantic-color-border-primary);
 }
 
 .case-caption {

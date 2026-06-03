@@ -346,6 +346,7 @@
      (.container, .container--narrow) rather than ad-hoc overrides. */
   --semantic-layout-container-max-width-default: 1200px;
   --semantic-layout-container-max-width-narrow: 1000px;
+  --semantic-layout-container-max-width-reading: 736px;  /* optimal line length for long-form article/prose */
 }
 
 /* DARK MODE */
