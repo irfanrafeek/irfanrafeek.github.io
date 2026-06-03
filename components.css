@@ -182,8 +182,10 @@ main {
 }
 
 .underline {
-    border-bottom: 3px solid var(--semantic-color-interactive-primary);
-    padding-bottom: 0.1rem;
+    text-decoration: underline;
+    text-decoration-color: var(--semantic-color-interactive-primary);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
 }
 
 .accent-dot {
