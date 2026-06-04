@@ -966,7 +966,7 @@
       "title": "Introducing Spacing to Verso Design System",
       "slug": "spacing-verso-design-system",
       "year": "2025",
-      "image": "Assets/Spacing.avif",
+      "image": "Assets/spacing-08.jpg",
       "description": "Simplify component complexity, improve cross-brand flexibility, and create a semantic structure that scales gracefully as the system evolves.",
       "tags": [
         "tokens",
@@ -976,12 +976,297 @@
       "featured": false,
       "blocks": [
         {
+          "type": "paragraph",
+          "text": "In a design system, however, managing spacing across reusable components often becomes a challenge. Too much rigidity limits flexibility, while too much freedom leads to inconsistency. Verso’s approach to spacing addresses this balance. Our goal was to simplify component complexity, improve cross-brand flexibility, and create a semantic structure that scales gracefully as the system evolves."
+        },
+        {
           "type": "heading",
           "text": "The Need for Structured Spacing"
         },
         {
           "type": "paragraph",
-          "text": "As Verso evolved, components had grown more complex, with individual brands introducing custom spacing props to meet their specific layout needs. This led to inconsistencies and unnecessary variations across the system.\n\n\nSpacing requirement differed from brand to brand\n\nSpacing requirement differed from brand to brand\n\nThe solution was to standardize spacing through semantic tokens that reference primitive tokens. This would create a consistent structure for spacing values, ensure design scalability, and make cross-brand customization easier.\n\n\nCore Principles for Scalable Spacing\nThe current state of spacing in Verso was highly complex and hacky, making it extremely difficult to systemize. Spacing between elements was often the unintended result of various individual spacing properties layering from multiple components."
+          "text": "As Verso evolved, components had grown more complex, with individual brands introducing custom spacing props to meet their specific layout needs. This led to inconsistencies and unnecessary variations across the system."
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-01.png",
+          "alt": "",
+          "caption": "Spacing requirement differed from brand to brand"
+        },
+        {
+          "type": "paragraph",
+          "text": "The solution was to standardize spacing through semantic tokens that reference primitive tokens. This would create a consistent structure for spacing values, ensure design scalability, and make cross-brand customization easier."
+        },
+        {
+          "type": "heading",
+          "text": "Core Principles for Scalable Spacing"
+        },
+        {
+          "type": "paragraph",
+          "text": "The current state of spacing in Verso was highly complex and hacky, making it extremely difficult to systemize. Spacing between elements was often the unintended result of various individual spacing properties layering from multiple components."
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-02.png",
+          "alt": "",
+          "caption": "The example above illustrates how the a Story Card shifts when different combinations of elements are toggled on or off through component properties."
+        },
+        {
+          "type": "paragraph",
+          "text": "Before defining our new tokens, we grounded our approach in a few essential principles to ensure a robust and scalable implementation"
+        },
+        {
+          "type": "heading",
+          "text": "1. Avoid Outer Spacing in Components"
+        },
+        {
+          "type": "paragraph",
+          "text": "A core rule is to avoid assigning outer spacing (margins) to reusable components. While initially convenient, margins \"baked\" into components limit their flexibility and make layout unpredictable. By keeping components atomic and truly portable, all outer spacing is managed by parent layouts or containers."
+        },
+        {
+          "type": "heading",
+          "text": "2. Embrace Layout-Driven Spacing"
+        },
+        {
+          "type": "paragraph",
+          "text": "We will leverage modern CSS properties like gap within layout containers to manage space between items. This mirrors how designers define spacing in tools like Figma. This approach:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Centralizes control at the layout level.",
+            "Enables dynamic adjustments (responsive or themed spacing).",
+            "Reduces overrides and component-specific hacks."
+          ]
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-03.png",
+          "alt": "",
+          "caption": "The example above shows how internal spacing within the same Story Card can be managed using gap (space-between) instead of fixed padding or margins."
+        },
+        {
+          "type": "paragraph",
+          "text": "These principles formed the foundation for how we defined our semantic spacing tokens in Verso. For a detailed look at the successful best practices we followed, you can refer to this: Spacing in Design Systems: Best Practices."
+        },
+        {
+          "type": "heading",
+          "text": "Naming the Primitives"
+        },
+        {
+          "type": "paragraph",
+          "text": "Once the philosophy was set, we explored various ways to name primitive spacing tokens, the foundational units upon which semantic tokens would be built."
+        },
+        {
+          "type": "paragraph",
+          "text": "1. Pixel/Rem Values"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Example: spacing-12 = 12px, spacing-16 = 16px",
+            "Easy to understand and extend, but risks arbitrary additions and a lack of structural clarity."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "2. Numerical Order"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Example: spacing-0 = 2px, spacing-1 = 4px",
+            "Simple and sequential, but hard to insert new sizes without disrupting order."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "3. T-Shirt Sizing"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Example: spacing-s, spacing-m, spacing-xl",
+            "Intuitive in small sets, but lacks transparency on actual measurements, and is inflexible for future expansion."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "4. Multiplier"
+        },
+        {
+          "type": "paragraph",
+          "text": "Example: space-025, space-100, space-150"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Scalable, calculated as multiples of a base unit, though slightly less intuitive than pixel values for new adopters."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Feedbacks and Decision"
+        },
+        {
+          "type": "paragraph",
+          "text": "After evaluating both usability and scalability, our team concluded that the Pixel/Rem Value approach would best serve the Verso Design System."
+        },
+        {
+          "type": "paragraph",
+          "text": "While both the Pixel/Rem and Multiplier styles offer the necessary clarity and long-term scalability, critical for a system supporting multiple brands—we ultimately chose the Pixel/Rem naming. This decision was influenced by feedback from our developers: using direct pixel/rem values makes implementation lighter and more straightforward, as it removes the immediate need for a base multiplication function. We agreed that if greater flexibility is needed down the line, we can always introduce base multiplication logic later."
+        },
+        {
+          "type": "paragraph",
+          "text": "With the naming convention decided, we conducted a thorough audit of all existing spacing values used across our brands. This process allowed us to define a carefully curated set of primitive tokens that will serve as the stable foundation for all future spacing decisions."
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-04.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Semantic Tokens"
+        },
+        {
+          "type": "paragraph",
+          "text": "Semantic tokens add meaning and context to spacing. They are built on top of primitive tokens and help ensure consistency across patterns while allowing brands to apply their own nuances."
+        },
+        {
+          "type": "heading",
+          "text": "When to Use Semantic Tokens"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Repeating spacing patterns across components",
+            "Brand-specific spacing variations",
+            "Contextually defined spacing (e.g., editorial vs. luxury brands)",
+            "Theming prominent, high-visibility spacing patterns"
+          ]
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-05.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "When Not to Use Them"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Component-specific or one-off spacing needs",
+            "Subtle, unnoticeable changes",
+            "Low-visibility elements with minimal impact on layout"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Categorizing Semantic Tokens"
+        },
+        {
+          "type": "paragraph",
+          "text": "Inspired by Gestalt’s Law of Proximity, we categorized spacing into two types to reflect how users perceive relationships between elements:"
+        },
+        {
+          "type": "heading",
+          "text": "1. Space Around"
+        },
+        {
+          "type": "paragraph",
+          "text": "Defines the space around an item — often used as padding or inset to create breathing room within components."
+        },
+        {
+          "type": "heading",
+          "text": "2. Space Between"
+        },
+        {
+          "type": "paragraph",
+          "text": "Defines the space between items — used for layout gaps between child elements or content groups."
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-06.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "By keeping this distinction clear, we ensure that spacing reinforces hierarchy and visual relationships consistently."
+        },
+        {
+          "type": "heading",
+          "text": "Naming Semantic Tokens"
+        },
+        {
+          "type": "paragraph",
+          "text": "To make spacing tokens readable, scalable, and meaningful, we adopted a structured naming format:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Foundation   Context   Modifier"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Foundation: Token type (e.g., color, type, spacing, motion, decoration)",
+            "Context: Category or component where the token is used.",
+            "Modifier: Describes the spacing behavior Space-around or Space-between"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Modifiers"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Space-around: Refers to spacing around an itemWe use “padding” (common and intuitive in both CSS and Figma).",
+            "Space-between: Refers to spacing between itemsWe use “gap”, and when needed, specify direction: “row-gap” or “column-gap”."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Example"
+        },
+        {
+          "type": "image",
+          "src": "Assets/spacing-07.png",
+          "alt": "",
+          "caption": "Some examples semantic spacing tokens in Verso"
+        },
+        {
+          "type": "heading",
+          "text": "Structure First, Then Space"
+        },
+        {
+          "type": "paragraph",
+          "text": "For complex components like story cards, which can have variable elements (rubric, title, byline, date, etc.) spacing should adapt dynamically. By structuring components first, then applying spacing using layout-driven tokens (like gap), spacing remains predictable even as content changes."
+        },
+        {
+          "type": "paragraph",
+          "text": "This principle ensures that when elements are removed or toggled off, no unnecessary space persists, keeping the layout clean and consistent."
+        },
+        {
+          "type": "heading",
+          "text": "Summary"
+        },
+        {
+          "type": "paragraph",
+          "text": "The introduction of semantic spacing tokens in Verso simplifies component design, reduces inconsistency, and enables brand-level flexibility."
+        },
+        {
+          "type": "paragraph",
+          "text": "By separating component spacing (padding) from layout spacing (gap) and grounding our approach in the principles of structure and proximity, Verso ensures that every pixel of space has a purpose."
+        },
+        {
+          "type": "paragraph",
+          "text": "This new system not only strengthens design consistency but also bridges design and engineering workflows creating a cleaner, more scalable, and more predictable design foundation for the future."
         }
       ]
     }
