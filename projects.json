@@ -1442,6 +1442,225 @@
           ]
         }
       ]
+    },
+    {
+      "title": "Emphasis Design System",
+      "slug": "emphasis-design-system",
+      "year": "2020",
+      "image": "Assets/emphasis-17.jpg",
+      "description": "Building Emphasis — Quintype's design system unifying components, tokens, and guidelines across publisher-facing products.",
+      "tags": [
+        "design systems",
+        "tokens",
+        "components"
+      ],
+      "featured": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Emphasis is the design system for all products in Quintype. It is a series of individual styles, components, and guidelines used for creating a unified interface across Quintype's different products. Rather than focusing on pixels, developers can focus on application logic, while designers can focus on user experience, interactions, and flows."
+        },
+        {
+          "type": "paragraph",
+          "text": "Initially, all the design components that we built were exclusively for Bold. As the company grew we introduced a bunch of new features within Bold. Later we developed two new products like Metype, Accesstype, Pagebuilder. So a number of pages, features, and components that were built later did not sync with each other in terms of consistency and UX. This made us rethink the whole design in terms of the design system."
+        },
+        {
+          "type": "paragraph",
+          "text": "What we needed was not just UI style guides, but a set of reusable components with proper rules, constraints, and principles for how to use it. So we decided to build a system that provides a unified set of evolving UI, UX, and ruleset that governs the composition of all our products."
+        },
+        {
+          "type": "heading",
+          "text": "Grid and Spacing"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our grid system is composed of 8 flexible columns with a gutter between columns of 24px. We use 8 pt grid system to space out elements on page. Any padding, margin, button height, etc. is always a multiple of 8 pixels. This makes it easy to compose components together neatly and consistently."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-01.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-02.png",
+          "alt": "",
+          "caption": "Spacing a Button in Em"
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-03.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Colour and typeface"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our palette consists of greens, neutrals, and accent colours. We use Open sans as our typeface across all our products. We also make sure to follow AA standard contrast ratios across all components. Here is a showcase of Typeface and colours."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-04.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Buttons"
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-05.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Form elements"
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-06.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Other elements"
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-07.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Elevation"
+        },
+        {
+          "type": "paragraph",
+          "text": "Depth is used to draw focus to experience and add physical materiality to the product. Shallow levels are reserved for items that are closely connected to the canvas or view, such as tiles. Deeper levels create a prominent frame around the surface, drawing strong focus to self-contained experiences like dialogs."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-08.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-09.png",
+          "alt": "",
+          "caption": "Low fidelity screen from Bold Workspace depicting how elevation is distributed among the page components"
+        },
+        {
+          "type": "heading",
+          "text": "Using Em across our web apps"
+        },
+        {
+          "type": "paragraph",
+          "text": "Quintype provides a complete suite of digital publishing solutions. We have different products that cover different aspects of publishing. Products include Bold, Ahead, Accesstype, and Metype. All products are built on by using the Em design system. We make sure that each component added to em is useful across our different products. An element will be added to Em only after verified by all designers and dev leads of each product. If any changes are needed for an Em component for a particular product, it can only be done locally."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-10.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Reusing components"
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-11.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Action menu in Pagebuilder, Bold and Accesstype for different use cases."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-12.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Inspectors are used to create, read, update, and delete data among products. Screengrabs of inspectors from Bold, Pagebuilder and Accesstype respectively."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-13.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Notifications used in Pagebuilder and access type for different purposes."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-14.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Popups used in Accesstype to create a new plan for access level and in Pagebuilder to create a new page template."
+        },
+        {
+          "type": "heading",
+          "text": "Theming"
+        },
+        {
+          "type": "paragraph",
+          "text": "We have used a very minimal number of colours. Colours were chosen precisely to support dark mode at a later phase. It was designed in such a way that replacing the brand and mono colours will change the whole theme."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-15.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Initially, the brand colour of Quintype was blue. But as part of a recent rebranding exercise, we have changed it to shades of green recently. Since all products were built using the design system, once the colours are changed it will be reflected across products."
+        },
+        {
+          "type": "image",
+          "src": "Assets/emphasis-16.png",
+          "alt": "",
+          "caption": "An example of how palettes colours can be changed to support themes"
+        },
+        {
+          "type": "heading",
+          "text": "Tools for the job"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our tool of choice for UI design was Sketch. When we started to build the design system, Sketch was more flexible with symbols compared to others. It was only at a later point Figma and Xd became more flexible with components. The features that make Sketch great for product design make it especially powerful for system design. When you’re creating hundreds of editable symbols and easily applicable text styles. Sketch’s simplicity becomes crucial. We used ReactJS for the development of Emphasis due to its performance and modular architecture."
+        },
+        {
+          "type": "heading",
+          "text": "Winding up"
+        },
+        {
+          "type": "paragraph",
+          "text": "Delivering the design system was a massive effort that spanned many months and brought new design challenges as we continually move forward. Throughout the project, I hardened my product-system thinking skills and learned how to better quantify the impact of design changes."
+        },
+        {
+          "type": "paragraph",
+          "text": "While we didn’t get everything right along the way, our pragmatic approach to building the new design system enabled us to address issues quickly and, ultimately, be confident that the system we've designed is something the company can rely on for the years to come."
+        }
+      ]
     }
   ]
 }
