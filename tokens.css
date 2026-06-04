@@ -45,6 +45,27 @@
   --primitive-color-warning-500: #eab308;
   --primitive-color-warning-600: #ca8a04;
 
+  /* TIER 1: PRIMITIVES - COLOR SEPIA (warm paper) */
+  --primitive-color-sepia-0: #fcf8f0;
+  --primitive-color-sepia-50: #f6edda;
+  --primitive-color-sepia-100: #efe3c8;
+  --primitive-color-sepia-200: #e4d4b0;
+  --primitive-color-sepia-300: #d3bf93;
+  --primitive-color-sepia-600: #8a7350;
+  --primitive-color-sepia-700: #6b5739;
+  --primitive-color-sepia-900: #3d3120;
+
+  /* TIER 1: PRIMITIVES - COLOR SLATE (cool dim) */
+  --primitive-color-slate-0: #f4f6f8;
+  --primitive-color-slate-100: #d8dee6;
+  --primitive-color-slate-300: #97a3b4;
+  --primitive-color-slate-500: #5a6a7e;
+  --primitive-color-slate-600: #3c4756;
+  --primitive-color-slate-700: #313a47;
+  --primitive-color-slate-800: #283039;
+  --primitive-color-slate-850: #232a33;
+  --primitive-color-slate-900: #1c222a;
+
   /* TIER 1: PRIMITIVES - SPACING */
   --primitive-spacing-0: 0px;
   --primitive-spacing-xs: 4px;
@@ -390,6 +411,47 @@
   --semantic-color-interactive-primary-hover: var(--primitive-color-accent-300);
   --semantic-color-interactive-primary-active: var(--primitive-color-accent-200);
   --semantic-color-interactive-primary-disabled: var(--primitive-color-neutral-600);
+  --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* SEPIA THEME (warm paper / reading) */
+[data-theme='sepia'] {
+  --semantic-color-background-primary: var(--primitive-color-sepia-50);
+  --semantic-color-background-secondary: var(--primitive-color-sepia-100);
+  --semantic-color-background-tertiary: var(--primitive-color-sepia-200);
+  --semantic-color-background-article: var(--primitive-color-sepia-0);
+  --semantic-color-text-primary: var(--primitive-color-sepia-900);
+  --semantic-color-text-secondary: var(--primitive-color-sepia-700);
+  --semantic-color-text-tertiary: var(--primitive-color-sepia-600);
+  --semantic-color-text-inverse: var(--primitive-color-sepia-0);
+  --semantic-color-border-primary: var(--primitive-color-sepia-200);
+  --semantic-color-border-secondary: var(--primitive-color-sepia-100);
+  --semantic-color-border-strong: var(--primitive-color-sepia-300);
+  --semantic-color-interactive-primary: var(--primitive-color-accent-600);
+  --semantic-color-interactive-primary-hover: var(--primitive-color-accent-700);
+  --semantic-color-interactive-primary-active: var(--primitive-color-accent-800);
+  --semantic-color-interactive-primary-disabled: var(--primitive-color-sepia-300);
+}
+
+/* SLATE THEME (cool dim) */
+[data-theme='slate'] {
+  --semantic-color-background-primary: var(--primitive-color-slate-850);
+  --semantic-color-background-secondary: var(--primitive-color-slate-800);
+  --semantic-color-background-tertiary: var(--primitive-color-slate-700);
+  --semantic-color-background-article: var(--primitive-color-slate-900);
+  --semantic-color-text-primary: var(--primitive-color-slate-0);
+  --semantic-color-text-secondary: var(--primitive-color-slate-100);
+  --semantic-color-text-tertiary: var(--primitive-color-slate-300);
+  --semantic-color-text-inverse: var(--primitive-color-slate-900);
+  --semantic-color-border-primary: var(--primitive-color-slate-700);
+  --semantic-color-border-secondary: var(--primitive-color-slate-800);
+  --semantic-color-border-strong: var(--primitive-color-slate-500);
+  --semantic-color-interactive-primary: var(--primitive-color-accent-400);
+  --semantic-color-interactive-primary-hover: var(--primitive-color-accent-300);
+  --semantic-color-interactive-primary-active: var(--primitive-color-accent-200);
+  --semantic-color-interactive-primary-disabled: var(--primitive-color-slate-600);
   --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
   --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
   --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);

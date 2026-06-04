@@ -541,53 +541,87 @@ footer {
 }
 
 /* ===== THEME TOGGLE ===== */
-.theme-toggle {
+/* ===== THEME SWITCHER ===== */
+/* Floating control: collapsed shows the active theme's icon; on hover/focus
+   (or tap on touch) it expands into a pill of all theme options. */
+.theme-switcher {
     position: fixed;
     bottom: var(--semantic-spacing-xl);
     right: var(--semantic-spacing-xl);
-    width: 44px;
-    height: 44px;
-    border-radius: var(--semantic-radius-full);
-    background-color: transparent;
-    color: var(--semantic-color-text-primary);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: var(--semantic-spacing-xs);
     border: 1px solid var(--semantic-color-border-primary);
-    cursor: pointer;
+    border-radius: var(--semantic-radius-full);
+    background-color: var(--semantic-color-background-primary);
+    transition: gap 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-switcher:hover,
+.theme-switcher:focus-within,
+.theme-switcher.is-open {
+    gap: var(--semantic-spacing-xs);
+    border-color: var(--semantic-color-border-strong);
+}
+
+.theme-switcher__option {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    z-index: 999;
     padding: 0;
+    border: none;
+    border-radius: var(--semantic-radius-full);
+    background-color: transparent;
+    color: var(--semantic-color-text-secondary);
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease, height 0.2s ease,
+                background-color 0.2s ease, color 0.2s ease;
 }
 
-.theme-toggle:hover {
-    border-color: var(--semantic-color-border-strong);
+.theme-switcher__option:hover {
+    background-color: var(--semantic-color-background-secondary);
+    color: var(--semantic-color-text-primary);
+}
+
+.theme-switcher__option.is-active {
+    color: var(--semantic-color-interactive-primary);
     background-color: var(--semantic-color-background-secondary);
 }
 
-.theme-toggle:focus-visible {
+.theme-switcher__option:focus-visible {
     outline: 2px solid var(--semantic-color-interactive-primary);
     outline-offset: 2px;
 }
 
-.theme-toggle__icon {
-    width: 16px;
-    height: 16px;
+.theme-switcher__icon {
+    width: 18px;
+    height: 18px;
     display: block;
 }
 
-/* Default (light theme): show sun, hide moon */
-.theme-toggle__icon--sun { display: block; }
-.theme-toggle__icon--moon { display: none; }
+/* Collapsed: only the active option is visible */
+.theme-switcher__option:not(.is-active) {
+    height: 0;
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+    overflow: hidden;
+}
 
-/* Manual dark theme: show moon, hide sun */
-[data-theme='dark'] .theme-toggle__icon--sun { display: none; }
-[data-theme='dark'] .theme-toggle__icon--moon { display: block; }
-
-/* System dark theme (only when user has no manual override): show moon */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) .theme-toggle__icon--sun { display: none; }
-    :root:not([data-theme]) .theme-toggle__icon--moon { display: block; }
+/* Expanded (hover / keyboard focus / tap-opened): reveal every option */
+.theme-switcher:hover .theme-switcher__option:not(.is-active),
+.theme-switcher:focus-within .theme-switcher__option:not(.is-active),
+.theme-switcher.is-open .theme-switcher__option:not(.is-active) {
+    height: 40px;
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -692,9 +726,15 @@ footer {
         margin-bottom: var(--semantic-spacing-2xl);
     }
 
-    .theme-toggle {
-        width: 40px;
-        height: 40px;
+    .theme-switcher__option {
+        width: 36px;
+        height: 36px;
+    }
+
+    .theme-switcher:hover .theme-switcher__option:not(.is-active),
+    .theme-switcher:focus-within .theme-switcher__option:not(.is-active),
+    .theme-switcher.is-open .theme-switcher__option:not(.is-active) {
+        height: 36px;
     }
 
 }
