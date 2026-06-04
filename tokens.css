@@ -302,6 +302,7 @@
   --semantic-color-background-primary: var(--primitive-color-neutral-50);
   --semantic-color-background-secondary: var(--primitive-color-neutral-100);
   --semantic-color-background-tertiary: var(--primitive-color-neutral-200);
+  --semantic-color-background-article: var(--primitive-color-neutral-0);  /* pure-white reading surface for long-form article pages */
   --semantic-color-text-primary: var(--primitive-color-neutral-900);
   --semantic-color-text-secondary: var(--primitive-color-neutral-600);
   --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
@@ -355,6 +356,7 @@
     --semantic-color-background-primary: var(--primitive-color-neutral-900);
     --semantic-color-background-secondary: var(--primitive-color-neutral-800);
     --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+    --semantic-color-background-article: var(--primitive-color-neutral-900);  /* dark reading surface keeps article text legible in dark mode */
     --semantic-color-text-primary: var(--primitive-color-neutral-0);
     --semantic-color-text-secondary: var(--primitive-color-neutral-300);
     --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
@@ -376,6 +378,7 @@
   --semantic-color-background-primary: var(--primitive-color-neutral-900);
   --semantic-color-background-secondary: var(--primitive-color-neutral-800);
   --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+  --semantic-color-background-article: var(--primitive-color-neutral-900);  /* dark reading surface keeps article text legible in dark mode */
   --semantic-color-text-primary: var(--primitive-color-neutral-0);
   --semantic-color-text-secondary: var(--primitive-color-neutral-300);
   --semantic-color-text-tertiary: var(--primitive-color-neutral-500);

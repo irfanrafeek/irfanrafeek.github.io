@@ -138,6 +138,13 @@ main {
     padding-top: 120px;
 }
 
+/* Article (case-study) pages use a dedicated white reading surface.
+   The navbar is intentionally left on the default surface so it reads as
+   distinct chrome over the article. */
+body.page--article {
+    background-color: var(--semantic-color-background-article);
+}
+
 .container {
     width: 100%;
     max-width: var(--semantic-layout-container-max-width-default);
