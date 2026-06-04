@@ -173,7 +173,7 @@ main {
 
 .hero-title {
     font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-display-md-font-size);
+    font-size: var(--semantic-type-display-lg-font-size);
     font-weight: var(--primitive-font-weight-bold);
     line-height: var(--semantic-type-display-sm-line-height);
     color: var(--semantic-color-text-primary);
