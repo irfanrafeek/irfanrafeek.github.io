@@ -885,7 +885,9 @@ a.project-card {
 .case-back {
     display: inline-block;
     margin-bottom: var(--semantic-spacing-xl);
-    font-size: var(--primitive-font-size-sm);
+    font-family: var(--semantic-type-article-small-font-family);
+    font-size: var(--semantic-type-article-small-font-size);
+    line-height: var(--semantic-type-article-small-line-height);
     color: var(--semantic-color-text-tertiary);
     text-decoration: none;
 }
@@ -908,9 +910,11 @@ a.project-card {
 }
 
 .case-title {
-    font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-heading-lg-font-size);
-    font-weight: var(--primitive-font-weight-bold);
+    font-family: var(--semantic-type-article-title-font-family);
+    font-size: var(--semantic-type-article-title-font-size);
+    font-weight: var(--semantic-type-article-title-font-weight);
+    line-height: var(--semantic-type-article-title-line-height);
+    letter-spacing: var(--semantic-type-article-title-letter-spacing);
     color: var(--semantic-color-text-primary);
     margin: 0;
 }
@@ -918,8 +922,9 @@ a.project-card {
 .case-summary {
     margin-top: var(--semantic-spacing-md);
     margin-bottom: var(--semantic-spacing-md);
-    font-size: var(--primitive-font-size-lg);
-    line-height: var(--semantic-type-body-md-line-height);
+    font-family: var(--semantic-type-article-summary-font-family);
+    font-size: var(--semantic-type-article-summary-font-size);
+    line-height: var(--semantic-type-article-summary-line-height);
     color: var(--semantic-color-text-secondary);
 }
 
@@ -930,16 +935,19 @@ a.project-card {
 }
 
 .case-heading {
-    font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-heading-sm-font-size);
-    font-weight: var(--primitive-font-weight-bold);
+    font-family: var(--semantic-type-article-heading-font-family);
+    font-size: var(--semantic-type-article-heading-font-size);
+    font-weight: var(--semantic-type-article-heading-font-weight);
+    line-height: var(--semantic-type-article-heading-line-height);
+    letter-spacing: var(--semantic-type-article-heading-letter-spacing);
     color: var(--semantic-color-text-primary);
     margin: var(--semantic-spacing-lg) 0 0;
 }
 
 .case-paragraph {
-    font-size: var(--primitive-font-size-base);
-    line-height: var(--semantic-type-body-md-line-height);
+    font-family: var(--semantic-type-article-body-font-family);
+    font-size: var(--semantic-type-article-body-font-size);
+    line-height: var(--semantic-type-article-body-line-height);
     color: var(--semantic-color-text-secondary);
     margin: 0;
 }
@@ -971,8 +979,9 @@ a.project-card {
 }
 
 .case-list-item {
-    font-size: var(--primitive-font-size-base);
-    line-height: var(--semantic-type-body-md-line-height);
+    font-family: var(--semantic-type-article-body-font-family);
+    font-size: var(--semantic-type-article-body-font-size);
+    line-height: var(--semantic-type-article-body-line-height);
     color: var(--semantic-color-text-secondary);
     padding-left: var(--semantic-spacing-xs);
 }
@@ -1084,7 +1093,9 @@ a.project-card {
 
 .case-caption {
     margin-top: var(--semantic-spacing-sm);
-    font-size: var(--primitive-font-size-sm);
+    font-family: var(--semantic-type-article-small-font-family);
+    font-size: var(--semantic-type-article-small-font-size);
+    line-height: var(--semantic-type-article-small-line-height);
     color: var(--semantic-color-text-tertiary);
 }
 
@@ -1095,8 +1106,9 @@ a.project-card {
 }
 
 .case-quote p {
-    font-family: var(--semantic-font-serif);
-    font-size: var(--semantic-type-heading-xs-font-size);
+    font-family: var(--semantic-type-article-quote-font-family);
+    font-size: var(--semantic-type-article-quote-font-size);
+    line-height: var(--semantic-type-article-quote-line-height);
     color: var(--semantic-color-text-primary);
     margin: 0;
 }
@@ -1104,7 +1116,9 @@ a.project-card {
 .case-cite {
     display: block;
     margin-top: var(--semantic-spacing-sm);
-    font-size: var(--primitive-font-size-sm);
+    font-family: var(--semantic-type-article-small-font-family);
+    font-size: var(--semantic-type-article-small-font-size);
+    line-height: var(--semantic-type-article-small-line-height);
     font-style: normal;
     color: var(--semantic-color-text-tertiary);
 }

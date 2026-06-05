@@ -286,6 +286,41 @@
   --semantic-type-caption-sm-letter-spacing: var(--primitive-letter-spacing-normal);
 
   /* ────────────────────────────────────────────────────────────────────────
+     SEMANTIC: TYPOGRAPHY TOKENS - ARTICLE (long-form reading scale)
+     Use for: case-study / article pages. Body is 20px desktop, scales down
+     to 18px below the responsive breakpoint (see media query at file end).
+     Other article sizes (small, summary, quote, heading, title) scale in
+     step so the visual rhythm holds at both viewports.
+     ──────────────────────────────────────────────────────────────────────── */
+  --semantic-type-article-small-font-family: var(--semantic-font-sans);
+  --semantic-type-article-small-font-size: var(--primitive-font-size-base);    /* 16px */
+  --semantic-type-article-small-line-height: var(--primitive-line-height-normal);
+
+  --semantic-type-article-body-font-family: var(--semantic-font-sans);
+  --semantic-type-article-body-font-size: var(--primitive-font-size-lg);       /* 20px */
+  --semantic-type-article-body-line-height: var(--primitive-line-height-relaxed);
+
+  --semantic-type-article-summary-font-family: var(--semantic-font-sans);
+  --semantic-type-article-summary-font-size: var(--primitive-font-size-xl);    /* 26px */
+  --semantic-type-article-summary-line-height: var(--primitive-line-height-snug);
+
+  --semantic-type-article-quote-font-family: var(--semantic-font-serif);
+  --semantic-type-article-quote-font-size: var(--primitive-font-size-xl);      /* 26px */
+  --semantic-type-article-quote-line-height: var(--primitive-line-height-snug);
+
+  --semantic-type-article-heading-font-family: var(--semantic-font-serif);
+  --semantic-type-article-heading-font-size: var(--primitive-font-size-2xl);   /* 30px */
+  --semantic-type-article-heading-font-weight: var(--primitive-font-weight-bold);
+  --semantic-type-article-heading-line-height: var(--primitive-line-height-snug);
+  --semantic-type-article-heading-letter-spacing: var(--primitive-letter-spacing-tight);
+
+  --semantic-type-article-title-font-family: var(--semantic-font-serif);
+  --semantic-type-article-title-font-size: var(--primitive-font-size-4xl);     /* 44px */
+  --semantic-type-article-title-font-weight: var(--primitive-font-weight-bold);
+  --semantic-type-article-title-line-height: var(--primitive-line-height-snug);
+  --semantic-type-article-title-letter-spacing: var(--primitive-letter-spacing-tight);
+
+  /* ────────────────────────────────────────────────────────────────────────
      SEMANTIC: TYPOGRAPHY TOKENS - EYEBROW (Small Uppercase Section Labels)
      Use for: section numbers (01, 02), section labels (WHAT I DO),
      eyebrow text above hero, category markers.
@@ -455,4 +490,19 @@
   --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
   --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
   --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* ARTICLE TYPE SCALE - mobile (≤968px)
+   Reduces the article reading sizes one step down the primitive ladder
+   so the rhythm holds on small viewports. Only article tokens shift;
+   the rest of the site keeps its existing responsive behavior. */
+@media (max-width: 968px) {
+  :root {
+    --semantic-type-article-small-font-size: var(--primitive-font-size-sm);     /* 14px */
+    --semantic-type-article-body-font-size: var(--primitive-font-size-md);      /* 18px */
+    --semantic-type-article-summary-font-size: var(--primitive-font-size-xl-sm);/* 22px */
+    --semantic-type-article-quote-font-size: var(--primitive-font-size-xl-sm);  /* 22px */
+    --semantic-type-article-heading-font-size: var(--primitive-font-size-xl);   /* 26px */
+    --semantic-type-article-title-font-size: var(--primitive-font-size-4xl-sm); /* 38px */
+  }
 }
