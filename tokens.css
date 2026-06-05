@@ -315,7 +315,7 @@
   --semantic-type-article-heading-letter-spacing: var(--primitive-letter-spacing-tight);
 
   --semantic-type-article-title-font-family: var(--semantic-font-serif);
-  --semantic-type-article-title-font-size: var(--primitive-font-size-4xl);     /* 44px */
+  --semantic-type-article-title-font-size: var(--primitive-font-size-5xl);     /* 44px */
   --semantic-type-article-title-font-weight: var(--primitive-font-weight-bold);
   --semantic-type-article-title-line-height: var(--primitive-line-height-snug);
   --semantic-type-article-title-letter-spacing: var(--primitive-letter-spacing-tight);
