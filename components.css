@@ -18,11 +18,12 @@ html {
 }
 
 body {
-    font-family: var(--semantic-font-sans);
+    font-family: var(--semantic-font-body);
     font-weight: var(--primitive-font-weight-regular);
+    line-height: var(--semantic-type-body-base-line-height);
+    letter-spacing: var(--semantic-type-body-base-letter-spacing);
     background-color: var(--semantic-color-background-primary);
     color: var(--semantic-color-text-primary);
-    line-height: var(--primitive-line-height-normal);
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -159,7 +160,7 @@ body.page--article {
 
 /* ===== LOCATION HEADER ===== */
 .location-header {
-    font-family: var(--semantic-font-sans);
+    font-family: var(--semantic-font-eyebrow);
     font-size: var(--primitive-font-size-sm);
     font-weight: var(--primitive-font-weight-regular);
     letter-spacing: var(--primitive-letter-spacing-wide);
@@ -180,7 +181,7 @@ body.page--article {
 }
 
 .hero-title {
-    font-family: var(--semantic-font-serif);
+    font-family: var(--semantic-font-display);
     font-size: var(--semantic-type-display-lg-font-size);
     font-weight: var(--primitive-font-weight-bold);
     line-height: var(--semantic-type-display-sm-line-height);
@@ -306,7 +307,7 @@ body.page--article {
 }
 
 .service-title {
-    font-family: var(--semantic-font-serif);
+    font-family: var(--semantic-font-display);
     font-size: var(--semantic-type-heading-sm-font-size);
     font-weight: var(--primitive-font-weight-bold);
     color: var(--semantic-color-text-primary);
@@ -429,7 +430,7 @@ body.page--article {
 }
 
 .project-title {
-    font-family: var(--semantic-font-serif);
+    font-family: var(--semantic-font-display);
     font-size: var(--semantic-type-heading-sm-font-size);
     font-weight: var(--primitive-font-weight-bold);
     color: var(--semantic-color-text-primary);
@@ -485,7 +486,7 @@ body.page--article {
 }
 
 .cta-title {
-    font-family: var(--semantic-font-serif);
+    font-family: var(--semantic-font-display);
     font-size: var(--semantic-type-heading-lg-font-size);
     font-weight: var(--primitive-font-weight-bold);
     color: var(--semantic-color-text-primary);
@@ -495,7 +496,7 @@ body.page--article {
 }
 
 .cta-email {
-    font-family: var(--semantic-font-serif);
+    font-family: var(--semantic-font-display);
     font-size: var(--primitive-font-size-xl-sm);
     color: var(--semantic-color-interactive-primary);
     text-decoration: none;
