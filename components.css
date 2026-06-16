@@ -626,6 +626,88 @@ footer {
     pointer-events: auto;
 }
 
+/* ===== THEME SWITCHER — large screens =====
+   On larger screens the control sits at the right-centre of the viewport and
+   rests as a vertical row of dots (the active theme's dot is highlighted).
+   Hovering / focusing the control reveals the icon pill — visually identical
+   to the small-screen hover state. Small screens keep the bottom-right,
+   single-icon-that-expands behaviour defined above. */
+@media (min-width: 641px) {
+    .theme-switcher {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+        gap: 0;
+        border-color: transparent;
+        background-color: transparent;
+    }
+
+    /* Hovered / focused / tap-opened: bring back the pill chrome */
+    .theme-switcher:hover,
+    .theme-switcher:focus-within,
+    .theme-switcher.is-open {
+        gap: var(--semantic-spacing-xs);
+        border-color: var(--semantic-color-border-strong);
+        background-color: var(--semantic-color-background-primary);
+    }
+
+    /* Resting state: every option is visible as a compact dot */
+    .theme-switcher__option,
+    .theme-switcher__option:not(.is-active) {
+        width: 40px;
+        height: 28px;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        overflow: visible;
+    }
+
+    /* No pill/hover background while resting — dots only */
+    .theme-switcher:not(:hover):not(:focus-within):not(.is-open) .theme-switcher__option.is-active,
+    .theme-switcher:not(:hover):not(:focus-within):not(.is-open) .theme-switcher__option:hover {
+        background-color: transparent;
+    }
+
+    /* The dot marker, shown in place of the icon while resting */
+    .theme-switcher__option::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: var(--semantic-radius-full);
+        background-color: var(--semantic-color-text-tertiary);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .theme-switcher__option.is-active::before {
+        background-color: var(--semantic-color-interactive-primary);
+        transform: scale(1.15);
+    }
+
+    /* Hide the icon while resting; the dot stands in for it */
+    .theme-switcher__icon {
+        display: none;
+    }
+
+    /* Hover / focus / open: grow the options and swap dots for icons */
+    .theme-switcher:hover .theme-switcher__option,
+    .theme-switcher:focus-within .theme-switcher__option,
+    .theme-switcher.is-open .theme-switcher__option {
+        height: 40px;
+    }
+
+    .theme-switcher:hover .theme-switcher__option::before,
+    .theme-switcher:focus-within .theme-switcher__option::before,
+    .theme-switcher.is-open .theme-switcher__option::before {
+        display: none;
+    }
+
+    .theme-switcher:hover .theme-switcher__icon,
+    .theme-switcher:focus-within .theme-switcher__icon,
+    .theme-switcher.is-open .theme-switcher__icon {
+        display: block;
+    }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
     .projects-grid {
