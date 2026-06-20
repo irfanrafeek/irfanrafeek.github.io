@@ -287,6 +287,45 @@ body.page--article {
     color: var(--semantic-color-interactive-primary-hover);
 }
 
+/* ===== CLIENTS SECTION ===== */
+#clients {
+    margin-bottom: var(--semantic-spacing-4xl);
+    padding: var(--semantic-spacing-4xl) 0;
+    border-top: 1px solid var(--semantic-color-border-secondary);
+}
+
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--semantic-spacing-2xl) var(--semantic-spacing-xl);
+    align-items: center;
+    justify-items: center;
+}
+
+.client-logo {
+    display: block;
+    width: 100%;
+    max-width: 160px;
+    height: 40px;
+    color: var(--semantic-color-text-secondary);
+    background-color: currentColor;
+    -webkit-mask-image: var(--client-logo);
+    mask-image: var(--client-logo);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.client-logo:hover {
+    color: var(--semantic-color-text-primary);
+    opacity: 1;
+}
+
 /* ===== SERVICES SECTION ===== */
 #services {
     margin-bottom: var(--semantic-spacing-4xl);
@@ -754,6 +793,11 @@ footer {
     .section-header {
         flex-direction: column;
     }
+
+    .clients-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--semantic-spacing-xl) var(--semantic-spacing-lg);
+    }
 }
 
 @media (max-width: 640px) {
@@ -808,6 +852,15 @@ footer {
 
     .category-scroll {
         margin-bottom: var(--semantic-spacing-2xl);
+    }
+
+    .clients-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--semantic-spacing-lg) var(--semantic-spacing-md);
+    }
+
+    .client-logo {
+        height: 32px;
     }
 
     .theme-switcher__option {
