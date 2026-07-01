@@ -125,7 +125,7 @@ async function convertBlock(block) {
       return [{
         _type: 'mediaImage',
         _key: uid(),
-        ...imageRef(assetId),
+        asset: { _type: 'reference', _ref: assetId },
         alt: block.alt || '',
         caption: block.caption || '',
       }]
@@ -148,7 +148,7 @@ async function convertBlock(block) {
         items.push({
           _type: 'galleryItem',
           _key: uid(),
-          ...imageRef(assetId),
+          asset: { _type: 'reference', _ref: assetId },
           alt: item.alt || '',
           caption: item.caption || '',
         })
