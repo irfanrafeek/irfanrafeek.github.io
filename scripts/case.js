@@ -183,8 +183,8 @@
             + '}';
         var url = SANITY_API
             + '?query=' + encodeURIComponent(query)
-            + '&$type=' + encodeURIComponent(JSON.stringify(docType))
-            + '&$slug=' + encodeURIComponent(JSON.stringify(slug));
+            + '&%24type=' + encodeURIComponent(JSON.stringify(docType))
+            + '&%24slug=' + encodeURIComponent(JSON.stringify(slug));
 
         var project;
         try {
