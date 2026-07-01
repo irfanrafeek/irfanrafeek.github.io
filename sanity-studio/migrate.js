@@ -1,5 +1,7 @@
 /**
  * One-time migration: imports projects.json and writings.json into Sanity.
+ * Converts the legacy typed-blocks format into Portable Text.
+ *
  * Run from the sanity-studio/ directory:
  *   SANITY_TOKEN=<your-token> node migrate.js
  *
@@ -21,56 +23,100 @@ const client = createClient({
 })
 
 function uid() {
-  return Math.random().toString(36).slice(2, 10)
+  return Math.random().toString(36).slice(2, 12)
 }
 
-function transformBlock(block) {
-  const base = { _type: 'contentBlock', _key: uid(), type: block.type }
+// Build a Portable Text "block" (paragraph, heading, list-item, quote).
+function ptBlock(text, style = 'normal', listItem) {
+  const block = {
+    _type: 'block',
+    _key: uid(),
+    style,
+    markDefs: [],
+    children: [{ _type: 'span', _key: uid(), text: String(text || ''), marks: [] }],
+  }
+  if (listItem) {
+    block.listItem = listItem
+    block.level = 1
+  }
+  return block
+}
 
+// Convert a single legacy typed block → one or more Portable Text entries.
+function convertBlock(block) {
   switch (block.type) {
     case 'heading':
+      return [ptBlock(block.text, 'h2')]
+
     case 'paragraph':
-      return { ...base, text: block.text }
+      // Support double-newlines within a paragraph → multiple PT paragraphs.
+      return String(block.text || '')
+        .split(/\n\n+/)
+        .map((t) => ptBlock(t, 'normal'))
 
-    case 'quote':
-      return { ...base, text: block.text, attribution: block.attribution || '' }
-
-    case 'image':
-      return { ...base, src: block.src, alt: block.alt || '', caption: block.caption || '' }
-
-    case 'video':
-      return { ...base, src: block.src, poster: block.poster || '', caption: block.caption || '' }
+    case 'quote': {
+      const out = [ptBlock(block.text, 'blockquote')]
+      if (block.attribution) out.push(ptBlock(`— ${block.attribution}`, 'normal'))
+      return out
+    }
 
     case 'list':
+      return (Array.isArray(block.items) ? block.items : [])
+        .map((item) => ptBlock(item, 'normal', 'bullet'))
+
     case 'numbered_list':
-      return { ...base, items: Array.isArray(block.items) ? block.items : [] }
+      return (Array.isArray(block.items) ? block.items : [])
+        .map((item) => ptBlock(item, 'normal', 'number'))
+
+    case 'image':
+      return [{
+        _type: 'mediaImage',
+        _key: uid(),
+        src: block.src || '',
+        alt: block.alt || '',
+        caption: block.caption || '',
+      }]
+
+    case 'video':
+      return [{
+        _type: 'mediaVideo',
+        _key: uid(),
+        src: block.src || '',
+        poster: block.poster || '',
+        caption: block.caption || '',
+      }]
 
     case 'gallery':
-      return {
-        ...base,
-        galleryItems: (Array.isArray(block.items) ? block.items : []).map((item, i) => ({
+      return [{
+        _type: 'mediaGallery',
+        _key: uid(),
+        items: (Array.isArray(block.items) ? block.items : []).map((item) => ({
           _type: 'galleryItem',
-          _key: `gi-${i}-${uid()}`,
+          _key: uid(),
           src: item.src || '',
           alt: item.alt || '',
           caption: item.caption || '',
         })),
-      }
+      }]
 
     case 'embed':
-      return {
-        ...base,
-        src: block.src,
-        embedTitle: block.title || '',
+      return [{
+        _type: 'mediaEmbed',
+        _key: uid(),
+        src: block.src || '',
+        title: block.title || '',
         caption: block.caption || '',
-      }
+      }]
 
     default:
-      return base
+      return []
   }
 }
 
 function transformItem(item, docType) {
+  const legacyBlocks = Array.isArray(item.blocks) ? item.blocks : []
+  const body = legacyBlocks.flatMap(convertBlock)
+
   return {
     _type: docType,
     _id: `${docType}-${item.slug}`,
@@ -81,7 +127,7 @@ function transformItem(item, docType) {
     description: item.description || '',
     tags: Array.isArray(item.tags) ? item.tags : [],
     featured: Boolean(item.featured),
-    blocks: Array.isArray(item.blocks) ? item.blocks.map(transformBlock) : [],
+    body,
   }
 }
 
@@ -94,14 +140,12 @@ async function migrate() {
   console.log(`Migrating ${projects.length} projects and ${writings.length} writings…\n`)
 
   for (const item of projects) {
-    const doc = transformItem(item, 'project')
-    await client.createOrReplace(doc)
+    await client.createOrReplace(transformItem(item, 'project'))
     console.log(`✓ project: ${item.title}`)
   }
 
   for (const item of writings) {
-    const doc = transformItem(item, 'writing')
-    await client.createOrReplace(doc)
+    await client.createOrReplace(transformItem(item, 'writing'))
     console.log(`✓ writing: ${item.title}`)
   }
 

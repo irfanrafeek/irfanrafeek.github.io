@@ -47,13 +47,12 @@ export const project = {
       initialValue: false,
     },
     {
-      name: 'blocks',
-      title: 'Content Blocks',
-      type: 'array',
-      of: [{ type: 'contentBlock' }],
+      name: 'body',
+      title: 'Body',
+      type: 'portableBody',
     },
   ],
   preview: {
-    select: { title: 'title', subtitle: 'year', media: 'image' },
+    select: { title: 'title', subtitle: 'year' },
   },
 }

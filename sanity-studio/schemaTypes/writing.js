@@ -47,10 +47,9 @@ export const writing = {
       initialValue: false,
     },
     {
-      name: 'blocks',
-      title: 'Content Blocks',
-      type: 'array',
-      of: [{ type: 'contentBlock' }],
+      name: 'body',
+      title: 'Body',
+      type: 'portableBody',
     },
   ],
   preview: {
