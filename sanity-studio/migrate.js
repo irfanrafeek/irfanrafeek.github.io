@@ -203,17 +203,22 @@ async function migrate() {
   console.log(`Migrating ${projects.length} projects and ${writings.length} writings…`)
   console.log(`(images will be uploaded to Sanity CDN — this takes a couple of minutes)\n`)
 
+  async function upsert(item, docType) {
+    const doc = await transformItem(item, docType)
+    // Delete any lingering draft so the fresh published version is what the editor sees.
+    await client.delete(`drafts.${doc._id}`).catch(() => {})
+    await client.createOrReplace(doc)
+  }
+
   for (const item of projects) {
     console.log(`→ project: ${item.title}`)
-    const doc = await transformItem(item, 'project')
-    await client.createOrReplace(doc)
+    await upsert(item, 'project')
     console.log(`  ✓ saved\n`)
   }
 
   for (const item of writings) {
     console.log(`→ writing: ${item.title}`)
-    const doc = await transformItem(item, 'writing')
-    await client.createOrReplace(doc)
+    await upsert(item, 'writing')
     console.log(`  ✓ saved\n`)
   }
 
