@@ -172,7 +172,15 @@
         var slug = new URLSearchParams(window.location.search).get('slug') || '';
         var docType = SOURCE_TYPE[source] || 'project';
 
-        var query = '*[_type==$type&&slug.current==$slug][0]{title,"slug":slug.current,year,description,tags,body}';
+        // Expand image asset references to CDN URLs with sizing hints via `asset->url`.
+        // Body images get a wider size than gallery items so hero images stay sharp.
+        var query = '*[_type==$type&&slug.current==$slug][0]{'
+            + 'title,"slug":slug.current,year,description,tags,'
+            + 'body[]{...,'
+                + '_type == "mediaImage" => {..., "src": asset->url + "?w=1400&auto=format&fit=max"},'
+                + '_type == "mediaGallery" => {..., items[]{..., "src": asset->url + "?w=1400&auto=format&fit=max"}}'
+            + '}'
+            + '}';
         var url = SANITY_API
             + '?query=' + encodeURIComponent(query)
             + '&$type=' + encodeURIComponent(JSON.stringify(docType))

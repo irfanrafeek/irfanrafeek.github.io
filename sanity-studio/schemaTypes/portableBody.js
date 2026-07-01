@@ -1,5 +1,7 @@
 // Portable Text body — Notion-like editor with inline formatting
 // plus custom embedded blocks for media (image, video, gallery, embed).
+// Images and gallery items use Sanity's native image asset type
+// (upload / drag-drop / hotspot / auto-resize via CDN).
 export const portableBody = {
   name: 'portableBody',
   type: 'array',
@@ -43,19 +45,20 @@ export const portableBody = {
       },
     },
     {
-      type: 'object',
+      type: 'image',
       name: 'mediaImage',
       title: 'Image',
+      options: { hotspot: true },
       fields: [
-        { name: 'src', title: 'Image path or URL', type: 'string' },
         { name: 'alt', title: 'Alt text', type: 'string' },
         { name: 'caption', title: 'Caption', type: 'string' },
       ],
       preview: {
-        select: { title: 'src', subtitle: 'caption' },
-        prepare: ({ title, subtitle }) => ({
-          title: title || '(no image)',
-          subtitle: subtitle ? `🖼 ${subtitle}` : '🖼 Image',
+        select: { media: 'asset', title: 'caption', alt: 'alt' },
+        prepare: ({ media, title, alt }) => ({
+          title: title || alt || 'Image',
+          subtitle: '🖼 Image',
+          media,
         }),
       },
     },
@@ -87,23 +90,30 @@ export const portableBody = {
           type: 'array',
           of: [
             {
-              type: 'object',
+              type: 'image',
               name: 'galleryItem',
+              options: { hotspot: true },
               fields: [
-                { name: 'src', title: 'Image path or URL', type: 'string' },
                 { name: 'alt', title: 'Alt text', type: 'string' },
                 { name: 'caption', title: 'Caption', type: 'string' },
               ],
-              preview: { select: { title: 'src', subtitle: 'caption' } },
+              preview: {
+                select: { media: 'asset', title: 'caption', alt: 'alt' },
+                prepare: ({ media, title, alt }) => ({
+                  title: title || alt || 'Image',
+                  media,
+                }),
+              },
             },
           ],
         },
       ],
       preview: {
-        select: { items: 'items' },
-        prepare: ({ items }) => ({
+        select: { items: 'items', firstAsset: 'items.0.asset' },
+        prepare: ({ items, firstAsset }) => ({
           title: `Gallery (${(items || []).length} image${(items || []).length === 1 ? '' : 's'})`,
           subtitle: '⊞ Gallery',
+          media: firstAsset,
         }),
       },
     },

@@ -23,9 +23,9 @@ export const writing = {
     },
     {
       name: 'image',
-      title: 'Cover Image (path or URL)',
-      type: 'string',
-      description: 'e.g. Assets/spc-01.png or a full https:// URL',
+      title: 'Cover Image',
+      type: 'image',
+      options: { hotspot: true },
     },
     {
       name: 'description',
@@ -53,6 +53,6 @@ export const writing = {
     },
   ],
   preview: {
-    select: { title: 'title', subtitle: 'year' },
+    select: { title: 'title', subtitle: 'year', media: 'image' },
   },
 }

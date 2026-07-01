@@ -10,9 +10,12 @@
     var SANITY_DATASET = 'production';
     var SANITY_API = 'https://' + SANITY_PROJECT_ID + '.api.sanity.io/v2021-10-21/data/query/' + SANITY_DATASET;
 
+    // Card thumbnails: 800px wide, auto WebP/AVIF, cropped to fit.
+    var COVER_SIZE = 'w=800&auto=format&fit=max';
+
     var SOURCE_QUERY = {
-        'projects.json': '*[_type=="project"]|order(year desc){title,"slug":slug.current,year,image,description,tags,featured}',
-        'writings.json': '*[_type=="writing"]|order(year desc){title,"slug":slug.current,year,image,description,tags,featured}',
+        'projects.json': '*[_type=="project"]|order(year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
+        'writings.json': '*[_type=="writing"]|order(year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
     };
 
     function escapeHtml(value) {
@@ -24,12 +27,20 @@
             .replace(/'/g, '&#39;');
     }
 
+    // Append optimization params for Sanity CDN URLs; leave others (emoji, legacy paths) untouched.
+    function optimize(url, size) {
+        var value = (url || '').trim();
+        if (!value) return value;
+        if (value.indexOf('cdn.sanity.io') === -1) return value;
+        return value + (value.indexOf('?') === -1 ? '?' : '&') + size;
+    }
+
     // An emoji/short string renders as text; a path or URL renders as an image.
     function renderImage(image) {
         var value = (image || '').trim();
         var looksLikePath = /\.(png|jpe?g|gif|webp|svg|avif)$/i.test(value) || /^https?:\/\//i.test(value) || value.includes('/');
         if (looksLikePath) {
-            return '<img src="' + escapeHtml(value) + '" alt="" loading="lazy">';
+            return '<img src="' + escapeHtml(optimize(value, COVER_SIZE)) + '" alt="" loading="lazy">';
         }
         return escapeHtml(value);
     }
