@@ -14,8 +14,8 @@
     var COVER_SIZE = 'w=800&auto=format&fit=max';
 
     var SOURCE_QUERY = {
-        'projects.json': '*[_type=="project"]|order(year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
-        'writings.json': '*[_type=="writing"]|order(year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
+        'projects.json': '*[_type=="project"]|order(coalesce(sortOrder, 9999) asc, year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
+        'writings.json': '*[_type=="writing"]|order(coalesce(sortOrder, 9999) asc, year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
     };
 
     function escapeHtml(value) {
