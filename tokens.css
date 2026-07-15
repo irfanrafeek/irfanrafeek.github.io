@@ -318,6 +318,12 @@
   --semantic-type-article-heading-line-height: var(--primitive-line-height-snug);
   --semantic-type-article-heading-letter-spacing: var(--primitive-letter-spacing-tight);
 
+  --semantic-type-article-subheading-font-family: var(--semantic-font-display);
+  --semantic-type-article-subheading-font-size: var(--primitive-font-size-xl);    /* 26px */
+  --semantic-type-article-subheading-font-weight: var(--primitive-font-weight-bold);
+  --semantic-type-article-subheading-line-height: var(--primitive-line-height-snug);
+  --semantic-type-article-subheading-letter-spacing: var(--primitive-letter-spacing-tight);
+
   --semantic-type-article-title-font-family: var(--semantic-font-display);
   --semantic-type-article-title-font-size: var(--primitive-font-size-5xl);     /* 44px */
   --semantic-type-article-title-font-weight: var(--primitive-font-weight-bold);
@@ -533,6 +539,7 @@
     --semantic-type-article-summary-font-size: var(--primitive-font-size-md);/* 22px */
     --semantic-type-article-quote-font-size: var(--primitive-font-size-xl-sm);  /* 22px */
     --semantic-type-article-heading-font-size: var(--primitive-font-size-xl);   /* 26px */
+    --semantic-type-article-subheading-font-size: var(--primitive-font-size-xl-sm); /* 22px */
     --semantic-type-article-title-font-size: var(--primitive-font-size-4xl-sm); /* 38px */
   }
 }

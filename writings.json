@@ -1,6 +1,147 @@
 {
   "writings": [
     {
+      "title": "I Built a Party Game in 3 Hours. It Crossed 2,000 Rounds in Two Days.",
+      "slug": "i-built-a-party-game-in-3-hours-it-crossed-2000-rounds-in-two-days",
+      "year": "2026",
+      "image": "Assets/imp-00.webp",
+      "description": "What building a small side project with AI taught me about how designers can ship ideas now.",
+      "tags": [
+        "side project",
+        "building with AI",
+        "product design"
+      ],
+      "featured": true,
+      "blocks": [
+        {
+          "type": "image",
+          "src": "Assets/imp-00.webp",
+          "alt": "Three phone screens of Impostor Games: the hub, the Impostor Dance Game home, and a game lobby with animal avatars",
+          "caption": "Impostor Games — the hub, the game home, and a lobby mid-join."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two weeks ago, my family got together for a wedding, and like every family gathering, we ended up looking for games to play."
+        },
+        {
+          "type": "paragraph",
+          "text": "We wanted to try the viral Impostor Dance Challenge, but none of the existing apps had the Malayalam songs we wanted. Most felt clunky, and many locked content behind a paywall."
+        },
+        {
+          "type": "paragraph",
+          "text": "Instead of spending more time searching, I opened Claude Code and built a simple version myself."
+        },
+        {
+          "type": "paragraph",
+          "text": "About three hours later, we were playing."
+        },
+        {
+          "type": "paragraph",
+          "text": "Everyone had a great time. A few days later, I cleaned up the experience, added a few finishing touches, and published it at impostorgames.com."
+        },
+        {
+          "type": "heading",
+          "text": "The interesting part wasn't building it"
+        },
+        {
+          "type": "paragraph",
+          "text": "The game itself is simple. Most of the effort went into making it feel effortless to play."
+        },
+        {
+          "type": "subheading",
+          "text": "No app download."
+        },
+        {
+          "type": "paragraph",
+          "text": "Every similar game I found lives inside an app. Asking ten people at a party to install something is enough to lose half the room. A web link that opens instantly felt like the better experience."
+        },
+        {
+          "type": "subheading",
+          "text": "Join with a QR code."
+        },
+        {
+          "type": "paragraph",
+          "text": "The host creates a room, everyone scans the QR code, and they're in. No typing room codes. No explaining where to tap next."
+        },
+        {
+          "type": "image",
+          "src": "Assets/imp-02.webp",
+          "alt": "Room created screen with a large QR code and a four-letter room code",
+          "caption": "Scan to join — no codes to type, no app to install."
+        },
+        {
+          "type": "subheading",
+          "text": "Small details that make waiting fun."
+        },
+        {
+          "type": "paragraph",
+          "text": "Random animal avatars, a little animation when someone joins, tiny celebratory moments. Nothing groundbreaking, but enough to make the lobby feel less like a waiting room."
+        },
+        {
+          "type": "image",
+          "src": "Assets/imp-04.gif",
+          "alt": "A new player pops into the lobby with a small confetti burst",
+          "caption": "The pop-in and confetti burst when a player joins — small enough to feel earned, not shouted."
+        },
+        {
+          "type": "subheading",
+          "text": "A consistent visual style."
+        },
+        {
+          "type": "paragraph",
+          "text": "Warm colours, soft shapes, and a simple design system throughout. I wanted it to feel like a finished product, even if it started as a weekend experiment."
+        },
+        {
+          "type": "paragraph",
+          "text": "A few days later, my cousin posted a reel featuring the game."
+        },
+        {
+          "type": "paragraph",
+          "text": "It unexpectedly took off."
+        },
+        {
+          "type": "paragraph",
+          "text": "Over the last two days alone, people have played more than 2,000 rounds, from over 35 countries."
+        },
+        {
+          "type": "paragraph",
+          "text": "The numbers were exciting, but they weren't the biggest takeaway for me."
+        },
+        {
+          "type": "paragraph",
+          "text": "What stayed with me was how quickly an idea went from, “Wouldn't it be nice if this existed?” to something that thousands of people were actually using."
+        },
+        {
+          "type": "heading",
+          "text": "Why I wanted to share this"
+        },
+        {
+          "type": "paragraph",
+          "text": "I think we're entering a really exciting time for designers."
+        },
+        {
+          "type": "paragraph",
+          "text": "Not because AI replaces design, but because it removes so many of the barriers between having an idea and putting it in front of people."
+        },
+        {
+          "type": "paragraph",
+          "text": "You no longer need to wait until you know how to code everything yourself. You can prototype, build, test, and ship much faster than before."
+        },
+        {
+          "type": "paragraph",
+          "text": "The tools help us build."
+        },
+        {
+          "type": "paragraph",
+          "text": "But the experience still comes from us—the decisions we make, the details we obsess over, and the care we put into every interaction."
+        },
+        {
+          "type": "paragraph",
+          "text": "If you've been sitting on an idea for a while, this might be the best time to build it."
+        }
+      ]
+    },
+    {
       "title": "Spacing components in Design Systems",
       "slug": "spacing-components-in-design-systems",
       "year": "2024",

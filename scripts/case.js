@@ -47,7 +47,7 @@
 
         switch (block.style) {
             case 'h2':         return '<h2 class="case-heading">' + children + '</h2>';
-            case 'h3':         return '<h3 class="case-heading">' + children + '</h3>';
+            case 'h3':         return '<h3 class="case-subheading">' + children + '</h3>';
             case 'blockquote': return '<blockquote class="case-quote"><p>' + children + '</p></blockquote>';
             default:           return '<p class="case-paragraph">' + children + '</p>';
         }

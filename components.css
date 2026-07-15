@@ -1081,6 +1081,16 @@ a.project-card {
     margin: var(--semantic-spacing-lg) 0 0;
 }
 
+.case-subheading {
+    font-family: var(--semantic-type-article-subheading-font-family);
+    font-size: var(--semantic-type-article-subheading-font-size);
+    font-weight: var(--semantic-type-article-subheading-font-weight);
+    line-height: var(--semantic-type-article-subheading-line-height);
+    letter-spacing: var(--semantic-type-article-subheading-letter-spacing);
+    color: var(--semantic-color-text-primary);
+    margin: var(--semantic-spacing-md) 0 0;
+}
+
 .case-paragraph {
     font-family: var(--semantic-type-article-body-font-family);
     font-size: var(--semantic-type-article-body-font-size);
