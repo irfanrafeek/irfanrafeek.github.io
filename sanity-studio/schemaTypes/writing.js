@@ -47,6 +47,12 @@ export const writing = {
       initialValue: false,
     },
     {
+      name: 'sortOrder',
+      title: 'Sort order',
+      description: 'Lower numbers appear first. Leave blank to fall back to year (newest first). Use gaps of 10 (10, 20, 30…) so you can slot new items in without renumbering.',
+      type: 'number',
+    },
+    {
       name: 'body',
       title: 'Body',
       type: 'portableBody',

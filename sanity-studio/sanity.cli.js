@@ -1,8 +1,7 @@
-import { defineCliConfig } from 'sanity/cli'
-
-export default defineCliConfig({
+module.exports = {
   api: {
     projectId: 'qgasa874',
     dataset: 'production',
   },
-})
+  studioHost: 'irfanrafeek-cms',
+}
