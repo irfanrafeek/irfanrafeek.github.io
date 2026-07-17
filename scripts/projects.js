@@ -14,9 +14,16 @@
     var COVER_SIZE = 'w=800&auto=format&fit=max';
 
     var SOURCE_QUERY = {
-        'projects.json': '*[_type=="project"]|order(coalesce(sortOrder, 9999) asc, year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
-        'writings.json': '*[_type=="writing"]|order(coalesce(sortOrder, 9999) asc, year desc){title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
+        'projects.json': '*[_type=="project"]|order(coalesce(sortOrder, 9999) asc, year desc){_type,title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
+        'writings.json': '*[_type=="writing"]|order(coalesce(sortOrder, 9999) asc, year desc){_type,title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
+        // Featured grid on the home page mixes featured projects and featured writings.
+        'featured.json': '*[(_type=="project" || _type=="writing") && featured==true]|order(coalesce(sortOrder, 9999) asc, year desc){_type,title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
     };
+
+    // Route writing cards to writing.html; everything else uses the grid's configured target.
+    function resolveTarget(item, defaultTarget) {
+        return item && item._type === 'writing' ? 'writing.html' : defaultTarget;
+    }
 
     function escapeHtml(value) {
         return String(value)
@@ -77,9 +84,13 @@
         if (!grids.length) return;
 
         for (var grid of grids) {
-            var source = grid.getAttribute('data-source') || 'projects.json';
-            var target = grid.getAttribute('data-target') || 'case.html';
             var mode = grid.getAttribute('data-projects');
+            var target = grid.getAttribute('data-target') || 'case.html';
+            // 'featured' mode pulls the mixed projects+writings feed so writing cards
+            // can appear alongside projects on the home page.
+            var source = mode === 'featured'
+                ? 'featured.json'
+                : (grid.getAttribute('data-source') || 'projects.json');
             var items;
             try {
                 items = await loadItems(source);
@@ -87,8 +98,7 @@
                 console.error('Could not load from Sanity:', err);
                 continue;
             }
-            var list = mode === 'featured' ? items.filter(function (p) { return p.featured; }) : items;
-            grid.innerHTML = list.map(function (item) { return renderCard(item, target); }).join('');
+            grid.innerHTML = items.map(function (item) { return renderCard(item, resolveTarget(item, target)); }).join('');
         }
     }
 
