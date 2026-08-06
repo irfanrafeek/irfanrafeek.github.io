@@ -1,6 +1,376 @@
 {
   "writings": [
     {
+      "title": "Designing One Clinical Note System for Every Kind of Indian Practice",
+      "slug": "designing-one-clinical-note-system-for-every-kind-of-indian-practice",
+      "year": "2026",
+      "image": "Assets/nimo-brand-practice-diversity.svg",
+      "description": "How we designed Nimo's clinical note editor as a block-based system that adapts to allopathy, physiotherapy, Ayurveda, homeopathy, and every other Indian practice type.",
+      "tags": [
+        "healthcare",
+        "product design",
+        "ai workflows"
+      ],
+      "featured": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "The Challenge"
+        },
+        {
+          "type": "paragraph",
+          "text": "Nimo was never meant to be just another allopathy clinic app."
+        },
+        {
+          "type": "paragraph",
+          "text": "In India, healthcare is not a single workflow. A general physician writes prescriptions and lab orders. A homeopath thinks in case-taking, mentals, generals, particulars, modalities, and remedy rationale. An Ayurvedic doctor may document prakriti, vikriti, pathya, and apathya. A physiotherapist needs assessment, treatment performed, progress tracking, and a home exercise program. Nutritionists, psychologists, naturopaths, dentists, Siddha, Unani, and other practitioners all have their own rhythm."
+        },
+        {
+          "type": "paragraph",
+          "text": "The real product challenge was this:"
+        },
+        {
+          "type": "paragraph",
+          "text": "How do we design one note-taking system that feels native to every practice type, without building a separate product for each one?"
+        },
+        {
+          "type": "paragraph",
+          "text": "A generic SOAP note would be too rigid. A hospital-style EMR form would become bloated. Separate editors for every system of medicine would be impossible to maintain. We needed a system that could flex with the doctor's practice while staying simple enough for a busy Indian clinic."
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-brand-practice-diversity.svg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "The Design Insight"
+        },
+        {
+          "type": "paragraph",
+          "text": "Both of us approached this as designers first."
+        },
+        {
+          "type": "paragraph",
+          "text": "Our past experience helped. At CureType, we had already seen how healthcare workflows change from specialty to specialty. Irfan's experience in publishing at Conde Nast also shaped the mental model: modern editors are not fixed forms. They are made of blocks."
+        },
+        {
+          "type": "paragraph",
+          "text": "That became the core design idea:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Treat a clinical note like a block editor, not like a fixed medical form."
+        },
+        {
+          "type": "paragraph",
+          "text": "Instead of forcing every doctor into the same sequence of fields, Nimo lets the note become a document made of reusable clinical blocks. The doctor can type naturally, then insert the right structured block when needed."
+        },
+        {
+          "type": "paragraph",
+          "text": "For a prescribing practice, the note can include Vitals, Prescription, Lab, and Follow-up."
+        },
+        {
+          "type": "paragraph",
+          "text": "For physiotherapy, the note can include Assessment, Treatment performed, Home exercise program, Progress, and Follow-up."
+        },
+        {
+          "type": "paragraph",
+          "text": "For homeopathy, it can include Case taking."
+        },
+        {
+          "type": "paragraph",
+          "text": "For Ayurveda, it can include Dosha & Pathya."
+        },
+        {
+          "type": "paragraph",
+          "text": "The surface stays the same. The blocks change."
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-brand-editor-architecture.svg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Why This Matters in India"
+        },
+        {
+          "type": "paragraph",
+          "text": "Most healthcare software treats \"clinic\" as one category. That assumption breaks quickly in India."
+        },
+        {
+          "type": "paragraph",
+          "text": "India has modern medicine, dental, Ayurveda, Homeopathy, Unani, Siddha, Naturopathy, Yoga, Physiotherapy, Psychology, Nutrition, and many hybrid local practices. The diversity is not an edge case. It is the market."
+        },
+        {
+          "type": "paragraph",
+          "text": "So we designed Nimo around practice type as a first-class product concept. When a clinic signs up, its practice type determines the language, tools, and blocks it sees."
+        },
+        {
+          "type": "paragraph",
+          "text": "A physiotherapy clinic does not get prescription-heavy screens by default. A homeopath does not have to pretend they are writing an allopathy prescription. An Ayurvedic practitioner gets vocabulary closer to how they actually consult."
+        },
+        {
+          "type": "paragraph",
+          "text": "This was the designer-first move: we did not start with \"what tables do we need?\" We started with \"what does this doctor need to think clearly during a consultation?\""
+        },
+        {
+          "type": "heading",
+          "text": "The System We Built"
+        },
+        {
+          "type": "paragraph",
+          "text": "The final architecture is a single block editor used across practice types."
+        },
+        {
+          "type": "paragraph",
+          "text": "The editor has a / command, similar to modern writing tools. Doctors can insert blocks as they write. The available menu is resolved from the clinic's practice type."
+        },
+        {
+          "type": "paragraph",
+          "text": "Option A — a prescribing (allopathy) clinic"
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-allopathy-block-menu.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Option B — a physiotherapy clinic"
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-physio-block-menu.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "At the product level, this gives us three kinds of blocks."
+        },
+        {
+          "type": "paragraph",
+          "text": "Text blocks are for normal note-taking: headings, paragraphs, and bullet lists."
+        },
+        {
+          "type": "paragraph",
+          "text": "Content blocks are specialty-specific clinical structures where the content lives inside the note document itself. Examples include Follow-up, Assessment, Treatment performed, Home exercise program, Progress, Case taking, and Dosha & Pathya."
+        },
+        {
+          "type": "paragraph",
+          "text": "Record blocks appear inside the note but read and write to proper clinical tables. Examples include Prescriptions, Vitals, and Lab orders. These stay connected to the rest of the product: printed prescriptions, pharmacy, billing, lab workflows, patient records, and AI suggestions."
+        },
+        {
+          "type": "paragraph",
+          "text": "This distinction was important. We wanted the note to feel like one clean document, but we could not flatten critical medical records into plain text. Prescriptions and lab orders needed to remain structured, auditable, printable, and usable elsewhere."
+        },
+        {
+          "type": "paragraph",
+          "text": "So the design became:"
+        },
+        {
+          "type": "paragraph",
+          "text": "One writing surface. Multiple block types. Structured data where it matters. Freedom where it helps."
+        },
+        {
+          "type": "heading",
+          "text": "The Recording Workflow"
+        },
+        {
+          "type": "paragraph",
+          "text": "We also had to solve the most painful part of clinical documentation: doctors do not have time to write notes during a busy OPD."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nimo's recording workflow is built into the same editor. The doctor taps Record, speaks naturally during the consultation, and taps Finish notes. Nimo transcribes the visit, generates the note, fills the editor, and keeps the doctor in control to review and edit."
+        },
+        {
+          "type": "paragraph",
+          "text": "Option A — allopathy"
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-recording-workflow-allopathy.gif",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Option B — physiotherapy"
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-recording-workflow-physio.gif",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "The key design decision was to make recording feel like part of note-taking, not a separate AI feature."
+        },
+        {
+          "type": "paragraph",
+          "text": "The recording dock stays pinned at the bottom of the note. It has clear states: ready, recording, paused, processing, and error. While Nimo processes the audio, the interface shows progress instead of leaving the doctor staring at a blank page. If the note is empty, a ghost scaffold appears so the doctor can see the structure forming."
+        },
+        {
+          "type": "paragraph",
+          "text": "For longer consultations, recordings can be uploaded in segments. For simpler dictation, the flow stays lightweight. In both cases, the result lands back in the same editor."
+        },
+        {
+          "type": "paragraph",
+          "text": "We also added trust anchors: the doctor can view the transcript later, copy it, and verify exactly what Nimo heard. The AI draft is never treated as the final truth. It is a starting point. The doctor remains the author."
+        },
+        {
+          "type": "heading",
+          "text": "Bringing Nimo Into the Editor"
+        },
+        {
+          "type": "paragraph",
+          "text": "Once the editor became the centre of the product, AI had a natural place to live."
+        },
+        {
+          "type": "paragraph",
+          "text": "We did not want Nimo to feel like a separate chatbot or a floating assistant that doctors had to operate. The idea was simpler: Nimo should quietly work around the note."
+        },
+        {
+          "type": "paragraph",
+          "text": "The doctor records the consultation. Nimo transcribes the conversation, understands the clinical context, and turns it into a structured summary inside the same editor. If the clinic uses templates, Nimo fills the right blocks instead of dumping a wall of text. The doctor can review, edit, and finalise without leaving the note."
+        },
+        {
+          "type": "paragraph",
+          "text": "For prescribing practices, Nimo can also suggest medicines after the recording. This is especially useful in high-volume clinics where doctors repeat common prescription patterns many times a day. The prescription suggestion appears around the editor, and when accepted, it updates the actual prescription block, not just plain text. That means the prescription can still be printed, used by pharmacy workflows, and stored as structured clinical data."
+        },
+        {
+          "type": "paragraph",
+          "text": "Option A — allopathy: Nimo suggests a prescription"
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-suggests-prescription.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Option B — physiotherapy: the note Nimo fills"
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-physio-note.png",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "This made the editor more than a writing surface. It became the place where the consultation gets transformed into usable clinical work:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "speech becomes transcript",
+            "transcript becomes summary",
+            "summary becomes structured note",
+            "clinical context becomes prescription suggestions",
+            "final note becomes part of the patient record"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The time saved is the obvious benefit. Doctors no longer have to reconstruct the visit at the end of the day or type everything manually during a three-minute consultation."
+        },
+        {
+          "type": "paragraph",
+          "text": "But the deeper design win is that AI stays in the right role. Nimo prepares the work. The doctor remains in control."
+        },
+        {
+          "type": "image",
+          "src": "Assets/nimo-brand-ai-workflow.svg",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "type": "heading",
+          "text": "Why This Was a Design Problem First"
+        },
+        {
+          "type": "paragraph",
+          "text": "This work could have easily become an engineering-led settings problem: add more dropdowns, add more templates, add more modules."
+        },
+        {
+          "type": "paragraph",
+          "text": "Instead, we approached it as a product design problem:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "What should disappear for a clinic that does not prescribe?",
+            "What vocabulary should change for a homeopath or Ayurvedic doctor?",
+            "What should remain universal across every doctor?",
+            "Which information belongs inside the note, and which must stay as structured medical data?",
+            "How can AI help without making the doctor feel out of control?",
+            "How can this work on a phone in a crowded Indian clinic?"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The answer was not a bigger form. It was a more flexible document."
+        },
+        {
+          "type": "heading",
+          "text": "The Outcome"
+        },
+        {
+          "type": "paragraph",
+          "text": "Nimo now has one note-taking system that adapts to many Indian practice types."
+        },
+        {
+          "type": "paragraph",
+          "text": "Allopathy and dental clinics get prescriptions, vitals, labs, and follow-up."
+        },
+        {
+          "type": "paragraph",
+          "text": "Physiotherapy clinics get assessment, treatment, home exercise programs, progress, and follow-up."
+        },
+        {
+          "type": "paragraph",
+          "text": "Homeopathy gets case-taking."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ayurveda gets Dosha & Pathya."
+        },
+        {
+          "type": "paragraph",
+          "text": "Other systems can be added by introducing new blocks, without rebuilding the editor."
+        },
+        {
+          "type": "paragraph",
+          "text": "We built all of this around the editor, and that is where Nimo came alive: not as a separate AI feature, but as the assistant inside the doctor's daily workflow."
+        },
+        {
+          "type": "paragraph",
+          "text": "This gives the product a scalable foundation. Every new specialty does not require a new app. It requires understanding the practice deeply enough to design the right blocks."
+        },
+        {
+          "type": "paragraph",
+          "text": "That is the main story of Nimo: two designers used a publishing-inspired block editor model to solve a healthcare problem that is uniquely Indian in scale and diversity."
+        },
+        {
+          "type": "paragraph",
+          "text": "We did not design one more clinic note."
+        },
+        {
+          "type": "paragraph",
+          "text": "We designed a system where every kind of Indian practitioner can feel: this was made for the way I work."
+        }
+      ]
+    },
+    {
       "title": "I Built a Party Game in 3 Hours. It Crossed 2,000 Rounds in Two Days.",
       "slug": "i-built-a-party-game-in-3-hours-it-crossed-2000-rounds-in-two-days",
       "year": "2026",

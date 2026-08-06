@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840">
+  <defs>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#6d5ef7" flood-opacity="0.10"/></filter>
+    <style>
+      .t{font-family:Poppins,Inter,Arial,sans-serif;font-size:48px;font-weight:700;fill:#0f172a;letter-spacing:-1px}.p{font-family:Poppins,Inter,Arial,sans-serif;font-size:22px;font-weight:400;fill:#64748b}.h{font-family:Poppins,Inter,Arial,sans-serif;font-size:22px;font-weight:700;fill:#0f172a}.s{font-family:Poppins,Inter,Arial,sans-serif;font-size:16px;font-weight:500;fill:#64748b}.pill{font-family:Poppins,Inter,Arial,sans-serif;font-size:16px;font-weight:600;fill:#475569}.white{fill:#fff}.brand{fill:#6d5ef7}
+    </style>
+  </defs>
+  <rect width="1400" height="840" rx="38" fill="#ffffff"/>
+  <rect x="56" y="54" width="1288" height="732" rx="34" fill="#f8fafc" stroke="#e2e8f0"/>
+  <g transform="translate(96 94)">
+    <rect width="84" height="34" rx="17" fill="#e9e5ff"/><text x="20" y="23" class="pill" fill="#6d5ef7">NIMO</text>
+    <text x="0" y="104" class="t">Built for every system of medicine.</text>
+    <text x="2" y="146" class="p">A single clinic product has to respect India’s many ways of practising care.</text>
+  </g>
+  <g filter="url(#soft)">
+    <rect x="96" y="284" width="1208" height="336" rx="30" fill="#fff"/>
+  </g>
+  <g transform="translate(132 324)">
+    <rect width="218" height="94" rx="22" fill="#f4f2ff" stroke="#e9e5ff"/><text x="24" y="38" class="h">Allopathy</text><text x="24" y="68" class="s">Rx · vitals · labs</text>
+    <rect x="242" width="218" height="94" rx="22" fill="#fff5eb" stroke="#ffdfcf"/><text x="266" y="38" class="h">Homeopathy</text><text x="266" y="68" class="s">Case taking</text>
+    <rect x="484" width="218" height="94" rx="22" fill="#f4f2ff" stroke="#e9e5ff"/><text x="508" y="38" class="h">Ayurveda</text><text x="508" y="68" class="s">Dosha &amp; Pathya</text>
+    <rect x="726" width="218" height="94" rx="22" fill="#f0fbf7" stroke="#cbeee2"/><text x="750" y="38" class="h">Physiotherapy</text><text x="750" y="68" class="s">Treatment plans</text>
+    <rect x="968" width="198" height="94" rx="22" fill="#f0f7ff" stroke="#dbeafe"/><text x="992" y="38" class="h">Dental</text><text x="992" y="68" class="s">Procedures · Rx</text>
+
+    <rect y="126" width="218" height="94" rx="22" fill="#f8fafc" stroke="#e2e8f0"/><text x="24" y="164" class="h">Unani</text><text x="24" y="194" class="s">Traditional practice</text>
+    <rect x="242" y="126" width="218" height="94" rx="22" fill="#f8fafc" stroke="#e2e8f0"/><text x="266" y="164" class="h">Siddha</text><text x="266" y="194" class="s">System vocabulary</text>
+    <rect x="484" y="126" width="218" height="94" rx="22" fill="#f4f2ff" stroke="#e9e5ff"/><text x="508" y="164" class="h">Naturopathy</text><text x="508" y="194" class="s">Advice &amp; routines</text>
+    <rect x="726" y="126" width="218" height="94" rx="22" fill="#fff5eb" stroke="#ffdfcf"/><text x="750" y="164" class="h">Nutrition</text><text x="750" y="194" class="s">Diet &amp; goals</text>
+    <rect x="968" y="126" width="198" height="94" rx="22" fill="#f0fbf7" stroke="#cbeee2"/><text x="992" y="164" class="h">Psychology</text><text x="992" y="194" class="s">Sessions</text>
+  </g>
+  <g transform="translate(96 680)">
+    <rect width="1208" height="62" rx="31" fill="#6d5ef7"/>
+    <text x="42" y="40" class="pill white">Design challenge: make one note-taking system feel native to each practice type.</text>
+    <circle cx="1148" cy="31" r="18" fill="#fff" opacity="0.95"/><path d="M1140 31h16M1148 23v16" stroke="#6d5ef7" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
