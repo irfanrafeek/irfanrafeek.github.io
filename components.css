@@ -197,6 +197,12 @@ body.page--article {
     text-underline-offset: 6px;
 }
 
+.hero-description .underline {
+    text-decoration-color: var(--semantic-color-text-primary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
 .accent-dot {
     color: var(--semantic-color-interactive-primary);
 }
