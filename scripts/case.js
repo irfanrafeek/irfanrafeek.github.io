@@ -165,7 +165,7 @@
         if (!root) return;
 
         var source     = root.getAttribute('data-source') || 'projects.json';
-        var backTarget = root.getAttribute('data-back')   || 'work.html';
+        var backTarget = root.getAttribute('data-back')   || '/work';
         var backLabel  = root.getAttribute('data-back-label') || 'All work';
         var kindLabel  = root.getAttribute('data-kind') || 'Case study';
 

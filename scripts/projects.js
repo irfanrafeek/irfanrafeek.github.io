@@ -4,7 +4,7 @@
 //   <div class="projects-grid" data-projects="featured"></div>
 // Optional attributes:
 //   data-source="writings.json"    -> load writings instead of projects (default: projects.json)
-//   data-target="writing.html"     -> swap the card link target (default: case.html)
+//   data-target="/writing"          -> swap the card link target (default: /case)
 (function () {
     var SANITY_PROJECT_ID = 'qgasa874';
     var SANITY_DATASET = 'production';
@@ -20,9 +20,9 @@
         'featured.json': '*[(_type=="project" || _type=="writing") && featured==true]|order(coalesce(sortOrder, 9999) asc, year desc){_type,title,"slug":slug.current,year,"image":image.asset->url,description,tags,featured}',
     };
 
-    // Route writing cards to writing.html; everything else uses the grid's configured target.
+    // Route writing cards to /writing; everything else uses the grid's configured target.
     function resolveTarget(item, defaultTarget) {
-        return item && item._type === 'writing' ? 'writing.html' : defaultTarget;
+        return item && item._type === 'writing' ? '/writing' : defaultTarget;
     }
 
     function escapeHtml(value) {
@@ -85,7 +85,7 @@
 
         for (var grid of grids) {
             var mode = grid.getAttribute('data-projects');
-            var target = grid.getAttribute('data-target') || 'case.html';
+            var target = grid.getAttribute('data-target') || '/case';
             // 'featured' mode pulls the mixed projects+writings feed so writing cards
             // can appear alongside projects on the home page.
             var source = mode === 'featured'
