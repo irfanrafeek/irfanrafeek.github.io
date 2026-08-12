@@ -422,8 +422,6 @@ body.page--article {
 /* ===== WORK SECTION ===== */
 #work {
     margin-bottom: var(--semantic-spacing-4xl);
-    padding: var(--semantic-spacing-4xl) 0;
-    border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
 .projects-grid {
