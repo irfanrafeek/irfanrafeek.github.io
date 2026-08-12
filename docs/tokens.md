@@ -70,10 +70,10 @@ Plus status colors: `success`, `error`, `warning` at `50` / `500` / `600`.
 ### Typography
 
 ```
---primitive-font-serif         → 'EB Garamond', 'Georgia', serif
+--primitive-font-serif         → 'Merriweather', 'Georgia', serif
 --primitive-font-sans          → 'Inter', system-ui, sans-serif
 --primitive-font-mono          → 'Monaco', 'Courier New', monospace
---primitive-font-fraunces      → 'Fraunces', 'EB Garamond', serif
+--primitive-font-fraunces      → 'Fraunces', 'Merriweather', 'Georgia', serif
 --primitive-font-source-serif  → 'Source Serif 4', 'Source Serif Pro', serif
 --primitive-font-jetbrains-mono → 'JetBrains Mono', 'Monaco', monospace
 
@@ -148,7 +148,7 @@ Per-theme resolution:
 
 | Intent | Light | Dark | Editorial | Code |
 | --- | --- | --- | --- | --- |
-| `font/display` | EB Garamond | EB Garamond | Fraunces | JetBrains Mono |
+| `font/display` | Merriweather | Merriweather | Fraunces | JetBrains Mono |
 | `font/body` | Inter | Inter | Source Serif 4 | JetBrains Mono |
 | `font/eyebrow` | Inter | Inter | Inter | JetBrains Mono |
 

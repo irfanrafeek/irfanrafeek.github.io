@@ -35,7 +35,9 @@ Components consume semantic tokens, never primitives. Four themes
 ## Documentation in this folder
 
 - [**tokens.md**](./tokens.md) — Token reference: every primitive ramp,
-  every semantic intent, naming convention, when to use which.
+  every semantic intent, naming convention, when to use which. Includes the
+  [motion scale](./tokens.md#motion) — durations, easing curves, and the
+  per-theme motion character.
 - [**components.md**](./components.md) — Class reference: the major
   component classes (`.hero`, `.project-card`, `.case-*`, `.theme-switcher`, etc.)
   with markup examples.

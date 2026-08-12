@@ -28,8 +28,8 @@ Four themes — **Light**, **Dark**, **Editorial** (data-theme = `sepia`),
 
 | Theme | data-theme | Display font | Body font | Surface |
 | --- | --- | --- | --- | --- |
-| **Light** | (none / default) | EB Garamond | Inter | warm off-white |
-| **Dark** | `dark` | EB Garamond | Inter | near-black |
+| **Light** | (none / default) | Merriweather | Inter | warm off-white |
+| **Dark** | `dark` | Merriweather | Inter | near-black |
 | **Editorial** | `sepia` | Fraunces | Source Serif 4 | cream paper |
 | **Code** | `slate` | JetBrains Mono | JetBrains Mono | cool dim |
 
@@ -37,6 +37,15 @@ Plus body rhythm:
 - Light/Dark → line-height **1.6 relaxed**, letter-spacing normal
 - Editorial → **1.8 loose**, normal
 - Code → **1.25 snug**, tight (-0.02em)
+
+And motion — a theme carries its own *feel*, not just its look:
+- Light/Dark → **120ms**, `ease-standard` — neutral, precise
+- Editorial → **200ms**, `ease-soft` — calm, gentle settle
+- Code → **80ms**, `linear` — mechanical, reads as switched rather than animated
+
+Dark deliberately shares Light's motion: it's a colour mode, not a separate
+personality. See [tokens.md → Motion](./tokens.md#motion) for the full scale
+and the rules for extending it.
 
 ## What a theme block looks like
 
