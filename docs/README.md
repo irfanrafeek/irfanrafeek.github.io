@@ -78,3 +78,70 @@ styles bind their `fontFamily` to `font/display`, `font/body`, and
 like the live site.
 
 See [themes.md](./themes.md#in-figma) for the editor workflow.
+
+---
+
+## Where content actually comes from
+
+**Sanity, not the JSON files.** This trips people up, so read this before
+editing case-study or writing copy.
+
+`scripts/case.js` and `scripts/projects.js` fetch from the Sanity API
+(project `qgasa874`, dataset `production`) at page load. The committed
+`projects.json` / `writings.json` are legacy import sources that are no
+longer read by the site.
+
+So: **editing `projects.json` does not change the live page.** To fix
+article copy, edit the Sanity document — via the Studio in `sanity-studio/`,
+or with a direct mutation using the CLI token in `~/.config/sanity/config.json`.
+It is still worth keeping the JSON files in sync so the two don't diverge.
+
+The `data-source="projects.json"` attribute is a leftover naming: it selects
+the Sanity document *type* (`project` / `writing`), it does not fetch a file.
+
+## URLs and local development
+
+Internal links are **extensionless** — `/about`, `/work`, `/case?slug=…`.
+GitHub Pages resolves these to the matching `.html` file automatically, so
+no folder restructuring or build step is involved. The `.html` URLs still
+work, which keeps previously shared links alive.
+
+`python3 -m http.server` does **not** do that resolution, so every clean
+link 404s against it. Use the included server instead:
+
+```bash
+python3 devserver.py 4000
+```
+
+It adds the same extensionless fallback Pages uses (only when no literal
+file matches and the URL has no extension, so it never shadows a real
+file) and sends `Cache-Control: no-store` so CSS edits show up without a
+hard refresh. `.claude/launch.json` already points at it.
+
+Case studies are still `/case?slug=…`. Making those clean (`/work/<slug>`)
+needs a page generated per slug, since no file exists at that path — that
+would also fix the fact that crawlers currently see an empty shell for
+articles, because the content is fetched client-side.
+
+## Deploying
+
+Push to `main`; GitHub Pages builds automatically (legacy build type,
+branch `main`, path `/`, custom domain via `CNAME`).
+
+**Do not cancel a stuck `pages-build-deployment` run.** Cancelling orphans
+the Pages build record and wedges the service in `building`, so every later
+push queues behind a phantom build and never goes live. If a build looks
+stuck, nudge it instead:
+
+```bash
+gh api -X POST repos/irfanrafeek/irfanrafeek.github.io/pages/builds
+```
+
+That is non-destructive and clears the wedge. Verify a deploy landed by
+checking both the build status and the live bytes — the API can report
+success while the CDN still serves the old file:
+
+```bash
+gh api repos/irfanrafeek/irfanrafeek.github.io/pages/builds/latest --jq '.status, .commit'
+curl -s https://www.irfanrafeek.com/ | grep -o 'something-you-changed'
+```

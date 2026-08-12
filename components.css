@@ -341,7 +341,7 @@ body.page--article {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--semantic-spacing-3xl);
 }
 
@@ -392,8 +392,10 @@ body.page--article {
 }
 
 .about-me-image {
-    width: 360px;
-    height: 360px;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1;
+    height: auto;
     display: block;
     border-radius: 50%;
     border: 1px solid var(--semantic-color-border-primary);
@@ -426,8 +428,8 @@ body.page--article {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--semantic-spacing-xl);
+    grid-template-columns: 1fr;
+    gap: var(--semantic-spacing-2xl);
 }
 
 .project-card {
@@ -754,18 +756,6 @@ footer {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: var(--semantic-spacing-2xl);
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: var(--semantic-spacing-2xl);
-    }
-}
-
 @media (max-width: 968px) {
     nav,
     .container,

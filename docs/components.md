@@ -119,14 +119,20 @@ Tags are separated by accent-colour bullet points via `::after` CSS.
 <div class="projects-grid"
      data-projects
      data-source="writings.json"
-     data-target="writing.html"></div>
+     data-target="/writing"></div>
 ```
 
 The `scripts/projects.js` renderer:
 
-- Reads `data-source` (default `projects.json`).
-- Reads `data-target` (default `case.html`) — used as the card link target.
+- Reads `data-source` (default `projects.json`) — this selects the Sanity
+  document *type*, it does not fetch the JSON file. See "Where content
+  actually comes from" in [README](./README.md).
+- Reads `data-target` (default `/case`) — used as the card link target.
 - If `data-projects="featured"`, filters to `featured: true` items.
+
+`.projects-grid` is a **single column** at every width — cards render
+full-bleed, stacked. This is shared by the homepage, Projects, and Writing
+pages, so changing it changes all three.
 
 ### Card markup (produced by the renderer)
 
@@ -161,7 +167,7 @@ The `scripts/projects.js` renderer:
 </div>
 ```
 
-3-column grid above 1200px, stacked below.
+2-column grid, stacked below 968px.
 
 ---
 

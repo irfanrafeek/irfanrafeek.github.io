@@ -183,10 +183,24 @@ The `body` element binds these directly so themes can vary the rhythm:
 ### Layout
 
 ```
---semantic-layout-container-max-width-default → 1200px
---semantic-layout-container-max-width-narrow  → 1000px
---semantic-layout-container-max-width-reading → 736px  (long-form articles)
+--semantic-layout-container-max-width-default → 800px
+--semantic-layout-container-max-width-narrow  → 800px
+--semantic-layout-container-max-width-reading → 672px  (long-form articles)
 ```
+
+`default` and `narrow` are deliberately the same value — every page shares
+one 800px column. The `narrow` variant is kept as a separate token so the
+two can diverge again without touching markup.
+
+Anything sized in fixed pixels inside a container must be checked against
+this width when it changes. Watch for two failure modes:
+
+- **Fixed square images going oval.** Set `width: 100%` + `max-width` +
+  `aspect-ratio` rather than a fixed `width`/`height` pair (see
+  `.about-me-image`).
+- **Media queries wider than the container.** A `@media (max-width: 1200px)`
+  rule now fires on essentially every viewport, so it silently becomes the
+  default rather than a responsive exception.
 
 ---
 
