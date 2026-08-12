@@ -180,6 +180,70 @@ The `body` element binds these directly so themes can vary the rhythm:
 --semantic-type-body-base-letter-spacing → normal  (Light/Dark) | normal (Editorial) | tight (Code)
 ```
 
+### Motion
+
+Primitives mirror the [DTCG format module](https://tr.designtokens.org/format/)
+types — `duration` (number + unit) and `cubicBezier`.
+
+```
+--primitive-duration-instant → 80ms
+--primitive-duration-fast    → 120ms
+--primitive-duration-base    → 200ms
+--primitive-duration-slow    → 320ms
+
+--primitive-ease-standard → cubic-bezier(0.2, 0, 0, 1)    workhorse; fast out, settles
+--primitive-ease-soft     → cubic-bezier(0.4, 0, 0.2, 1)  calm, editorial
+--primitive-ease-exit     → cubic-bezier(0.4, 0, 1, 1)    accelerates away
+--primitive-ease-spring   → cubic-bezier(0.34, 1.56, 0.64, 1)  slight overshoot
+--primitive-ease-linear   → linear                        mechanical, no easing
+```
+
+**Semantic motion intents are themable** — the same mechanism as
+`--semantic-font-display`. Components reference these, never the primitives:
+
+```
+--semantic-motion-hover-duration
+--semantic-motion-hover-easing
+--semantic-motion-hover           ← shorthand pair (duration + easing)
+```
+
+The shorthand mirrors DTCG's `transition` composite type, so components read:
+
+```css
+.project-card {
+    transition: border-color var(--semantic-motion-hover),
+                box-shadow var(--semantic-motion-hover);
+}
+```
+
+Per-theme character:
+
+| Theme            | Duration | Easing     | Reads as              |
+| ---------------- | -------- | ---------- | --------------------- |
+| Light / Dark     | 120ms    | `standard` | neutral, precise      |
+| Editorial (sepia)| 200ms    | `soft`     | calm, gentle settle   |
+| Code (slate)     | 80ms     | `linear`   | mechanical, switched  |
+
+Dark deliberately shares Light's motion — it's a colour mode, not a separate
+personality. Only Editorial and Code are distinct characters.
+
+**Two rules when adding motion:**
+
+1. **Hover stays under 200ms in every theme.** Hover is feedback on something
+   the visitor is touching. A theme may change how it settles, never whether
+   it keeps up.
+2. **Never `transition: all`.** List the properties that actually change —
+   `all` animates things you didn't intend (including layout properties) and
+   costs more to composite.
+
+**Reduced motion** is handled globally at the end of `components.css` per
+WCAG 2.3.3. Durations are near-zeroed rather than removed, so state changes
+still apply instantly and nothing waits on a `transitionend` that never fires.
+
+**Figma caveat:** unlike colour and type, motion tokens do **not** round-trip
+into the Figma library — Figma has no easing or duration variable type.
+Durations could be mirrored as number variables; the curves cannot.
+
 ### Layout
 
 ```

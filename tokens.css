@@ -365,6 +365,28 @@
   --primitive-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.1);
   --primitive-shadow-xl: 0px 20px 25px rgba(0, 0, 0, 0.1);
 
+  /* TIER 1: PRIMITIVES - MOTION DURATION
+     Mirrors the DTCG `duration` type (number + time unit). Kept to a short
+     ramp on purpose — more steps invite inconsistency, not nuance. */
+  --primitive-duration-instant: 80ms;
+  --primitive-duration-fast: 120ms;
+  --primitive-duration-base: 200ms;
+  --primitive-duration-slow: 320ms;
+
+  /* TIER 1: PRIMITIVES - MOTION EASING
+     Mirrors the DTCG `cubicBezier` type. Each curve is a distinct character,
+     not a shade of the same one:
+       standard — leaves fast, decelerates into place. The workhorse.
+       soft     — gentler on both ends; reads calm and editorial.
+       exit     — accelerates away; for things leaving the screen.
+       spring   — slight overshoot; for elements that should feel physical.
+       linear   — no easing at all; mechanical, deliberately "machine". */
+  --primitive-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --primitive-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --primitive-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --primitive-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --primitive-ease-linear: linear;
+
   /* TIER 2: SEMANTIC TOKENS - LIGHT MODE */
   --semantic-color-background-primary: var(--primitive-color-neutral-50);
   --semantic-color-background-secondary: var(--primitive-color-neutral-100);
@@ -419,6 +441,23 @@
   /* Body reading rhythm — themable */
   --semantic-type-body-base-line-height: var(--primitive-line-height-relaxed);
   --semantic-type-body-base-letter-spacing: var(--primitive-letter-spacing-normal);
+
+  /* SEMANTIC MOTION INTENTS — themable.
+     Components reference these, never the primitives above, so each theme can
+     express its own character in one place — the same way it overrides
+     --semantic-font-display.
+
+     `hover` is feedback on something the visitor is touching, so it stays fast
+     in every theme; a theme may change how it settles, not whether it keeps up.
+     Themes vary easing far more than duration: easing carries personality at no
+     cost in perceived latency, whereas a slow duration just reads as lag.
+
+     --semantic-motion-hover is a shorthand pair (duration + easing) mirroring
+     the DTCG `transition` composite type, so components read:
+         transition: color var(--semantic-motion-hover); */
+  --semantic-motion-hover-duration: var(--primitive-duration-fast);
+  --semantic-motion-hover-easing: var(--primitive-ease-standard);
+  --semantic-motion-hover: var(--semantic-motion-hover-duration) var(--semantic-motion-hover-easing);
 
   /* LAYOUT - Container max-widths
      Named variants for content container widths. Use modifier classes
@@ -498,6 +537,11 @@
   --semantic-font-eyebrow: var(--primitive-font-sans);
   --semantic-type-body-base-line-height: var(--primitive-line-height-loose);
   --semantic-type-body-base-letter-spacing: var(--primitive-letter-spacing-normal);
+
+  /* Motion — editorial: a gentler settle, marginally longer. Still under the
+     200ms hover ceiling, so "calm" never becomes "slow to respond". */
+  --semantic-motion-hover-duration: var(--primitive-duration-base);
+  --semantic-motion-hover-easing: var(--primitive-ease-soft);
 }
 
 /* SLATE THEME (cool dim) */
@@ -527,6 +571,11 @@
   --semantic-font-eyebrow: var(--primitive-font-jetbrains-mono);
   --semantic-type-body-base-line-height: var(--primitive-line-height-snug);
   --semantic-type-body-base-letter-spacing: var(--primitive-letter-spacing-tight);
+
+  /* Motion — code: mechanical. No easing curve at all and the shortest step,
+     so state changes read as switched rather than animated. */
+  --semantic-motion-hover-duration: var(--primitive-duration-instant);
+  --semantic-motion-hover-easing: var(--primitive-ease-linear);
 }
 
 /* ARTICLE TYPE SCALE - mobile (≤968px)

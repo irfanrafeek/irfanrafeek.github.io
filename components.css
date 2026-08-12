@@ -81,7 +81,7 @@ nav.scrolled {
     color: var(--semantic-color-text-primary);
     font-size: var(--primitive-font-size-sm);
     font-weight: var(--primitive-font-weight-regular);
-    transition: color 0.3s ease;
+    transition: color var(--semantic-motion-hover);
 }
 
 .nav-links a:hover {
@@ -93,7 +93,9 @@ nav.scrolled {
     color: var(--semantic-color-text-primary);
     padding: var(--semantic-spacing-sm) var(--semantic-spacing-lg);
     border-radius: var(--semantic-radius-sm);
-    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    transition: border-color var(--semantic-motion-hover),
+                background-color var(--semantic-motion-hover),
+                color var(--semantic-motion-hover);
     border: 1px solid var(--semantic-color-border-primary);
     cursor: pointer;
     display: inline-block;
@@ -237,7 +239,7 @@ body.page--article {
     border: none;
     padding: 0;
     white-space: nowrap;
-    transition: all 0.3s ease;
+    transition: color var(--semantic-motion-hover);
 }
 
 .category-tag:not(:last-child)::after {
@@ -285,7 +287,7 @@ body.page--article {
     text-decoration: none;
     font-size: var(--primitive-font-size-sm);
     font-weight: var(--primitive-font-weight-medium);
-    transition: color 0.3s ease;
+    transition: color var(--semantic-motion-hover);
     margin-top: var(--semantic-spacing-sm);
 }
 
@@ -324,7 +326,8 @@ body.page--article {
     -webkit-mask-size: contain;
     mask-size: contain;
     opacity: 0.7;
-    transition: opacity 0.2s ease, color 0.2s ease;
+    transition: opacity var(--semantic-motion-hover),
+                color var(--semantic-motion-hover);
 }
 
 .client-logo:hover {
@@ -437,7 +440,8 @@ body.page--article {
     background-color: var(--semantic-color-background-secondary);
     border: 1px solid var(--semantic-color-border-primary);
     border-radius: var(--semantic-radius-md);
-    transition: all 0.3s ease;
+    transition: border-color var(--semantic-motion-hover),
+                box-shadow var(--semantic-motion-hover);
 }
 
 .project-card:hover {
@@ -545,7 +549,7 @@ body.page--article {
     font-size: var(--primitive-font-size-xl-sm);
     color: var(--semantic-color-interactive-primary);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--semantic-motion-hover);
     font-weight: var(--primitive-font-weight-serif-medium);
     letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
 }
@@ -580,7 +584,7 @@ footer {
     text-decoration: none;
     color: var(--semantic-color-text-secondary);
     font-size: var(--primitive-font-size-sm);
-    transition: color 0.3s ease;
+    transition: color var(--semantic-motion-hover);
 }
 
 .social-links a:hover {
@@ -960,7 +964,7 @@ footer {
     color: var(--semantic-color-interactive-primary);
     text-decoration: none;
     border-bottom: 1px solid var(--semantic-color-interactive-primary);
-    transition: opacity 0.2s ease;
+    transition: opacity var(--semantic-motion-hover);
 }
 
 .experience-description a:hover {
@@ -1206,7 +1210,8 @@ a.project-card {
     background-color: var(--semantic-color-background-primary);
     color: var(--semantic-color-text-primary);
     cursor: pointer;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    transition: border-color var(--semantic-motion-hover),
+                background-color var(--semantic-motion-hover);
 }
 
 .case-gallery__nav:hover {
@@ -1262,4 +1267,23 @@ a.project-card {
     line-height: var(--semantic-type-article-small-line-height);
     font-style: normal;
     color: var(--semantic-color-text-tertiary);
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   WCAG 2.3.3 (Animation from Interactions): motion triggered by interaction
+   must be disableable. Honours the OS-level "reduce motion" setting.
+
+   Transitions are near-zeroed rather than removed, so state changes still
+   apply instantly and nothing depends on a transitionend that never fires.
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
