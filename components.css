@@ -192,6 +192,33 @@ body.page--article {
     letter-spacing: var(--semantic-type-display-sm-letter-spacing);
 }
 
+/* Opening line of an interior page (work, writings, about). Not the page's
+   name — .page-eyebrow above it carries that. This is the lede: a sentence
+   that says what the page holds. Deliberately quieter than .hero-title, which
+   is reserved for the homepage; these pages are entered on purpose, so the
+   lede orients rather than announces. Accent marks inside it (.accent-dot,
+   .underline) keep their brand colour and read as emphasis against the
+   secondary text. */
+.page-lede {
+    font-family: var(--semantic-type-lede-lg-font-family);
+    font-size: var(--semantic-type-lede-lg-font-size);
+    font-weight: var(--semantic-type-lede-lg-font-weight);
+    line-height: var(--semantic-type-lede-lg-line-height);
+    letter-spacing: var(--semantic-type-lede-lg-letter-spacing);
+    color: var(--semantic-color-text-secondary);
+    margin-bottom: var(--semantic-spacing-lg);
+}
+
+/* Small lede — for pages whose opening line is a full sentence of prose
+   rather than a short statement. Same display face, so it still reads as
+   masthead and not as body copy, but sized to be read rather than scanned. */
+.page-lede--sm {
+    font-size: var(--semantic-type-lede-sm-font-size);
+    font-weight: var(--semantic-type-lede-sm-font-weight);
+    line-height: var(--semantic-type-lede-sm-line-height);
+    letter-spacing: var(--semantic-type-lede-sm-letter-spacing);
+}
+
 .underline {
     text-decoration: underline;
     text-decoration-color: var(--semantic-color-interactive-primary);
@@ -916,7 +943,7 @@ footer {
 
 .experience-company {
     font-family: var(--semantic-type-heading-lg-font-family);
-    font-size: var(--semantic-type-heading-lg-font-size);
+    font-size: var(--semantic-type-heading-sm-font-size);
     font-weight: var(--semantic-type-heading-lg-font-weight);
     line-height: var(--semantic-type-heading-lg-line-height);
     letter-spacing: var(--semantic-type-heading-lg-letter-spacing);
@@ -931,12 +958,11 @@ footer {
     letter-spacing: var(--semantic-type-eyebrow-md-letter-spacing);
     text-transform: uppercase;
     color: var(--semantic-color-text-tertiary);
-    margin-top: var(--semantic-spacing-xs);
 }
 
 .experience-role {
     font-family: var(--semantic-type-heading-xs-font-family);
-    font-size: var(--semantic-type-heading-xs-font-size);
+    font-size: var(--semantic-type-heading-2xs-font-size);
     font-weight: var(--semantic-type-heading-xs-font-weight);
     line-height: var(--semantic-type-heading-xs-line-height);
     letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
@@ -958,6 +984,29 @@ footer {
     line-height: var(--semantic-type-body-md-line-height);
     color: var(--semantic-color-text-secondary);
     margin: 0;
+}
+
+/* Sub-heading inside an experience entry — for entries that cover more than
+   one engagement (e.g. a consulting period spanning several clients). */
+.experience-subhead {
+    font-family: var(--semantic-type-heading-2xs-font-family);
+    font-size: var(--semantic-type-heading-2xs-font-size);
+    font-weight: var(--semantic-type-heading-2xs-font-weight);
+    line-height: var(--semantic-type-heading-2xs-line-height);
+    letter-spacing: var(--semantic-type-heading-2xs-letter-spacing);
+    color: var(--semantic-color-text-primary);
+    margin: 0;
+}
+
+/* Second and later sub-heads need air above them; the first sits flush with
+   the entry's role line. */
+.experience-subhead + p,
+.experience-description > .experience-subhead:not(:first-child) {
+    margin-top: 0;
+}
+
+.experience-description > .experience-subhead:not(:first-child) {
+    margin-top: var(--semantic-spacing-md);
 }
 
 .experience-description a {
