@@ -330,14 +330,31 @@ body.page--article {
     gap: var(--semantic-spacing-lg);
 }
 
+/* Number and title sit on one line with a hairline running from the title to
+   the right edge, the way a printed index rules off a heading. The rule is
+   what announces a new section, so the type stays small — and it replaces the
+   section's own top border rather than sitting alongside it. */
+.section-header > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: var(--semantic-spacing-sm);
+    flex: 1 1 auto;
+}
+
+.section-header > div:first-child::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 1px;
+    background-color: var(--semantic-color-border-primary);
+}
+
 .section-number {
-    font-family: var(--semantic-type-eyebrow-md-font-family);
-    font-size: var(--semantic-type-eyebrow-md-font-size);
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-xs);
     font-weight: var(--semantic-type-eyebrow-md-font-weight);
     color: var(--semantic-color-text-tertiary);
-    margin-bottom: var(--semantic-spacing-xs);
     line-height: var(--semantic-type-eyebrow-md-line-height);
-    letter-spacing: var(--semantic-type-eyebrow-md-letter-spacing);
+    letter-spacing: var(--primitive-letter-spacing-widest);
 }
 
 .section-title {
@@ -367,7 +384,6 @@ body.page--article {
 #clients {
     margin-bottom: var(--semantic-spacing-4xl);
     padding: var(--semantic-spacing-4xl) 0;
-    border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
 .clients-grid {
@@ -407,7 +423,6 @@ body.page--article {
 #services {
     margin-bottom: var(--semantic-spacing-4xl);
     padding: var(--semantic-spacing-4xl) 0;
-    border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
 /* Services read as a divided list rather than a grid of boxes: a two-column
@@ -424,16 +439,11 @@ body.page--article {
     flex-direction: column;
     gap: var(--semantic-spacing-xs);
     padding: var(--semantic-spacing-md) 0;
-    border-top: 1px solid var(--semantic-color-border-secondary);
-}
-
-.services-grid > .service:last-child {
-    border-bottom: 1px solid var(--semantic-color-border-secondary);
 }
 
 .service-title {
     font-family: var(--semantic-font-display);
-    font-size: var(--semantic-type-heading-xs-font-size);
+    font-size: var(--semantic-type-heading-2xs-font-size);
     font-weight: var(--primitive-font-weight-serif-medium);
     color: var(--semantic-color-text-primary);
     letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
@@ -468,7 +478,6 @@ body.page--article {
 #about-me {
     margin-bottom: var(--semantic-spacing-4xl);
     padding: var(--semantic-spacing-4xl) 0;
-    border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
 .about-me-grid {
@@ -936,6 +945,13 @@ footer {
 
     .section-header {
         flex-direction: column;
+    }
+
+    /* Stacking the header makes it a column flex container, where flex-start
+       shrinks children to their content width — which would leave the rule
+       nothing to fill. Stretch the heading row back to full width. */
+    .section-header > div:first-child {
+        align-self: stretch;
     }
 
     .clients-grid {
