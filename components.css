@@ -28,6 +28,47 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ===== GRAIN =====
+   A single noise field across the page ground. It is painted three times —
+   once on the body, once on the nav, once on the footer — because nav and
+   footer carry their own opaque background and would otherwise punch flat
+   rectangles through the texture at the top and bottom of the viewport.
+
+   Each layer is a pseudo-element at z-index -1, which paints above its own
+   element's background but below every piece of content, so nothing is ever
+   drawn through grain. Cards and article surfaces are left flat on purpose:
+   grain belongs to the ground, not to the things standing on it. */
+body::before,
+nav::before,
+footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--semantic-texture-grain-image);
+    background-repeat: repeat;
+    opacity: var(--semantic-texture-grain-opacity);
+}
+
+/* The body layer is viewport-fixed rather than page-height, so the texture
+   costs one screen of compositing no matter how long the page runs. */
+body::before {
+    position: fixed;
+}
+
+/* nav already establishes a stacking context (position + z-index); footer is
+   given one in its own rule below so its grain layer stays inside it. */
+
+/* Grain is a screen texture — on paper it is just noise in the toner. */
+@media print {
+    body::before,
+    nav::before,
+    footer::before {
+        display: none;
+    }
+}
+
 /* ===== NAVIGATION ===== */
 nav {
     display: flex;
@@ -457,13 +498,14 @@ body.page--article {
 .projects-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--semantic-spacing-2xl);
+    gap: var(--semantic-spacing-lg);
 }
 
 .project-card {
     display: flex;
-    gap: var(--semantic-spacing-xl);
-    padding: var(--semantic-spacing-xl);
+    gap: var(--semantic-spacing-md);
+    padding: var(--semantic-spacing-lg);
+    align-items: center;
     background-color: var(--semantic-color-background-secondary);
     border: 1px solid var(--semantic-color-border-primary);
     border-radius: var(--semantic-radius-md);
@@ -476,53 +518,78 @@ body.page--article {
     box-shadow: var(--semantic-shadow-md);
 }
 
+/* Framed thumbnail: a mat and a hairline around the image, so the cover
+   reads as something placed on the card rather than cropped into it.
+   content-box keeps the mat and border outside the ratio, so the visible
+   image is exactly 4:3 — the shape of the work itself, which is screens
+   rather than icons, so covers crop far less than a square did. */
 .project-image {
     font-size: var(--primitive-font-size-5xl);
-    min-width: 80px;
-    height: 80px;
+    box-sizing: content-box;
+    min-width: 168px;
+    width: 168px;
+    height: 126px;
+    padding: var(--semantic-spacing-xs);
+    background-color: var(--semantic-color-background-article);
+    border: 1px solid var(--semantic-color-border-primary);
+    border-radius: var(--semantic-radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* When a card uses an uploaded image instead of an emoji, keep it in the 80px slot */
+/* When a card uses an uploaded image instead of an emoji, it fills the mat */
 .project-image img {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: var(--semantic-radius-sm);
+    border-radius: 2px;
 }
 
+/* The title and description are one thought, so they sit tight together;
+   the tags are a separate register and keep their own breathing room. */
 .project-content {
     display: flex;
     flex-direction: column;
-    gap: var(--semantic-spacing-md);
+    gap: var(--semantic-spacing-xs);
 }
 
+/* Markup order is title-then-year, so column-reverse lifts the year above
+   the title as an eyebrow without changing what scripts/projects.js renders. */
 .project-meta {
     display: flex;
-    align-items: baseline;
-    gap: var(--semantic-spacing-md);
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 2px;
 }
 
 .project-title {
     font-family: var(--semantic-font-display);
-    font-size: var(--semantic-type-heading-sm-font-size);
+    font-size: var(--semantic-type-heading-xs-font-size);
     font-weight: var(--primitive-font-weight-serif-medium);
     color: var(--semantic-color-text-primary);
     margin: 0;
     letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
 }
 
+/* .project-year, .project-tags and .tag are shared with the case-study
+   header, so the card's treatment of them is scoped to the card. */
 .project-year {
     font-size: var(--primitive-font-size-sm);
     color: var(--semantic-color-text-tertiary);
     font-weight: var(--primitive-font-weight-medium);
 }
 
+.project-card .project-year {
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--primitive-letter-spacing-widest);
+}
+
 .project-description {
-    font-size: var(--primitive-font-size-base);
-    line-height: var(--semantic-type-body-md-line-height);
+    font-size: var(--primitive-font-size-sm);
+    line-height: 1.55;
     color: var(--semantic-color-text-secondary);
 }
 
@@ -530,6 +597,16 @@ body.page--article {
     display: flex;
     gap: var(--semantic-spacing-sm);
     flex-wrap: wrap;
+}
+
+.project-card .project-tags {
+    gap: var(--semantic-spacing-xs);
+    margin-top: var(--semantic-spacing-xs);
+}
+
+.project-card .tag {
+    padding: 2px var(--semantic-spacing-sm);
+    font-size: 11px;
 }
 
 .tag {
@@ -590,6 +667,10 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* Stacking context, so the -1 grain layer resolves against the footer and
+       not against the page. */
+    position: relative;
+    z-index: 0;
     padding: var(--semantic-spacing-2xl) var(--semantic-spacing-xl);
     border-top: 1px solid var(--semantic-color-border-secondary);
     color: var(--semantic-color-text-secondary);
@@ -793,8 +874,18 @@ footer {
         padding-right: var(--semantic-spacing-lg);
     }
 
+    /* Stacked below the breakpoint, but a full-bleed image would turn a
+       compact list into a gallery, so the thumbnail stays a thumbnail. */
     .project-card {
-        gap: var(--semantic-spacing-lg);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--semantic-spacing-md);
+    }
+
+    .project-image {
+        min-width: 120px;
+        width: 120px;
+        height: 90px;  /* 4:3 */
     }
 
     .hero-title {
