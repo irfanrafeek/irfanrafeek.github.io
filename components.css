@@ -410,30 +410,58 @@ body.page--article {
     border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
+/* Services read as a divided list rather than a grid of boxes: a two-column
+   grid orphans an odd third item and crushes the copy measure, and a list
+   still works if a fourth practice is added later. */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--semantic-spacing-3xl);
+    grid-template-columns: 1fr;
+    gap: 0;
 }
 
 .service {
     display: flex;
     flex-direction: column;
-    gap: var(--semantic-spacing-md);
+    gap: var(--semantic-spacing-xs);
+    padding: var(--semantic-spacing-md) 0;
+    border-top: 1px solid var(--semantic-color-border-secondary);
+}
+
+.services-grid > .service:last-child {
+    border-bottom: 1px solid var(--semantic-color-border-secondary);
 }
 
 .service-title {
     font-family: var(--semantic-font-display);
-    font-size: var(--semantic-type-heading-sm-font-size);
+    font-size: var(--semantic-type-heading-xs-font-size);
     font-weight: var(--primitive-font-weight-serif-medium);
     color: var(--semantic-color-text-primary);
     letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
 }
 
 .service-description {
-    font-size: var(--primitive-font-size-base);
-    line-height: var(--semantic-type-body-md-line-height);
+    font-size: var(--primitive-font-size-sm);
+    line-height: 1.55;
     color: var(--semantic-color-text-secondary);
+}
+
+/* Inline link inside body copy. Follows the hero-description treatment —
+   a hairline underline that warms to the accent on hover — rather than the
+   3px brand .underline, which is a display gesture and would read as a bar
+   at body size. */
+.text-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--semantic-color-text-tertiary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: color var(--semantic-motion-hover),
+                text-decoration-color var(--semantic-motion-hover);
+}
+
+.text-link:hover {
+    color: var(--semantic-color-interactive-primary);
+    text-decoration-color: var(--semantic-color-interactive-primary);
 }
 
 /* ===== ABOUT ME SECTION ===== */
@@ -960,10 +988,6 @@ footer {
 
     .cta-email {
         font-size: var(--semantic-type-heading-2xs-font-size);
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr;
     }
 
     .category-scroll {
