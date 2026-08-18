@@ -480,8 +480,8 @@ body.page--article {
 
 .about-me-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-    gap: var(--semantic-spacing-3xl);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr);
+    gap: var(--semantic-spacing-lg);
     align-items: center;
 }
 
@@ -499,11 +499,11 @@ body.page--article {
 
 .about-me-image {
     width: 100%;
-    max-width: 360px;
-    aspect-ratio: 1;
+    max-width: 320px;
+    aspect-ratio: 4 / 5;
     height: auto;
     display: block;
-    border-radius: 50%;
+    border-radius: var(--semantic-radius-lg);
     border: 1px solid var(--semantic-color-border-primary);
     object-fit: cover;
 }
