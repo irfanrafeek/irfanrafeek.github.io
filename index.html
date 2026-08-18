@@ -170,7 +170,8 @@
                         </p>
                         <p class="about-me-text">
                             Off the screen, I enjoy exploring unfamiliar streets with
-                            my camera📷 or cruising on my longboard 🛹 (gracefully… sometimes 😄).
+                            my camera 📷 or cruising on my longboard 🛹, gracefully… sometimes 😅.
+                            Try not to crash below.
                         </p>
                     </div>
                     <div class="about-me-media">
@@ -178,6 +179,41 @@
                     </div>
                 </div>
             </section>
+
+
+            <!-- A quiet bit of play between the sections. See scripts/skate.js. -->
+            <div class="skate" data-skate tabindex="0" role="button" aria-label="Small skating game. Click or press space to play and to jump.">
+                <svg class="skate-svg" viewBox="0 0 900 160" aria-hidden="true">
+                    <line class="skate-ground" x1="0" y1="128.5" x2="900" y2="128.5"></line>
+                    <g class="skate-obstacles"></g>
+                    <!-- Joint positions are written by scripts/skate.js; the
+                         figure is authored around the board's contact point. -->
+                    <g class="skate-skater">
+                        <g class="skate-deck">
+                            <path class="skate-board" d="M-16 -4.5 H16"></path>
+                            <circle class="skate-wheel" cx="-9" cy="-2" r="2"></circle>
+                            <circle class="skate-wheel" cx="10" cy="-2" r="2"></circle>
+                        </g>
+                        <g class="skate-figure">
+                            <path class="skate-leg-b"></path>
+                            <path class="skate-arm-b"></path>
+                            <path class="skate-torso"></path>
+                            <circle class="skate-head" r="4.6"></circle>
+                            <path class="skate-leg-f"></path>
+                            <path class="skate-arm-f"></path>
+                        </g>
+                    </g>
+                </svg>
+                <span class="skate-score" aria-hidden="true">
+                    <span class="skate-best"></span><span class="skate-time"></span>
+                </span>
+                <span class="skate-hint" aria-hidden="true">
+                    <svg class="skate-hint-icon" viewBox="0 0 24 24" width="11" height="11">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg><span class="skate-hint-text"></span>
+                </span>
+            </div>
 
             <section id="clients">
                 <div class="section-header">
@@ -240,6 +276,7 @@
     <script src="scripts/projects.js" defer></script>
     <script src="scripts/nav.js" defer></script>
     <script src="scripts/theme.js" defer></script>
+    <script src="scripts/skate.js" defer></script>
     <script>
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');

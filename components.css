@@ -421,7 +421,6 @@ body.page--article {
 
 /* ===== SERVICES SECTION ===== */
 #services {
-    margin-bottom: var(--semantic-spacing-4xl);
     padding: var(--semantic-spacing-4xl) 0;
 }
 
@@ -476,7 +475,6 @@ body.page--article {
 
 /* ===== ABOUT ME SECTION ===== */
 #about-me {
-    margin-bottom: var(--semantic-spacing-4xl);
     padding: var(--semantic-spacing-4xl) 0;
 }
 
@@ -1469,4 +1467,123 @@ a.project-card {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* ===================================================================
+   SKATE — a small playable scene under the About section.
+   Monochrome and borderless on purpose: it should read as a graphic
+   until someone clicks it. Logic lives in scripts/skate.js.
+   =================================================================== */
+
+.skate {
+    /* Mirrors GROUND_Y in scripts/skate.js — the ground sits this far up
+       from the bottom of the box. */
+    --skate-ground-offset: 32px;
+    position: relative;
+    width: 100%;
+    height: 160px;
+    margin-bottom: var(--semantic-spacing-2xl);
+    cursor: pointer;
+    outline: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.skate:focus-visible {
+    outline: 1px solid var(--semantic-color-border-strong);
+    outline-offset: var(--semantic-spacing-sm);
+}
+
+.skate-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.skate-ground {
+    stroke: var(--semantic-color-border-primary);
+    stroke-width: 1;
+}
+
+.skate-skater {
+    fill: none;
+    stroke: var(--semantic-color-text-secondary);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Limbs read better a touch lighter than the deck they stand on. */
+.skate-figure { stroke-width: 1.4; }
+
+.skate-obstacles path {
+    fill: none;
+    stroke: var(--semantic-color-text-tertiary);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.skate-score {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-xs);
+    letter-spacing: var(--primitive-letter-spacing-widest);
+    color: var(--semantic-color-text-tertiary);
+    opacity: 0.6;
+    pointer-events: none;
+    font-variant-numeric: tabular-nums;
+}
+
+.skate-best {
+    color: var(--semantic-color-text-tertiary);
+    opacity: 0.7;
+}
+
+.skate-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* Tucked just above the ground line. */
+    bottom: calc(var(--skate-ground-offset) + var(--semantic-spacing-sm));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--semantic-spacing-xs);
+    text-align: center;
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-xs);
+    letter-spacing: var(--primitive-letter-spacing-widest);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-tertiary);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* The crashed scene keeps its obstacles on screen, so the restart line clears
+   them rather than sitting where the play prompt does. */
+.skate.is-over .skate-hint {
+    bottom: calc(var(--skate-ground-offset) + var(--semantic-spacing-2xl));
+}
+
+.skate-hint-icon {
+    display: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.skate.is-over .skate-hint-icon { display: block; }
+
+@media (max-width: 768px) {
+    .skate { height: 140px; }
+}
+
+@media print {
+    .skate { display: none; }
 }

@@ -167,7 +167,8 @@ pages, so changing it changes all three.
 </div>
 ```
 
-2-column grid, stacked below 968px.
+Single-column list. Rows carry no rules of their own — the ruled
+section header above the grid is the only divider.
 
 ---
 
@@ -312,6 +313,106 @@ Fixed bottom-right pill that expands on hover/focus. Wired by `scripts/theme.js`
 ```
 
 See [themes.md](./themes.md) for how it persists and applies the choice.
+
+---
+
+## Skate game (home page)
+
+A small playable scene between About Me and Selected Clients. Static
+until clicked; logic in `scripts/skate.js`, no dependencies.
+
+```html
+<div class="skate" data-skate tabindex="0" role="button" aria-label="…">
+  <svg class="skate-svg" viewBox="0 0 900 160" aria-hidden="true">
+    <line class="skate-ground"></line>
+    <g class="skate-obstacles"></g>       <!-- filled at runtime -->
+    <g class="skate-skater">
+      <g class="skate-deck">…board + wheels…</g>
+      <g class="skate-figure">…5 limb paths + head…</g>
+    </g>
+  </svg>
+  <span class="skate-score" aria-hidden="true">
+    <span class="skate-best"></span><span class="skate-time"></span>
+  </span>
+  <span class="skate-hint" aria-hidden="true">
+    <svg class="skate-hint-icon">…</svg><span class="skate-hint-text"></span>
+  </span>
+</div>
+```
+
+The script drives everything through two state classes on the root:
+`.is-playing` and `.is-over`.
+
+| Class | State | Hint |
+| --- | --- | --- |
+| *(none)* | idle, never played | "Click to play", 8px above the line |
+| `.is-playing` | running | hidden |
+| `.is-over` | crashed, scene frozen | icon + "Restart", raised clear of frozen obstacles |
+
+### Coordinate space
+
+The SVG viewBox is resized to the element's own pixel dimensions on
+load and on resize, so **one SVG unit is always one CSS pixel** and
+nothing scales unexpectedly between breakpoints. The ground sits
+`--skate-ground-offset` (32px) up from the bottom edge; that custom
+property is mirrored by `GROUND_Y` in the script, and the hint's
+`bottom` is derived from it. Change it in both places or neither.
+
+### The skater
+
+Eleven joints — hip, shoulder, head, two knees, two feet, two elbows,
+two hands — in a local space whose origin is the board's contact
+point, y negative upwards. Four poses (`roll`, `takeoff`, `air`,
+`land`) are arrays of those joints; each frame the live pose eases
+toward whichever the state asks for and five `d` attributes are
+rewritten. There are no animation frames — the interpolated in-between
+poses *are* the animation. `roll` doubles as the idle pose so the
+resting graphic already reads as someone cruising.
+
+Takeoff is deliberately brief: the jump impulse is applied instantly on
+click (delaying it for real anticipation costs more in input lag than
+the pose is worth), so the compressed pose blends out over the first
+100ms of the rise instead.
+
+### Obstacles
+
+Eight line-icon silhouettes in the `SHAPES` table, one `<path>` each,
+weighted so simple shapes turn up most and stacked boxes stay rare.
+Heights are authored against a 28-unit tallest shape and scaled by a
+single factor derived from the jump apex, so **every obstacle stays
+clearable at every screen size**. Organic shapes (bush, rock) declare
+an `inset` that shrinks their hitbox — a strict bounding box around a
+soft silhouette punishes players for air they visually cleared.
+
+### Sizing and difficulty
+
+Both derive from the box, not from constants:
+
+- Jump apex is clamped to the headroom actually available, so a jump
+  can never clip out of a short box.
+- Obstacle scale follows the apex.
+- Speed scales down on narrow screens, where the runway gives less
+  warning.
+
+The box is 160px tall, 140px below 768px. **Making it shorter lowers
+the jump, which shrinks the obstacles** — it is a gameplay change, not
+just a layout one.
+
+### Score
+
+Distance-based like the Chrome dinosaur game (~10 points/second at the
+starting speed, accelerating with it), not wall-clock seconds. The best
+score persists in `localStorage` under `skate-best`, wrapped in
+try/catch on both read and write — Safari private mode throws on write,
+where the game still plays and just doesn't remember.
+
+### Accessibility & motion
+
+Focusable with space/enter parity, `:focus-visible` outline, and all
+visual text `aria-hidden` behind the root's `aria-label`. Under
+`prefers-reduced-motion` the body bob is suppressed and the idle hint
+is hidden, leaving a static graphic that is still playable on click.
+Hidden entirely in print.
 
 ---
 
