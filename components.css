@@ -1050,7 +1050,6 @@ footer {
 /* Experience timeline */
 .journey-section {
     padding: var(--semantic-spacing-4xl) 0;
-    border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
 .experience-entry {
@@ -1061,7 +1060,11 @@ footer {
     border-top: 1px solid var(--semantic-color-border-secondary);
 }
 
-.experience-entry:first-of-type {
+/* The first entry sits directly under the ruled section header, so it takes
+   no rule of its own. Matched off the header rather than :first-of-type,
+   which never applied here — the header is itself the first div in the
+   section, so the first .experience-entry is never the first of its type. */
+.section-header + .experience-entry {
     border-top: none;
     padding-top: var(--semantic-spacing-md);
 }
