@@ -417,9 +417,44 @@ body.page--article {
     -webkit-mask-size: contain;
     mask-size: contain;
     opacity: 0.7;
+    /* Optical balance. Every mark gets the same box, but marks are not
+       comparable objects: a heavy display face reads far larger than a light
+       wordmark at identical height, and a 10:1 lockup is starved by the column
+       long before it reaches the box's 40px. So each logo may carry a scale
+       factor, set inline beside its mask URL, that adjusts it INSIDE its box —
+       the grid, the columns and the box itself never move. The factors are
+       judged by eye rather than derived from aspect ratio, because what is
+       being matched is ink mass, not height. See docs/components.md. */
+    transform: scale(var(--client-scale, 1));
     transition: opacity var(--semantic-motion-hover),
                 color var(--semantic-motion-hover);
 }
+
+/* --- Optical scales: five columns -----------------------------------------
+   Keyed off data-logo rather than written inline, because the balance is a
+   property of the LAYOUT, not of the logo: which marks look oversized changes
+   with the column width, so every breakpoint below re-tunes this set. An inline
+   custom property would out-rank the media queries and freeze one breakpoint's
+   answer onto all of them.
+
+   In five columns the track is ~90px and the box 40px tall, so anything wider
+   than about 2.3:1 is limited by the column, not the height. The marks that
+   still reach the 40px ceiling are the near-square ones, and they are the ones
+   holding down. */
+.client-logo[data-logo="gq"]                  { --client-scale: 0.68; }
+.client-logo[data-logo="ad"]                  { --client-scale: 0.75; }
+.client-logo[data-logo="asista"]              { --client-scale: 0.78; }
+.client-logo[data-logo="yourstory"],
+.client-logo[data-logo="conde-nast-traveler"] { --client-scale: 0.82; }
+.client-logo[data-logo="allure"],
+.client-logo[data-logo="vogue"]               { --client-scale: 0.85; }
+
+/* The one mark that grows rather than shrinks. Bloomberg Quint's lockup is
+   5.9:1, so in a narrow track the column runs out before the box height does
+   and it renders far smaller than its neighbours. Growing it overflows the
+   column into the gutter, which is empty anyway — so the ceiling is however
+   much gutter there is to spend. */
+.client-logo[data-logo="bloomberg-quint"]     { --client-scale: 1.25; }
 
 .client-logo:hover {
     color: var(--semantic-color-text-primary);
@@ -1001,6 +1036,26 @@ footer {
         grid-template-columns: repeat(3, 1fr);
         gap: var(--semantic-spacing-xl) var(--semantic-spacing-lg);
     }
+
+    /* --- Optical scales: three columns ------------------------------------
+       The track roughly doubles against the same 40px box, so this sits between
+       the other two sets and needs its own answer. Most marks stop being
+       starved by the column and pile up on the height ceiling instead, which
+       lifts the heavy ones — Allure, Wired and Vanity Fair all arrive at the
+       top of the wall, where their weight shows. The light faces are left near
+       the ceiling on purpose: at this size they can carry it. */
+    .client-logo[data-logo="allure"]          { --client-scale: 0.72; }
+    .client-logo[data-logo="quintype"]        { --client-scale: 0.83; }
+    .client-logo[data-logo="wired"]           { --client-scale: 0.87; }
+    .client-logo[data-logo="vanity-fair"]     { --client-scale: 0.88; }
+    .client-logo[data-logo="bon-appetit"]     { --client-scale: 0.90; }
+    .client-logo[data-logo="fortune"]         { --client-scale: 0.92; }
+
+    /* Both still run out of column before they run out of box height, so both
+       still grow — but into a 24px gutter rather than a 32px one, so neither
+       may spend as much as it does at five columns. */
+    .client-logo[data-logo="national-herald"] { --client-scale: 1.12; }
+    .client-logo[data-logo="bloomberg-quint"] { --client-scale: 1.12; }
 }
 
 @media (max-width: 640px) {
@@ -1061,6 +1116,48 @@ footer {
     .client-logo {
         height: 32px;
     }
+
+    /* --- Optical scales: two columns --------------------------------------
+       The track is now ~155px against a 32px box, so the balance inverts. On
+       desktop most marks were starved by the column; here almost everything
+       reaches the height ceiling instead, and the question stops being "which
+       logo has room" and becomes purely "which logo looks heavy at 32px".
+
+       That re-orders the list. Wired and Vanity Fair rendered at 18px on
+       desktop — the smallest things on the wall — and land at the very top
+       here, where their weight makes them shout. They need the hardest
+       correction on a phone and none at all on a desktop.
+
+       There is a second effect here that does not exist on desktop. At two
+       columns the widest marks span the track edge to edge, and a logo touching
+       both edges of its cell reads as large however short it is — presence is
+       width as much as height. Wired, Vanity Fair and Bon Appétit are all
+       ~5:1 and all do this, so they are corrected harder than their height
+       alone would suggest. */
+    /* Re-asserted, not redundant. `max-width: 968px` also matches a phone, so
+       every value in the three-column set above reaches this breakpoint too.
+       These three are the ones whose tablet answer is wrong here: Allure and
+       Fortune are corrected for a 40px box they no longer have, and GQ's
+       desktop value is deliberately smaller than what a phone wants. A logo
+       tuned in the block above must be restated here or it leaks down. */
+    .client-logo[data-logo="allure"]          { --client-scale: 0.85; }
+    .client-logo[data-logo="fortune"]         { --client-scale: 1; }
+    .client-logo[data-logo="gq"]              { --client-scale: 0.75; }
+
+    .client-logo[data-logo="vanity-fair"]     { --client-scale: 0.78; }
+    .client-logo[data-logo="wired"]           { --client-scale: 0.80; }
+    .client-logo[data-logo="bon-appetit"]     { --client-scale: 0.85; }
+    .client-logo[data-logo="quintype"]        { --client-scale: 0.92; }
+
+    /* Still the widest lockup by far and still short, but with 155px of track
+       it is no longer desperate — a nudge into the 16px gutter is all there is
+       room for. */
+    .client-logo[data-logo="national-herald"] { --client-scale: 1.10; }
+
+    /* Bloomberg is limited by the 32px height here, not by the column, so the
+       starvation this was correcting no longer exists and the correction goes
+       with it. Left in, it would simply make one logo the tallest on screen. */
+    .client-logo[data-logo="bloomberg-quint"] { --client-scale: 1; }
 
     .theme-switcher__option {
         width: 36px;

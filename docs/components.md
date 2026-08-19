@@ -250,6 +250,137 @@ does sit a hair proud of the text above it.
 
 ---
 
+## Client logos
+
+```html
+<div class="clients-grid">
+    <div data-logo="vogue" class="client-logo" role="img" aria-label="Vogue"
+         style="--client-logo: url('Assets/logos/vogue.svg')"></div>
+</div>
+```
+
+Each logo is a `div`, not an `img`: the SVG is applied as a **mask** and the
+shape painted with `currentColor`, so one asset recolours correctly in all four
+themes. The mark travels in `--client-logo`; `role="img"` plus `aria-label`
+carry the name, since a masked div has no accessible content of its own.
+`data-logo` is the hook the stylesheet sizes it by.
+
+### Optical sizing
+
+The grid gives every logo the same box. That is the right layout and the wrong
+sizing, because **logos are not comparable objects**. Two things break at a
+shared box:
+
+- **Weight.** A heavy display face reads far larger than a light wordmark at
+  identical height. Vogue and Allure are only the 5th and 6th tallest marks on
+  the wall but among the first to look oversized. What the eye matches is ink
+  mass, not bounding box.
+- **Proportion.** A 10:1 lockup runs out of column long before it reaches the
+  box height. National Herald painted at 9px next to AD at 40px — a 4.3&times;
+  spread from identical boxes.
+
+So a logo may carry `--client-scale`, which adjusts it **inside** its box via
+`transform: scale()`. The grid, the columns and the box never move. Values are
+hand-set and judged by eye; do not try to derive them from aspect ratio, because
+the thing being matched is not a measurable dimension.
+
+### Why the scales live in CSS, not inline
+
+**The balance is a property of the layout, not of the logo.** Which marks look
+oversized changes with the column width, so each breakpoint needs its own set —
+and an inline custom property out-ranks every media query, which would freeze
+one breakpoint's answer onto all of them. Hence `[data-logo="…"]` selectors.
+This is the whole reason the attribute exists.
+
+How completely the answer changes is worth seeing:
+
+| | 5 columns (~90px track) | 2 columns (~155px track) |
+|---|---|---|
+| Wired | 18px — smallest but one | 32px — joint largest |
+| Vanity Fair | 18px | 31px |
+| Bloomberg | starved, grows 1.25&times; | height-limited, no growth |
+
+Wired and Vanity Fair need the hardest correction on a phone and **none at all**
+on a desktop. Copying one set to the other breakpoint would make things worse,
+not better.
+
+The reason is that the binding dimension flips. In five columns the track is
+narrow, so most marks are limited by *width* and the question is "which logo has
+room". In two columns the track is wide and almost everything reaches the height
+ceiling instead, so the question becomes purely "which logo looks heavy".
+
+### The three sets
+
+**Base — 5 columns.** The marks reaching the 40px ceiling are the near-square
+ones, so those hold down: `ad` `gq` 0.75, `asista` 0.78, `yourstory`
+`conde-nast-traveler` 0.82, `allure` `vogue` 0.85. `bloomberg-quint` grows
+1.25&times;.
+
+**≤ 968px — 3 columns.** The track roughly doubles against the same 40px box,
+so most marks stop being starved by the column and pile up on the height ceiling
+instead. That lifts the heavy ones to the top of the wall: `allure` 0.72,
+`quintype` 0.83, `wired` 0.87, `vanity-fair` 0.88, `bon-appetit` 0.90,
+`fortune` 0.92. The light faces are left near the ceiling on purpose — at this
+size they carry it. `national-herald` and `bloomberg-quint` both still run out
+of column before box height so both still grow, but into a 24px gutter rather
+than a 32px one, so both sit at 1.12.
+
+**≤ 640px — 2 columns.** Weight is the question, plus one effect that does not
+exist on desktop: the widest marks now span the track edge to edge, and a logo
+touching both edges of its cell reads as large however short it is. Presence is
+width as much as height. Wired, Vanity Fair and Bon Appétit are all ~5:1 and all
+do this, so they are corrected harder than their height alone would suggest —
+`vanity-fair` 0.78, `wired` 0.80, `bon-appetit` 0.85, joined by `quintype` 0.92.
+`national-herald` grows 1.10; `bloomberg-quint` returns to 1, since the
+starvation it corrected no longer exists and leaving it in would make one logo
+the tallest on screen.
+
+Result: 24–32px across fourteen of fifteen marks, ordered by weight — light
+faces (New Yorker, Fortune, bon appétit) sit at the top of the band, heavy ones
+(GQ, AD, Wired) at the bottom. That ordering *is* the alignment.
+
+### Breakpoint sets leak downward
+
+The media queries are `max-width`, so **`≤ 968px` also matches a phone**. Any
+logo tuned in the three-column set reaches the two-column set as well, and if
+its answer differs there it must be restated in the narrower block. Three are:
+`allure` and `fortune` are corrected for a 40px box the phone no longer has, and
+`gq` is deliberately smaller on desktop than a phone wants.
+
+This has already bitten once — adding the tablet set silently changed three
+logos on mobile. **After editing any breakpoint's set, re-measure every
+breakpoint, not just the one you edited.**
+
+### Growth overflows the column
+
+A scale above 1 pushes the mark past its column and into the gutter, which is
+empty space. The ceiling is therefore however much gutter there is to spend —
+go past the gap and it touches its neighbour. Bloomberg at 1.25 in a 90px track
+spends 22px of a 32px gutter. **After changing any scale above 1, re-check for
+collisions** by comparing each logo's `right` against its row-neighbour's
+`left`.
+
+### Trimmed viewBoxes
+
+Four logos — `asista`, `bloomberg-quint`, `quintype`, `fortune` — are `<text>`
+based placeholders rather than real vector artwork, and shipped with large empty
+margins baked into the viewBox: Asista filled 40% of its own artboard, Bloomberg
+50%. With `mask-size: contain` that padding is sized as if it were part of the
+logo, so the mark renders small no matter what the CSS says. Their viewBoxes are
+trimmed to the real ink bounds plus 1.5 units.
+
+Trimming changes a logo's aspect ratio, so it can flip which dimension binds —
+Asista went from looking starved to looking oversized, which is why it appears
+in the scale table. And because these four are text, they depend on Arial and
+Times being present on the visitor's machine; inside a mask that fallback is
+silent. Replacing them with real vector marks would beat any tuning here.
+
+**Measuring ink bounds:** load the SVG into the DOM and call `getBBox()` on the
+root. Comparing that to the viewBox gives the fill percentage; anything under
+~90% is carrying padding.
+
+---
+
 ## Experience timeline (about page)
 
 ```html
