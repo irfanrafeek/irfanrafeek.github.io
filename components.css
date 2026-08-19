@@ -511,9 +511,9 @@ body.page--article {
 .project-image {
     font-size: var(--primitive-font-size-5xl);
     box-sizing: content-box;
-    min-width: 168px;
-    width: 168px;
-    height: 126px;
+    min-width: 144px;
+    width: 144px;
+    height: 108px;  /* 4:3 */
     padding: var(--semantic-spacing-xs);
     background-color: var(--semantic-color-background-article);
     border: 1px solid var(--semantic-color-border-primary);
@@ -550,7 +550,7 @@ body.page--article {
 
 .project-title {
     font-family: var(--semantic-font-display);
-    font-size: var(--semantic-type-heading-xs-font-size);
+    font-size: var(--semantic-type-heading-2xs-font-size);
     font-weight: var(--primitive-font-weight-serif-medium);
     color: var(--semantic-color-text-primary);
     margin: 0;
