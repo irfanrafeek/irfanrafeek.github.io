@@ -354,16 +354,21 @@ The script drives everything through two state classes on the root:
 The SVG viewBox is resized to the element's own pixel dimensions on
 load and on resize, so **one SVG unit is always one CSS pixel** and
 nothing scales unexpectedly between breakpoints. The ground sits
-`--skate-ground-offset` (32px) up from the bottom edge; that custom
+`--skate-ground-offset` (80px) up from the bottom edge; that custom
 property is mirrored by `GROUND_Y` in the script, and the hint's
 `bottom` is derived from it. Change it in both places or neither.
+
+That offset is larger than the line needs. The band below the ground
+is dead space by design: nothing ever moves through it, so it is the
+safest place for a thumb to land. The block carries no bottom margin —
+the tap room *is* the spacing.
 
 ### The skater
 
 Eleven joints — hip, shoulder, head, two knees, two feet, two elbows,
 two hands — in a local space whose origin is the board's contact
-point, y negative upwards. Four poses (`roll`, `takeoff`, `air`,
-`land`) are arrays of those joints; each frame the live pose eases
+point, y negative upwards. Five poses (`roll`, `takeoff`, `air`,
+`land`, `grind`) are arrays of those joints; each frame the live pose eases
 toward whichever the state asks for and five `d` attributes are
 rewritten. There are no animation frames — the interpolated in-between
 poses *are* the animation. `roll` doubles as the idle pose so the
@@ -376,13 +381,57 @@ the pose is worth), so the compressed pose blends out over the first
 
 ### Obstacles
 
-Eight line-icon silhouettes in the `SHAPES` table, one `<path>` each,
+Nine line-icon silhouettes in the `SHAPES` table, one `<path>` each,
 weighted so simple shapes turn up most and stacked boxes stay rare.
 Heights are authored against a 28-unit tallest shape and scaled by a
 single factor derived from the jump apex, so **every obstacle stays
 clearable at every screen size**. Organic shapes (bush, rock) declare
 an `inset` that shrinks their hitbox — a strict bounding box around a
 soft silhouette punishes players for air they visually cleared.
+
+### Benches
+
+One shape — the long bench — carries `ride: true`, and it is the only
+one you are not meant to clear. Its top is a **temporary elevated
+floor**: land on it, roll across, drop off the end.
+
+The physics did not grow a special case for it. Every frame resolves a
+single `support` height — 0 on open ground, the bench top while the
+board is over one — and the existing gravity step lands on `support`
+instead of on zero. Everything downstream reads `airborne`
+(`y > support`) rather than `y > 0`, so jumping, the board tilt, the
+bob and the pose all behave identically eight pixels up.
+
+A bench is solid from above and lethal from the side, and the same
+pass decides which:
+
+| At the moment of overlap | Result |
+| --- | --- |
+| Board was clear of the top when the frame began | Lands, `support` becomes the bench top |
+| Board is at deck height | Crash — that is the end face |
+
+Testing against the position at the *start* of the frame is what makes
+a fast descent land rather than clip through, while still failing an
+approach that never left the ground. **Timing the jump is the whole
+interaction** — jump late and you hit the end face.
+
+Two knock-on constraints, both easy to break by accident:
+
+- Jumps also start from a bench top, so `resize()` subtracts the bench
+  height from the headroom clamp a second time. Without it a hop taken
+  on a bench clips the ceiling.
+- Spawn gaps are measured from the *trailing* edge of the obstacle just
+  placed, not its origin. A 220-unit bench is wider than the old gap,
+  so the next obstacle used to land on top of it.
+
+Benches are held back for the first six seconds of a run: they ask for
+timing rather than reflex, and they read better once the player has
+met a few ordinary obstacles.
+
+While riding, the figure takes the `grind` pose — hips dropped, knees
+wider, arms floated up — and a slow `sway` rotates the whole figure by
+just over a degree. Both are subtle on purpose; the point is to read
+as balancing, not as a different character.
 
 ### Sizing and difficulty
 
@@ -394,9 +443,11 @@ Both derive from the box, not from constants:
 - Speed scales down on narrow screens, where the runway gives less
   warning.
 
-The box is 160px tall, 140px below 768px. **Making it shorter lowers
-the jump, which shrinks the obstacles** — it is a gameplay change, not
-just a layout one.
+The box is 208px tall, 188px below 768px — of which the bottom 80px is
+tap room, leaving the same play area as before. **Making it shorter
+lowers the jump, which shrinks the obstacles** — it is a gameplay
+change, not just a layout one. Trim the ground offset instead if you
+only want the block to take less room.
 
 ### Score
 

@@ -1477,12 +1477,14 @@ a.project-card {
 
 .skate {
     /* Mirrors GROUND_Y in scripts/skate.js — the ground sits this far up
-       from the bottom of the box. */
-    --skate-ground-offset: 32px;
+       from the bottom of the box. The space below the line is deliberately
+       generous: on touch it is the easiest part of the box to tap, since
+       nothing moves through it. It replaces the margin this block used to
+       carry, so the overall footprint is unchanged. */
+    --skate-ground-offset: 80px;
     position: relative;
     width: 100%;
-    height: 160px;
-    margin-bottom: var(--semantic-spacing-2xl);
+    height: 208px;
     cursor: pointer;
     outline: none;
     touch-action: manipulation;
@@ -1581,7 +1583,7 @@ a.project-card {
 .skate.is-over .skate-hint-icon { display: block; }
 
 @media (max-width: 768px) {
-    .skate { height: 140px; }
+    .skate { height: 188px; }
 }
 
 @media print {

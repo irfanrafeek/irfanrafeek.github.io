@@ -48,7 +48,10 @@
     var nextSpawn = 0;
     var last = 0;
     var jumpAt = -1;            /* when the current jump started, for the push-off */
+    var floorY = 0;             /* what the board is resting on: 0, or a bench top */
+    var airborne = false;
     var tilt = 0;               /* board tilt, eased */
+    var sway = 0;               /* balance sway while riding a bench, eased */
     var frame = null;
     var elapsed = 0;
 
@@ -76,7 +79,12 @@
               10,-30, 15,-33,  -7,-29, -13,-27],
         /* Absorbing the landing: deep knees, arms low and wide. */
         land: [-3,-19,  4,-30,  7,-36,   8.5,-13.5,  7.5,-5,  -8,-12, -7.5,-5,
-                9,-27, 15,-27,  -7,-27, -13,-23]
+                9,-27, 15,-27,  -7,-27, -13,-23],
+        /* Riding a bench: hips dropped for a low centre of gravity, knees
+           pushed wider, arms floated up and out. Reads as balancing rather
+           than cruising, without leaving the same line vocabulary. */
+        grind: [-4,-21,  4,-31,  7,-37,   8.5,-14,  7.5,-5,  -8.5,-13, -7.5,-5,
+                10,-30, 17,-33,  -7,-28, -14,-30]
     };
 
     var pose = POSES.roll.slice();      /* the live, interpolated pose */
@@ -153,9 +161,14 @@
         {   /* stacked boxes */
             w: 30, h: 28, weight: 0.6,
             d: 'M0 0 V-26 L2 -28 H15 L17 -26 V0 Z M2 -2 L15 -26 M2 -26 L15 -2 M17 0 V-13 L19 -15 H28 L30 -13 V0 Z M19 -2 L28 -13 M19 -13 L28 -2'
+        },
+        {   /* long bench / ledge — ridden, not cleared. See `ride` below. */
+            w: 220, h: 15, weight: 3, ride: true,
+            d: 'M0 -15 H220 V-11 H0 Z M18 -11 V0 M110 -11 V0 M202 -11 V0'
         }
     ];
 
+    var BENCH_H = 15;           /* the tallest ride surface; see resize() */
     var SHAPE_TOTAL = SHAPES.reduce(function (sum, s) { return sum + s.weight; }, 0);
     var TALLEST = 28;           /* the local-space height the scale is derived from */
 
@@ -163,7 +176,12 @@
         var r = Math.random() * SHAPE_TOTAL;
         for (var i = 0; i < SHAPES.length; i++) {
             r -= SHAPES[i].weight;
-            if (r <= 0) return SHAPES[i];
+            if (r <= 0) {
+                /* A bench asks for timing rather than reflex, so hold it back
+                   until the player has had a few ordinary obstacles first. */
+                if (SHAPES[i].ride && elapsed < 6) return SHAPES[0];
+                return SHAPES[i];
+            }
         }
         return SHAPES[0];
     }
@@ -179,7 +197,7 @@
     try { best = parseInt(localStorage.getItem(BEST_KEY), 10) || 0; } catch (e) { best = 0; }
 
     function pad(n) {
-        return ('000' + n).slice(-4);
+        return ('0000' + n).slice(-5);
     }
 
     function score() {
@@ -209,14 +227,18 @@
         width = root.clientWidth;
         height = root.clientHeight;
         svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
-        GROUND_Y = height - 32;
+        GROUND_Y = height - 80;   /* keep in step with --skate-ground-offset */
 
         /* A jump must never clip through the top of the box. */
-        var apex = Math.max(34, Math.min(JUMP_APEX, GROUND_Y - SKATER_H - 6));
-        jumpV = -Math.sqrt(2 * GRAVITY * apex);
+        var headroom = GROUND_Y - SKATER_H - 6;
+        var apex0 = Math.max(34, Math.min(JUMP_APEX, headroom));
         speedScale = Math.max(0.72, Math.min(1, width / 700));
         /* Obstacles are sized off the jump, so a short box stays clearable. */
-        scale = Math.max(0.55, Math.min(1, (apex * 0.4) / TALLEST));
+        scale = Math.max(0.55, Math.min(1, (apex0 * 0.4) / TALLEST));
+        /* Jumps also start from a bench top, so the clamp has to pay for that
+           height as well — otherwise a hop off a bench clips the ceiling. */
+        var apex = Math.max(30, Math.min(apex0, headroom - BENCH_H * scale));
+        jumpV = -Math.sqrt(2 * GRAVITY * apex);
         ground.setAttribute('y1', GROUND_Y + 0.5);
         ground.setAttribute('y2', GROUND_Y + 0.5);
         ground.setAttribute('x2', width);
@@ -239,6 +261,7 @@
         el.setAttribute('d', shape.d);
         obstacleLayer.appendChild(el);
         obstacles.push(o);
+        scheduleSpawn(shape.w * scale);
     }
 
     function clearObstacles() {
@@ -246,31 +269,34 @@
         obstacles = [];
     }
 
-    function scheduleSpawn() {
-        /* Distance-based, so the gap stays fair as the speed creeps up. */
-        nextSpawn = (260 + Math.random() * 300) / speed;
+    function scheduleSpawn(lastW) {
+        /* Distance-based, so the gap stays fair as the speed creeps up, and
+           measured from the trailing edge — a 220-wide bench would otherwise
+           have the next obstacle spawn on top of it. */
+        nextSpawn = ((lastW || 0) + 260 + Math.random() * 300) / speed;
+    }
+
+    function overlaps(o) {
+        return SKATER_X < o.x + o.pad + o.w &&
+               SKATER_X + SKATER_W > o.x + o.pad;
     }
 
     function hits(o) {
         var top = GROUND_Y - SKATER_H - y;
         var bottom = GROUND_Y - y;
-        return SKATER_X < o.x + o.pad + o.w &&
-               SKATER_X + SKATER_W > o.x + o.pad &&
-               bottom > GROUND_Y - o.h &&
-               top < GROUND_Y;
+        return overlaps(o) && bottom > GROUND_Y - o.h && top < GROUND_Y;
     }
 
     function draw() {
-        var airborne = y > 0;
         var bob = 0;
         if (state === 'playing' && !airborne && !reduced.matches) {
             /* A soft roll, tied to speed — half a pixel is plenty. */
             bob = Math.sin(bobPhase) * 0.6;
         }
-        var lean = airborne ? -3 : 0;
+        var lean = (airborne ? -3 : 0) + sway;
         skater.setAttribute('transform',
             'translate(' + SKATER_CX + ' ' + (GROUND_Y - y + bob).toFixed(2) + ')' +
-            (lean ? ' rotate(' + lean + ')' : ''));
+            (lean ? ' rotate(' + lean.toFixed(2) + ')' : ''));
         deck.setAttribute('transform', 'rotate(' + tilt.toFixed(2) + ')');
         obstacles.forEach(function (o) {
             o.el.setAttribute('transform',
@@ -280,10 +306,13 @@
 
     function choosePose() {
         if (state !== 'playing') return POSES.roll;
-        if (y > 0) {
+        if (airborne) {
             /* The impulse is instant, so the push-off reads on the way up. */
             return (elapsed - jumpAt) < 0.1 ? POSES.takeoff : POSES.air;
         }
+        /* Balancing beats absorbing: once the board settles on a bench the
+           grind pose owns the figure for the whole crossing. */
+        if (floorY > 0) return POSES.grind;
         return elapsed < landUntil ? POSES.land : POSES.roll;
     }
 
@@ -294,28 +323,52 @@
 
         speed = Math.min(SPEED_MAX, SPEED_START + elapsed * SPEED_RAMP) * speedScale;
 
+        var prevY = y;
+        var wasAirborne = airborne;
         vy += GRAVITY * dt;
         y -= vy * dt;
-        if (y <= 0) {
-            if (vy > 0) landUntil = elapsed + 0.16;     /* just touched down */
-            y = 0; vy = 0;
+
+        nextSpawn -= dt;
+        if (nextSpawn <= 0) makeObstacle();
+
+        /* Move the obstacles, and work out what the board is resting on. A
+           bench is solid from above and lethal from the side, so the same
+           pass decides between a landing and a crash. */
+        var support = 0;
+        for (var i = obstacles.length - 1; i >= 0; i--) {
+            var o = obstacles[i];
+            o.x -= speed * dt;
+            if (o.x + o.shape.w * scale < -20) { o.el.remove(); obstacles.splice(i, 1); continue; }
+            if (!o.shape.ride) {
+                if (hits(o)) { stop(); return; }
+                continue;
+            }
+            if (!overlaps(o)) continue;
+            /* Landing counts if the board was clear of the top when the frame
+               began — meeting the end face at deck height is a crash. */
+            if (y >= o.h - 0.5 || prevY >= o.h - 0.5) {
+                if (o.h > support) support = o.h;
+            } else { stop(); return; }
         }
+
+        if (y <= support) {
+            /* Only a real descent reads as a landing; simply resting on a
+               surface re-enters this branch every frame. */
+            if (wasAirborne && vy > 0) landUntil = elapsed + 0.16;
+            y = support; vy = 0;
+        }
+        floorY = support;
+        airborne = y > support + 0.01;
 
         distance += speed * dt;
         bobPhase += dt * speed / 22;
         target = choosePose();
         easePose(dt);
-        tilt += ((y > 0 ? -4 : 0) - tilt) * Math.min(1, dt * 10);
-
-        nextSpawn -= dt;
-        if (nextSpawn <= 0) { makeObstacle(); scheduleSpawn(); }
-
-        for (var i = obstacles.length - 1; i >= 0; i--) {
-            var o = obstacles[i];
-            o.x -= speed * dt;
-            if (o.x + o.shape.w * scale < -20) { o.el.remove(); obstacles.splice(i, 1); continue; }
-            if (hits(o)) { stop(); return; }
-        }
+        tilt += ((airborne ? -4 : 0) - tilt) * Math.min(1, dt * 10);
+        /* A slow weight shift, only while balanced on a bench. */
+        var swayTo = (floorY > 0 && !airborne && !reduced.matches)
+            ? Math.sin(bobPhase * 0.35) * 1.4 : 0;
+        sway += (swayTo - sway) * Math.min(1, dt * 6);
 
         draw();
         paintScore();
@@ -329,8 +382,9 @@
         hint.textContent = '';
         y = 0; vy = 0; elapsed = 0; speed = SPEED_START * speedScale;
         jumpAt = -1; landUntil = 0; tilt = 0; distance = 0;
+        floorY = 0; airborne = false; sway = 0;
         clearObstacles();
-        scheduleSpawn();
+        scheduleSpawn(0);
         shownTime = -1;
         draw();
         last = performance.now();
@@ -351,7 +405,7 @@
 
     function press() {
         if (state === 'playing') {
-            if (y === 0) { vy = jumpV; jumpAt = elapsed; }   /* no double jumps */
+            if (!airborne) { vy = jumpV; jumpAt = elapsed; }   /* no double jumps */
         } else {
             start();
         }
