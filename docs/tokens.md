@@ -109,6 +109,7 @@ The layer components actually touch.
 | `--semantic-color-background-primary` | Page surface |
 | `--semantic-color-background-secondary` | Subtle card / chip fill |
 | `--semantic-color-background-tertiary` | Even subtler — placeholders |
+| `--semantic-color-background-raised` | A surface one step apart from the page — darker in light, lighter in the dark themes |
 | `--semantic-color-background-article` | White reading surface used by `body.page--article` |
 | `--semantic-color-text-primary` | Primary text |
 | `--semantic-color-text-secondary` | Secondary body text |
@@ -243,6 +244,38 @@ still apply instantly and nothing waits on a `transitionend` that never fires.
 **Figma caveat:** unlike colour and type, motion tokens do **not** round-trip
 into the Figma library — Figma has no easing or duration variable type.
 Durations could be mirrored as number variables; the curves cannot.
+
+`-raised` marks a surface one step apart from the page. The *direction* of
+that step is chosen per theme rather than held constant:
+
+| Theme | Page | Raised | Direction |
+| --- | --- | --- | --- |
+| light | neutral-50 | **neutral-100** | down |
+| sepia | sepia-50 | sepia-25 | up |
+| dark | neutral-900 | neutral-850 | up |
+| slate | slate-850 | slate-750 | up |
+
+In light, a lighter-than-page card drifts toward white and loses its edge
+against a near-white ground, so the light theme steps down instead. In the
+dark themes there is nothing below the page worth stepping down to, so they
+step up. Reach for `-raised` when the element also casts a shadow; a
+separated surface with no lift, or a lift with no separation, reads as a
+mistake in one theme or the other.
+
+This makes light-theme `-raised` identical to `-secondary` today. They stay
+separate tokens because they answer different questions — `-secondary` is a
+recessed fill, `-raised` is a distinct surface — and only one of them should
+move if the light palette is retuned.
+
+The dark steps are deliberately **larger** than the light ones: about 12
+levels against 8. An equal numeric difference reads as far less separation
+at low luminance, so a dark surface has to be pushed further to look
+separated at all. Matching the numbers across themes would look correct in
+the token file and wrong on screen.
+
+It is deliberately not `-article`, which is a *reading* surface and is
+identical to the page in dark mode — it would give no separation at all
+there.
 
 ### Layout
 

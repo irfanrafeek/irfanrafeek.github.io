@@ -68,14 +68,14 @@ Small uppercase label above a page hero (used on About and Writings).
 
 ## Hero & section headers
 
-### `.location-header` (the greeting)
+### `.greeting`
 
 One line above the hero, set in the mono face rather than the eyebrow sans
 — deliberately the same family, size and tracking as the game's CLICK TO
 PLAY prompt at the foot of the page, so the two read as one voice.
 
 ```html
-<div class="location-header" id="greeting"></div>
+<div class="greeting" id="greeting"></div>
 <script>/* fills it from the visitor's clock */</script>
 ```
 
@@ -86,7 +86,9 @@ script paints an empty line first and then pops the text in. Buckets are
 midnight late night; it reads the visitor's own hour, so a reader in New
 York at 9pm is greeted with EVENING while it is morning in Bangalore.
 
-This line used to read BANGALORE, INDIA · AVAILABLE FOR WORK. Both signals
+It was called `.location-header` until the content stopped being a
+location. This line used to read BANGALORE, INDIA · AVAILABLE FOR WORK.
+Both signals
 left the page body with it — the city is now carried by the first sentence
 of `.hero-description`, and the hiring signal only by the nav button.
 
@@ -112,9 +114,25 @@ of `.hero-description`, and the hiring signal only by the nav button.
     <div class="section-number">01</div>
     <h2 class="section-title">What I Do</h2>
   </div>
-  <a href="work.html" class="view-all">All work</a>
 </div>
 ```
+
+The header takes the heading alone. It used to carry an `.view-all` link on
+the right; that route now sits under the cards as a `.cta-button` inside
+`.work-footer`, since it is what you reach for after reading the list rather
+than before. `.view-all` is gone — nothing else used it.
+
+### `.cta-button`
+
+```html
+<a href="#contact" class="cta-button">Work With Me</a>
+```
+
+The outlined button, in the nav and at the foot of the work section. It is
+authored standalone rather than as `.nav-links a.cta-button` so the two
+placements cannot drift apart. One nav-scoped rule survives: `.nav-links
+a:hover` tints every link with the accent and outranks `.cta-button:hover`,
+so the button's label colour is held explicitly there.
 
 ---
 
@@ -183,20 +201,52 @@ pages, so changing it changes all three.
 
 ---
 
-## Services grid
+## Services grid (sticky notes)
 
 ```html
 <div class="services-grid">
   <div class="service">
-    <h3 class="service-title">Product design</h3>
-    <p class="service-description">…</p>
+    <h3 class="service-title">Product Design</h3>
+    <p class="service-description">
+      <span class="service-lead">Product Design &middot;</span> turn complex problems&hellip;
+    </p>
   </div>
-  …
+  &hellip;
 </div>
 ```
 
-Single-column list. Rows carry no rules of their own — the ruled
-section header above the grid is the only divider.
+Three notes lying on the page: `background-raised`, square corners, no
+border, each tilted a different amount and straightening under the cursor.
+Three across, stacking below 768px.
+
+The practice name appears **twice on purpose**. `.service-title` is present
+for structure and visually hidden (clip-path, not `display: none`, so it is
+still read out); the visible name is the `.service-lead` span that opens the
+sentence. Running the name into its own line in one voice is what makes the
+card read as something written on a note rather than a designed card — but
+dropping the heading outright would leave the section with three anonymous
+paragraphs under one `h2`.
+
+Four things here are load-bearing and easy to undo by accident:
+
+- **The tilt is authored at `.services-grid .service:nth-child(n)`, and the
+  hover rule matches that specificity.** Written as a bare `.service:hover`
+  it loses the cascade to the nth-child rules, `:hover` matches, and nothing
+  moves. This exact bug shipped in the prototype.
+- **The shadows are literal rgba, not tokens.** A tight contact shadow plus a
+  longer one falling below is what separates paper lying on a surface from a
+  box floating over one, and the shadow tokens are single-layer. They are
+  neutral blacks at low alpha, so they hold in all four themes.
+- **`prefers-reduced-motion` removes the transform, not just the transition.**
+  Those users get straight notes, which is a plainer design than everyone
+  else gets — a deliberate trade, not an oversight.
+- **The grid carries vertical padding of its own.** The notes overhang their
+  track by design (the tilt, the shadow, the 2px hover lift); without that
+  padding the top edge clips.
+
+The rotation pushes the outer notes about 3px past the container. It causes
+no page scroll — the document stays exactly the viewport width — but the row
+does sit a hair proud of the text above it.
 
 ---
 

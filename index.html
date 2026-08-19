@@ -106,7 +106,7 @@
 
     <main>
         <div class="container">
-            <div class="location-header" id="greeting"></div>
+            <div class="greeting" id="greeting"></div>
             <script>
                 /* Greets by the visitor's own clock, not mine. Written inline
                    and right after the element so it lands before first paint —
@@ -178,25 +178,27 @@
                     </div>
                 </div>
 
+                <!-- Each practice reads as one line in one voice, the way it would be
+                     written on a note. The h3 stays for structure and is hidden. -->
                 <div class="services-grid">
                     <div class="service">
                         <h3 class="service-title">Product Design</h3>
                         <p class="service-description">
-                            Turn complex problems into clear product direction. Shape product strategy, define intuitive experiences, and lead products from concept to launch.
+                            <span class="service-lead">Product Design &middot;</span> turn complex problems into clear product direction, strategy, experience, concept to launch.
                         </p>
                     </div>
 
                     <div class="service">
                         <h3 class="service-title">Design Systems</h3>
                         <p class="service-description">
-                            Build scalable systems with semantic tokens and clear patterns that accelerate collaboration and enable AI-assisted design and development.
+                            <span class="service-lead">Design Systems &middot;</span> scalable systems built on semantic tokens and patterns teams can move fast on.
                         </p>
                     </div>
 
                     <div class="service">
                         <h3 class="service-title">Build with AI</h3>
                         <p class="service-description">
-                            Turn ideas into live products. Combine product thinking, design, AI, and code to build and ship complete experiences end to end—most recently, <a href="/case?slug=impostor-games" class="text-link">Impostor Games</a>.
+                            <span class="service-lead">Build with AI &middot;</span> design-led thinking, AI, and code to turn ideas into live products end to end.
                         </p>
                     </div>
                 </div>
@@ -235,10 +237,13 @@
                         <div class="section-number">03</div>
                         <h2 class="section-title">Selected Work</h2>
                     </div>
-                    <a href="/work" class="view-all">All work</a>
                 </div>
 
                 <div class="projects-grid" data-projects="featured"></div>
+
+                <div class="work-footer">
+                    <a href="/work" class="cta-button">See all work</a>
+                </div>
             </section>
 
             <section id="contact" class="cta-section">

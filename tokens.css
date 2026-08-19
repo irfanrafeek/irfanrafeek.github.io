@@ -20,6 +20,7 @@
   --primitive-color-neutral-600: #666666;
   --primitive-color-neutral-700: #444444;
   --primitive-color-neutral-800: #2a2a2a;
+  --primitive-color-neutral-850: #262626;
   --primitive-color-neutral-900: #1a1a1a;
   --primitive-color-neutral-1000: #000000;
 
@@ -47,6 +48,7 @@
 
   /* TIER 1: PRIMITIVES - COLOR SEPIA (warm paper) */
   --primitive-color-sepia-0: #fcf8f0;
+  --primitive-color-sepia-25: #faf3e4;
   --primitive-color-sepia-50: #f6edda;
   --primitive-color-sepia-100: #efe3c8;
   --primitive-color-sepia-200: #e4d4b0;
@@ -62,6 +64,7 @@
   --primitive-color-slate-500: #5a6a7e;
   --primitive-color-slate-600: #3c4756;
   --primitive-color-slate-700: #313a47;
+  --primitive-color-slate-750: #2d3641;
   --primitive-color-slate-800: #283039;
   --primitive-color-slate-850: #232a33;
   --primitive-color-slate-900: #1c222a;
@@ -420,6 +423,10 @@
   --semantic-color-background-primary: var(--primitive-color-neutral-50);
   --semantic-color-background-secondary: var(--primitive-color-neutral-100);
   --semantic-color-background-tertiary: var(--primitive-color-neutral-200);
+  /* A surface separated from the page by one step. The direction of that step
+     is chosen per theme for legibility, not for consistency: the light theme
+     steps DOWN to neutral-100, every other theme steps UP. See docs/tokens.md. */
+  --semantic-color-background-raised: var(--primitive-color-neutral-100);
   --semantic-color-background-article: var(--primitive-color-neutral-0);  /* pure-white reading surface for long-form article pages */
   --semantic-color-text-primary: var(--primitive-color-neutral-900);
   --semantic-color-text-secondary: var(--primitive-color-neutral-600);
@@ -514,6 +521,7 @@
     --semantic-color-background-primary: var(--primitive-color-neutral-900);
     --semantic-color-background-secondary: var(--primitive-color-neutral-800);
     --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+    --semantic-color-background-raised: var(--primitive-color-neutral-850);
     --semantic-color-background-article: var(--primitive-color-neutral-900);  /* dark reading surface keeps article text legible in dark mode */
     --semantic-color-text-primary: var(--primitive-color-neutral-0);
     --semantic-color-text-secondary: var(--primitive-color-neutral-300);
@@ -536,6 +544,7 @@
   --semantic-color-background-primary: var(--primitive-color-neutral-900);
   --semantic-color-background-secondary: var(--primitive-color-neutral-800);
   --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
+  --semantic-color-background-raised: var(--primitive-color-neutral-850);
   --semantic-color-background-article: var(--primitive-color-neutral-900);  /* dark reading surface keeps article text legible in dark mode */
   --semantic-color-text-primary: var(--primitive-color-neutral-0);
   --semantic-color-text-secondary: var(--primitive-color-neutral-300);
@@ -558,6 +567,7 @@
   --semantic-color-background-primary: var(--primitive-color-sepia-50);
   --semantic-color-background-secondary: var(--primitive-color-sepia-100);
   --semantic-color-background-tertiary: var(--primitive-color-sepia-200);
+  --semantic-color-background-raised: var(--primitive-color-sepia-25);
   --semantic-color-background-article: var(--primitive-color-sepia-0);
   --semantic-color-text-primary: var(--primitive-color-sepia-900);
   --semantic-color-text-secondary: var(--primitive-color-sepia-700);
@@ -590,6 +600,7 @@
   --semantic-color-background-primary: var(--primitive-color-slate-850);
   --semantic-color-background-secondary: var(--primitive-color-slate-800);
   --semantic-color-background-tertiary: var(--primitive-color-slate-700);
+  --semantic-color-background-raised: var(--primitive-color-slate-750);
   --semantic-color-background-article: var(--primitive-color-slate-900);
   --semantic-color-text-primary: var(--primitive-color-slate-0);
   --semantic-color-text-secondary: var(--primitive-color-slate-100);

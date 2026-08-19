@@ -129,23 +129,33 @@ nav.scrolled {
     color: var(--semantic-color-interactive-primary);
 }
 
-.nav-links a.cta-button {
+/* Outlined button. Lives in the nav and at the foot of the work section, so
+   it is authored as a standalone component rather than scoped to .nav-links —
+   the two places must not be able to drift apart. */
+.cta-button {
+    display: inline-block;
     background-color: transparent;
     color: var(--semantic-color-text-primary);
+    font-size: var(--primitive-font-size-sm);
+    font-weight: var(--primitive-font-weight-regular);
+    text-decoration: none;
     padding: var(--semantic-spacing-sm) var(--semantic-spacing-lg);
+    border: 1px solid var(--semantic-color-border-primary);
     border-radius: var(--semantic-radius-sm);
+    cursor: pointer;
     transition: border-color var(--semantic-motion-hover),
                 background-color var(--semantic-motion-hover),
                 color var(--semantic-motion-hover);
-    border: 1px solid var(--semantic-color-border-primary);
-    cursor: pointer;
-    display: inline-block;
-    font-weight: var(--primitive-font-weight-regular);
 }
 
-.nav-links a.cta-button:hover {
+.cta-button:hover {
     border-color: var(--semantic-color-border-strong);
     background-color: var(--semantic-color-background-secondary);
+}
+
+/* .nav-links a:hover tints every link with the accent, and it outranks
+   .cta-button:hover — so the button's label is held explicitly. */
+.nav-links a.cta-button:hover {
     color: var(--semantic-color-text-primary);
 }
 
@@ -201,17 +211,17 @@ body.page--article {
     max-width: var(--semantic-layout-container-max-width-narrow);
 }
 
-/* ===== LOCATION HEADER ===== */
+/* ===== GREETING ===== */
 /* Set in the same mono face as the game's CLICK TO PLAY line, so the greeting
    at the top and the prompt at the bottom read as the same voice speaking. */
-.location-header {
+.greeting {
     font-family: var(--primitive-font-mono);
     font-size: var(--primitive-font-size-xs);
     font-weight: var(--primitive-font-weight-regular);
     letter-spacing: var(--primitive-letter-spacing-widest);
     text-transform: uppercase;
     color: var(--semantic-color-text-secondary);
-    margin-bottom: var(--semantic-spacing-3xl);
+    margin-bottom: var(--semantic-spacing-2xl);
     padding-top: var(--semantic-spacing-2xl);
 }
 
@@ -369,17 +379,12 @@ body.page--article {
     line-height: var(--semantic-type-eyebrow-md-line-height);
 }
 
-.view-all {
-    color: var(--semantic-color-interactive-primary);
-    text-decoration: none;
-    font-size: var(--primitive-font-size-sm);
-    font-weight: var(--primitive-font-weight-medium);
-    transition: color var(--semantic-motion-hover);
-    margin-top: var(--semantic-spacing-sm);
-}
-
-.view-all:hover {
-    color: var(--semantic-color-interactive-primary-hover);
+/* The route to the full archive sits under the cards rather than beside the
+   heading: it is what you reach for after reading the list, not before. */
+.work-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--semantic-spacing-xl);
 }
 
 /* ===== CLIENTS SECTION ===== */
@@ -426,32 +431,101 @@ body.page--article {
     padding: var(--semantic-spacing-4xl) 0;
 }
 
-/* Services read as a divided list rather than a grid of boxes: a two-column
-   grid orphans an odd third item and crushes the copy measure, and a list
-   still works if a fourth practice is added later. */
+/* Services are three notes lying on the page: square-cornered, no border,
+   each tilted a little differently and straightening under the cursor. The
+   tilt has to be authored at the same specificity as the hover rule, or the
+   nth-child selectors below silently outrank :hover and nothing moves. */
 .services-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--semantic-spacing-md);
+    /* Room for the shadow and the lift; the notes overhang their track. */
+    padding: 14px 0 26px;
 }
 
 .service {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--semantic-spacing-xs);
-    padding: var(--semantic-spacing-md) 0;
+    /* Top padding clears the glue strip below. */
+    padding: 36px var(--semantic-spacing-md) var(--semantic-spacing-md);
+    background-color: var(--semantic-color-background-raised);
+    border-radius: 1px;
+    /* Two layers, and literal rather than tokenised: a tight contact shadow
+       plus a longer one falling away below is what separates paper lying on a
+       surface from a box floating over one, and the shadow tokens are single
+       layer. Neutral blacks at low alpha, so they hold in all four themes. */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10), 0 6px 12px -6px rgba(0, 0, 0, 0.22);
+    transform-origin: 50% 0;
+    transition: transform var(--semantic-motion-hover),
+                box-shadow var(--semantic-motion-hover);
 }
 
+/* The glue strip across the top of the sheet. */
+.service::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 22px;
+    background-color: color-mix(in srgb, var(--semantic-color-text-primary) 3%, transparent);
+    pointer-events: none;
+}
+
+/* The unstuck bottom edge, lifting slightly away from the page. */
+.service::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 2px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 7px 8px -6px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.services-grid .service:nth-child(1) { transform: rotate(-1.4deg) translateY(1px); }
+.services-grid .service:nth-child(2) { transform: rotate(1deg); }
+.services-grid .service:nth-child(3) { transform: rotate(-0.7deg) translateY(2px); }
+
+.services-grid .service:hover {
+    transform: rotate(0deg) translateY(-2px);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10), 0 14px 22px -10px rgba(0, 0, 0, 0.30);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .services-grid .service,
+    .services-grid .service:hover {
+        transform: none;
+        transition: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-grid { grid-template-columns: 1fr; }
+}
+
+/* The practice name runs into its own sentence, so the heading is hidden
+   rather than dropped — it is how the three practices are found by search
+   engines and read out by a screen reader. */
 .service-title {
-    font-family: var(--semantic-font-display);
-    font-size: var(--semantic-type-heading-2xs-font-size);
-    font-weight: var(--primitive-font-weight-serif-medium);
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.service-lead {
     color: var(--semantic-color-text-primary);
-    letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
+    font-weight: var(--primitive-font-weight-medium);
 }
 
 .service-description {
-    font-size: var(--primitive-font-size-sm);
+    font-size: 13.5px;
     line-height: 1.55;
     color: var(--semantic-color-text-secondary);
 }
