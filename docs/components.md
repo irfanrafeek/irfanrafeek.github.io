@@ -379,6 +379,11 @@ click (delaying it for real anticipation costs more in input lag than
 the pose is worth), so the compressed pose blends out over the first
 100ms of the rise instead.
 
+The landing pose is armed only by a *real descent* — the frame the
+board goes from airborne to resting. Resting on a surface re-enters
+the same branch of the physics every frame, so an unguarded check
+holds the landing crouch forever and the rolling pose never returns.
+
 ### Obstacles
 
 Nine line-icon silhouettes in the `SHAPES` table, one `<path>` each,
@@ -440,6 +445,8 @@ Both derive from the box, not from constants:
 - Jump apex is clamped to the headroom actually available, so a jump
   can never clip out of a short box.
 - Obstacle scale follows the apex.
+- The bench height is then subtracted from the headroom a second time,
+  because a jump can start from a bench top as well as the ground.
 - Speed scales down on narrow screens, where the runway gives less
   warning.
 
@@ -457,12 +464,20 @@ score persists in `localStorage` under `skate-best`, wrapped in
 try/catch on both read and write — Safari private mode throws on write,
 where the game still plays and just doesn't remember.
 
+Both numbers are zero-padded to five digits by `pad()`. That width is
+cosmetic rather than structural: at the current rate the counter only
+reaches five digits after roughly ten minutes of play. Changing
+`SCORE_RATE` to make the digits arrive sooner would re-scale every
+stored high score, which players would read as their record being
+wiped.
+
 ### Accessibility & motion
 
 Focusable with space/enter parity, `:focus-visible` outline, and all
 visual text `aria-hidden` behind the root's `aria-label`. Under
-`prefers-reduced-motion` the body bob is suppressed and the idle hint
-is hidden, leaving a static graphic that is still playable on click.
+`prefers-reduced-motion` the body bob and the bench sway are both
+suppressed and the idle hint is hidden, leaving a static graphic that
+is still playable on click.
 Hidden entirely in print.
 
 ---
