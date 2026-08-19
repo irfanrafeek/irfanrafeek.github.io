@@ -503,9 +503,6 @@ body.page--article {
     }
 }
 
-@media (max-width: 768px) {
-    .services-grid { grid-template-columns: 1fr; }
-}
 
 /* The practice name runs into its own sentence, so the heading is hidden
    rather than dropped — it is how the three practices are found by search
@@ -528,6 +525,30 @@ body.page--article {
     font-size: 13.5px;
     line-height: 1.55;
     color: var(--semantic-color-text-secondary);
+}
+
+/* Placed after the base rules above: these override them at equal
+   specificity, so source order is what decides. */
+@media (max-width: 768px) {
+    .services-grid { grid-template-columns: 1fr; }
+
+    /* Stacked, a note has the width of the column and only as much height as
+       its sentence needs — which reads as a strip, not a note. A floor on both
+       keeps the sheet roughly square-ish, and the copy comes up with it. */
+    .service {
+        /* 248 is the note's size here, not just a floor — a full-bleed card
+           reads as a banner. min-width holds it on a very narrow phone, where
+           the column itself drops under 248 and the grid would squeeze it. */
+        width: 248px;
+        min-width: 248px;
+        min-height: 176px;
+        justify-self: center;
+    }
+
+    .service-description {
+        font-size: var(--primitive-font-size-base);
+        line-height: 1.5;
+    }
 }
 
 /* Inline link inside body copy. Follows the hero-description treatment —
