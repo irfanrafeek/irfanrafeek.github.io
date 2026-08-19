@@ -515,9 +515,13 @@
   --semantic-layout-container-max-width-reading: 640px;  /* optimal line length for long-form article/prose */
 }
 
-/* DARK MODE */
+/* DARK MODE — follows the OS only while no theme has been chosen.
+   Written as :not([data-theme]) because there is no [data-theme='light']
+   block to out-rank it: choosing light simply falls back to the :root
+   palette above, and without this guard the media query kept overriding it
+   on any device whose OS is set to dark. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --semantic-color-background-primary: var(--primitive-color-neutral-900);
     --semantic-color-background-secondary: var(--primitive-color-neutral-800);
     --semantic-color-background-tertiary: var(--primitive-color-neutral-700);
