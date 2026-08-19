@@ -220,7 +220,6 @@ body.page--article {
 /* ===== HERO SECTION ===== */
 .hero {
     margin-bottom: var(--semantic-spacing-2xl);
-    max-width: 900px;
 }
 
 .hero-title {
@@ -281,7 +280,6 @@ body.page--article {
     font-size: var(--primitive-font-size-base);
     line-height: var(--semantic-type-body-md-line-height);
     color: var(--semantic-color-text-secondary);
-    max-width: 800px;
 }
 
 /* The introduction runs to a second paragraph — the personal one that
@@ -1006,8 +1004,12 @@ footer {
 
 .experience-entry {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--semantic-spacing-3xl);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 5fr);
+    /* The column gap was 3xl, which cost more than the meta column could
+       spare once the container came down to 640px — company names and roles
+       wrapped to three lines. The rule between the columns is the alignment,
+       not the distance. */
+    gap: var(--semantic-spacing-xl);
     padding: var(--semantic-spacing-3xl) 0;
     border-top: 1px solid var(--semantic-color-border-secondary);
 }
@@ -1024,12 +1026,18 @@ footer {
 .experience-meta {
     display: flex;
     flex-direction: column;
-    gap: var(--semantic-spacing-sm);
+    /* Company, dates and role are one block of identification, so they sit
+       closer to each other than to anything around them. */
+    gap: var(--semantic-spacing-xs);
 }
 
+/* The serif is spent on the company name and nowhere else in this column —
+   it is what gives the timeline its rhythm when the page is scanned. Dates
+   and role drop to the sans below, so the three lines read as one name with
+   two supporting labels rather than three headings. */
 .experience-company {
     font-family: var(--semantic-type-heading-lg-font-family);
-    font-size: var(--semantic-type-heading-sm-font-size);
+    font-size: var(--semantic-type-heading-2xs-font-size);
     font-weight: var(--semantic-type-heading-lg-font-weight);
     line-height: var(--semantic-type-heading-lg-line-height);
     letter-spacing: var(--semantic-type-heading-lg-letter-spacing);
@@ -1038,23 +1046,23 @@ footer {
 }
 
 .experience-dates {
-    font-family: var(--semantic-type-eyebrow-md-font-family);
-    font-size: var(--semantic-type-eyebrow-md-font-size);
-    font-weight: var(--semantic-type-eyebrow-md-font-weight);
-    letter-spacing: var(--semantic-type-eyebrow-md-letter-spacing);
+    font-family: var(--semantic-type-eyebrow-sm-font-family);
+    font-size: var(--semantic-type-eyebrow-sm-font-size);
+    font-weight: var(--semantic-type-eyebrow-sm-font-weight);
+    letter-spacing: var(--semantic-type-eyebrow-sm-letter-spacing);
     text-transform: uppercase;
     color: var(--semantic-color-text-tertiary);
 }
 
 .experience-role {
-    font-family: var(--semantic-type-heading-xs-font-family);
-    font-size: var(--semantic-type-heading-2xs-font-size);
-    font-weight: var(--semantic-type-heading-xs-font-weight);
-    line-height: var(--semantic-type-heading-xs-line-height);
-    letter-spacing: var(--semantic-type-heading-xs-letter-spacing);
+    font-family: var(--semantic-type-body-sm-font-family);
+    font-size: var(--semantic-type-body-sm-font-size);
+    font-weight: var(--semantic-type-body-sm-font-weight);
+    line-height: var(--semantic-type-body-sm-line-height);
+    letter-spacing: var(--semantic-type-body-sm-letter-spacing);
     color: var(--semantic-color-text-secondary);
-    margin-top: var(--semantic-spacing-sm);
-    font-style: italic;
+    /* Spaced by the column's own gap — a margin here would stack on top. */
+    margin-top: 0;
 }
 
 .experience-description {
@@ -1121,10 +1129,6 @@ footer {
     .experience-entry {
         grid-template-columns: 1fr;
         gap: var(--semantic-spacing-lg);
-    }
-
-    .experience-company {
-        font-size: var(--semantic-type-heading-md-font-size);
     }
 }
 

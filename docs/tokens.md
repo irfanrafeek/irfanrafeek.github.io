@@ -247,14 +247,15 @@ Durations could be mirrored as number variables; the curves cannot.
 ### Layout
 
 ```
---semantic-layout-container-max-width-default → 800px
---semantic-layout-container-max-width-narrow  → 800px
---semantic-layout-container-max-width-reading → 672px  (long-form articles)
+--semantic-layout-container-max-width-default → 640px
+--semantic-layout-container-max-width-narrow  → 640px
+--semantic-layout-container-max-width-reading → 640px  (long-form articles)
 ```
 
-`default` and `narrow` are deliberately the same value — every page shares
-one 800px column. The `narrow` variant is kept as a separate token so the
-two can diverge again without touching markup.
+All three are deliberately the same value — every page, index and article
+alike, shares one 640px column, which keeps running text near 70 characters
+a line. The variants are kept as separate tokens so they can diverge again
+without touching markup.
 
 Anything sized in fixed pixels inside a container must be checked against
 this width when it changes. Watch for two failure modes:
