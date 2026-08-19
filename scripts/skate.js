@@ -84,8 +84,78 @@
            pushed wider, arms floated up and out. Reads as balancing rather
            than cruising, without leaving the same line vocabulary. */
         grind: [-4,-21,  4,-31,  7,-37,   8.5,-14,  7.5,-5,  -8.5,-13, -7.5,-5,
-                10,-30, 17,-33,  -7,-28, -14,-30]
+                10,-30, 17,-33,  -7,-28, -14,-30],
+        /* Waiting: weight settled, spine near vertical, arms hanging. The only
+           pose the page shows before anyone clicks. */
+        rest: [-1.5,-26,  0.5,-37,  2.5,-43.5,   4.5,-17,  6,-5,  -5.5,-16.5, -7,-5,
+                5,-30.5, 7.5,-22.5,  -4.5,-30.5, -7,-23],
+        /* The kick-push that opens a run: lift the back foot clear of the deck,
+           plant it on the ground ahead, sweep it back as the board accelerates,
+           fold the knee to bring it home. */
+        lift:  [-3,-24,  3,-35,  6,-41.5,   8.7,-16.4,  7.5,-5,   4.5,-15.3, -2,-7,
+                 8,-32, 13,-30.5,  -2.5,-32, -8,-30],
+        plant: [-4,-19,  4,-30,  7,-36.5,   9.6,-16.3,  7.5,-5,   3.6,-10.4, 2,0,
+                 9,-27, 14.5,-25.5,  -1.5,-27, -7,-25],
+        sweep: [-3,-18,  6,-29,  9,-35.5,   10.8,-16,   7.5,-5,  -6.1,-6.9, -14,0,
+                11,-26, 16.5,-25,  0.5,-26, -5,-24],
+        fold:  [-3,-22,  4,-33,  7,-39.5,   9.7,-16.3,  7.5,-5,   3.8,-12.7, -5,-7,
+                 9,-30, 14.5,-28.5,  -1.5,-30, -7,-28]
     };
+
+    /* Beat end-times, in seconds from the start of a run. */
+    var PUSH_BEATS = [[0.09, 'lift'], [0.18, 'plant'], [0.35, 'sweep'], [0.46, 'fold']];
+    var PUSH_END = 0.46;
+    var pushUntil = 0;          /* > 0 while the opening push owns the figure */
+    /* Segment lengths the legs must hold. Taken from the riding pose, whose
+       front leg was already drawn to them. */
+    var BONES = { thighF: 13.9, shinF: 11.5, thighB: 11.5, shinB: 10.5 };
+
+    function pushPose(t) {
+        for (var i = 0; i < PUSH_BEATS.length; i++) {
+            if (t < PUSH_BEATS[i][0]) return POSES[PUSH_BEATS[i][1]];
+        }
+        return POSES.roll;
+    }
+
+    /* Two-bone IK. A knee only opens forward, so of the two solutions take the
+       one further along +x. */
+    function kneeAt(hx, hy, fx, fy, thigh, shin) {
+        var dx = fx - hx, dy = fy - hy;
+        var d = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        var reach = thigh + shin;
+        if (d > reach) { dx *= reach / d; dy *= reach / d; d = reach; }
+        var a = (thigh * thigh - shin * shin + d * d) / (2 * d);
+        var h = Math.sqrt(Math.max(0, thigh * thigh - a * a));
+        var ux = dx / d, uy = dy / d;
+        var bx = hx + a * ux, by = hy + a * uy;
+        var k1x = bx + h * uy, k2x = bx - h * uy;
+        return k1x >= k2x ? [k1x, by - h * ux] : [k2x, by + h * ux];
+    }
+
+    /* Easing joint positions shortens a limb between key poses — a reaching leg
+       loses a fifth of its length mid-blend. Re-solving the knees from the eased
+       hip and feet fixes every frame, not just the authored ones.  `w` fades the
+       correction out afterwards so the riding pose still arrives as drawn: its
+       back knee is deliberately behind the hip, which no solver would choose. */
+    function solveKnees(p, w) {
+        var kf = kneeAt(p[0], p[1], p[8], p[9], BONES.thighF, BONES.shinF);
+        p[6] += (kf[0] - p[6]) * w; p[7] += (kf[1] - p[7]) * w;
+        var kb = kneeAt(p[0], p[1], p[12], p[13], BONES.thighB, BONES.shinB);
+        p[10] += (kb[0] - p[10]) * w; p[11] += (kb[1] - p[11]) * w;
+    }
+
+    function ikWeight() {
+        if (pushUntil <= 0 || state !== 'playing') return 0;
+        if (elapsed <= pushUntil) return 1;
+        return Math.max(0, 1 - (elapsed - pushUntil) / 0.35);
+    }
+
+    /* The board is what accelerates during the sweep, so the ground speed
+       follows the push rather than leading it. */
+    function launch() {
+        if (pushUntil <= 0 || elapsed >= pushUntil) return 1;
+        return Math.pow(Math.max(0, elapsed) / pushUntil, 1.8);
+    }
 
     var pose = POSES.roll.slice();      /* the live, interpolated pose */
     var target = POSES.roll;
@@ -119,6 +189,8 @@
         for (var i = 0; i < pose.length; i++) {
             pose[i] = +(pose[i] + (target[i] - pose[i]) * k).toFixed(2);
         }
+        var w = ikWeight();
+        if (w > 0) solveKnees(pose, w);
         poseFigure();
     }
 
@@ -305,11 +377,14 @@
     }
 
     function choosePose() {
+        /* Only the untouched scene rests; a crashed one holds the ride. */
+        if (state === 'idle') return POSES.rest;
         if (state !== 'playing') return POSES.roll;
         if (airborne) {
             /* The impulse is instant, so the push-off reads on the way up. */
             return (elapsed - jumpAt) < 0.1 ? POSES.takeoff : POSES.air;
         }
+        if (elapsed < pushUntil) return pushPose(elapsed);
         /* Balancing beats absorbing: once the board settles on a bench the
            grind pose owns the figure for the whole crossing. */
         if (floorY > 0) return POSES.grind;
@@ -317,11 +392,11 @@
     }
 
     function tick(now) {
-        var dt = Math.min((now - last) / 1000, 0.05);   /* clamp after a tab switch */
+        var dt = Math.max(0, Math.min((now - last) / 1000, 0.05));   /* clamp; a rAF stamp can precede start() */
         last = now;
         elapsed += dt;
 
-        speed = Math.min(SPEED_MAX, SPEED_START + elapsed * SPEED_RAMP) * speedScale;
+        speed = Math.min(SPEED_MAX, SPEED_START + elapsed * SPEED_RAMP) * speedScale * launch();
 
         var prevY = y;
         var wasAirborne = airborne;
@@ -383,6 +458,7 @@
         y = 0; vy = 0; elapsed = 0; speed = SPEED_START * speedScale;
         jumpAt = -1; landUntil = 0; tilt = 0; distance = 0;
         floorY = 0; airborne = false; sway = 0;
+        pushUntil = PUSH_END;
         clearObstacles();
         scheduleSpawn(0);
         shownTime = -1;
@@ -405,7 +481,8 @@
 
     function press() {
         if (state === 'playing') {
-            if (!airborne) { vy = jumpV; jumpAt = elapsed; }   /* no double jumps */
+            /* Jumping out of the opening push abandons it rather than fighting it. */
+            if (!airborne) { vy = jumpV; jumpAt = elapsed; pushUntil = 0; }
         } else {
             start();
         }
@@ -427,6 +504,7 @@
     });
 
     window.addEventListener('resize', resize);
+    pose = POSES.rest.slice();
     poseFigure();
     resize();
     draw();

@@ -351,12 +351,14 @@ the tap room *is* the spacing.
 
 Eleven joints — hip, shoulder, head, two knees, two feet, two elbows,
 two hands — in a local space whose origin is the board's contact
-point, y negative upwards. Five poses (`roll`, `takeoff`, `air`,
-`land`, `grind`) are arrays of those joints; each frame the live pose eases
-toward whichever the state asks for and five `d` attributes are
-rewritten. There are no animation frames — the interpolated in-between
-poses *are* the animation. `roll` doubles as the idle pose so the
-resting graphic already reads as someone cruising.
+point, y negative upwards. Ten poses are arrays of those joints; each
+frame the live pose eases toward whichever the state asks for and five
+`d` attributes are rewritten. There are no animation frames — the
+interpolated in-between poses *are* the animation.
+
+Five cover riding — `roll`, `takeoff`, `air`, `land`, `grind`. One is
+the resting figure, `rest`. Four are the opening kick-push: `lift`,
+`plant`, `sweep`, `fold`.
 
 Takeoff is deliberately brief: the jump impulse is applied instantly on
 click (delaying it for real anticipation costs more in input lag than
@@ -367,6 +369,42 @@ The landing pose is armed only by a *real descent* — the frame the
 board goes from airborne to resting. Resting on a surface re-enters
 the same branch of the physics every frame, so an unguarded check
 holds the landing crouch forever and the rolling pose never returns.
+
+### Starting a run
+
+Only the untouched scene rests. `rest` is what the page shows before
+anyone clicks; a crashed scene holds the riding pose instead, because
+the run it is showing the end of was a moving one.
+
+The first 0.46s of every run is a scripted pose track — `lift`,
+`plant`, `sweep`, `fold` — laid over the ordinary physics rather than
+beside it. There is no new state: `choosePose` simply prefers the
+push while `elapsed < pushUntil`, so jumping, landing and benches all
+still win over it in the order they always did. Jumping during the
+push sets `pushUntil` to 0, abandoning it rather than fighting it.
+
+The ground accelerates on a curve underneath (`launch()`), because the
+board is what the sweep is pushing — the speed follows the leg rather
+than leading it.
+
+**The legs are solved, not posed.** Placing a reaching leg by hand
+silently stretches it: the first attempt grew the back leg by 68% to
+touch the ground. Both knees now come from two-bone IK against fixed
+segment lengths, and — because easing joint positions shortens a limb
+between key poses too — they are re-solved every frame from the eased
+hip and feet rather than eased themselves.
+
+The correction fades out over 0.35s after the push. That fade is
+load-bearing: the riding pose's back knee sits *behind* the hip, which
+no solver would ever choose, so the IK has to be gone by the time the
+figure settles or the knee would snap forward.
+
+One trap worth knowing: a `requestAnimationFrame` timestamp can
+precede the `performance.now()` captured when a run starts, making the
+first `dt` negative. The integrator absorbs that silently, but
+`launch()` raises `elapsed` to a fractional power, and a negative base
+gives `NaN` — which then spreads through the transform and the score.
+`dt` is clamped at zero for that reason.
 
 ### Obstacles
 
