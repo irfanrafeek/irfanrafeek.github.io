@@ -172,23 +172,6 @@ section header above the grid is the only divider.
 
 ---
 
-## About-me block (about page)
-
-```html
-<div class="about-me-grid">
-  <div class="about-me-content">
-    <h3 class="about-me-title">Get to Know Me</h3>
-    <p class="about-me-text">…</p>
-    <p class="about-me-text">…</p>
-  </div>
-  <div class="about-me-media">
-    <img src="Assets/About_me.gif" alt="" class="about-me-image">
-  </div>
-</div>
-```
-
----
-
 ## Case-study / writing article
 
 `case.html` and `writing.html` use a shared renderer (`scripts/case.js`).
@@ -318,7 +301,8 @@ See [themes.md](./themes.md) for how it persists and applies the choice.
 
 ## Skate game (home page)
 
-A small playable scene between About Me and Selected Clients. Static
+A small playable scene between the introduction and What I Do,
+picking up the last line of the copy above it. Static
 until clicked; logic in `scripts/skate.js`, no dependencies.
 
 ```html

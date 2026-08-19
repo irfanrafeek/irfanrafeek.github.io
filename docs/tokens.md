@@ -260,8 +260,7 @@ Anything sized in fixed pixels inside a container must be checked against
 this width when it changes. Watch for two failure modes:
 
 - **Fixed square images going oval.** Set `width: 100%` + `max-width` +
-  `aspect-ratio` rather than a fixed `width`/`height` pair (see
-  `.about-me-image`).
+  `aspect-ratio` rather than a fixed `width`/`height` pair.
 - **Media queries wider than the container.** A `@media (max-width: 1200px)`
   rule now fires on essentially every viewport, so it silently becomes the
   default rather than a responsive exception.

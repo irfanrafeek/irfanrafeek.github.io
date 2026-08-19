@@ -284,6 +284,12 @@ body.page--article {
     max-width: 800px;
 }
 
+/* The introduction runs to a second paragraph — the personal one that
+   hands off to the game below it. */
+.hero-description + .hero-description {
+    margin-top: var(--semantic-spacing-md);
+}
+
 /* ===== CATEGORY TAGS ===== */
 .category-scroll {
     display: flex;
@@ -471,58 +477,6 @@ body.page--article {
 .text-link:hover {
     color: var(--semantic-color-interactive-primary);
     text-decoration-color: var(--semantic-color-interactive-primary);
-}
-
-/* ===== ABOUT ME SECTION ===== */
-#about-me {
-    padding: var(--semantic-spacing-4xl) 0;
-}
-
-.about-me-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr);
-    gap: var(--semantic-spacing-lg);
-    align-items: center;
-}
-
-.about-me-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--semantic-spacing-lg);
-    max-width: 560px;
-}
-
-.about-me-media {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.about-me-image {
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 4 / 5;
-    height: auto;
-    display: block;
-    border-radius: var(--semantic-radius-lg);
-    border: 1px solid var(--semantic-color-border-primary);
-    object-fit: cover;
-}
-
-.about-me-title {
-    font-family: var(--semantic-type-heading-lg-font-family);
-    font-size: var(--semantic-type-heading-lg-font-size);
-    font-weight: var(--semantic-type-heading-lg-font-weight);
-    line-height: var(--semantic-type-heading-lg-line-height);
-    letter-spacing: var(--semantic-type-heading-lg-letter-spacing);
-    color: var(--semantic-color-text-primary);
-}
-
-.about-me-text {
-    font-family: var(--semantic-type-body-md-font-family);
-    font-size: var(--semantic-type-body-md-font-size);
-    font-weight: var(--semantic-type-body-md-font-weight);
-    line-height: var(--semantic-type-body-md-line-height);
-    color: var(--semantic-color-text-secondary);
 }
 
 /* ===== WORK SECTION ===== */
@@ -1164,15 +1118,6 @@ footer {
 }
 
 @media (max-width: 968px) {
-    .about-me-grid {
-        grid-template-columns: 1fr;
-        gap: var(--semantic-spacing-2xl);
-    }
-
-    .about-me-media {
-        justify-content: flex-start;
-    }
-
     .experience-entry {
         grid-template-columns: 1fr;
         gap: var(--semantic-spacing-lg);
