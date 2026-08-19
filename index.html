@@ -106,17 +106,30 @@
 
     <main>
         <div class="container">
-            <div class="location-header">
-                BANGALORE, INDIA
-                <span class="availability">• AVAILABLE FOR WORK</span>
-            </div>
+            <div class="location-header" id="greeting"></div>
+            <script>
+                /* Greets by the visitor's own clock, not mine. Written inline
+                   and right after the element so it lands before first paint —
+                   a deferred script would show an empty line first, then pop.
+                   Buckets: 5-11 morning, 12-16 afternoon, 17-21 evening, and
+                   everything either side of midnight is late night. */
+                (function () {
+                    var h = new Date().getHours();
+                    var when = h < 5 ? 'Late night'
+                        : h < 12 ? 'Morning'
+                        : h < 17 ? 'Afternoon'
+                        : h < 22 ? 'Evening'
+                        : 'Late night';
+                    document.getElementById('greeting').textContent = when + ', human.';
+                })();
+            </script>
 
             <section class="hero">
                 <h1 class="hero-title">
                     I turn ideas into products people trust<span class="accent-dot">.</span>
                 </h1>
                 <p class="hero-description">
-                    I’m a Product Designer with a decade of experience and deep expertise in design systems. Previously at Condé Nast, Quintype, and YourStory, I now partner with startups to shape early products and build foundations for growth.
+                    I’m a Product Designer based in Bangalore, with a decade of experience and deep expertise in design systems. Previously at Condé Nast, Quintype, and YourStory, I now partner with startups to shape early products and build foundations for growth.
                 </p>
                 <p class="hero-description">
                     Off the screen, I explore unfamiliar streets with my camera and, lately, cruise on my longboard—gracefully... sometimes :'D Try not to crash below.

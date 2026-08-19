@@ -12,14 +12,20 @@ Centered max-width wrapper with horizontal padding.
 ```html
 <main>
   <div class="container">
-    <!-- default: max-width 1200, padded -->
+    <!-- default: max-width 640, padded -->
   </div>
 
   <div class="container container--narrow">
-    <!-- narrow: max-width 1000 (used on the about page) -->
+    <!-- narrow: same 640 today, kept separate so the two can diverge -->
   </div>
 </main>
 ```
+
+All three layout widths — `default`, `narrow` and `reading` — resolve to
+640px, so index and article pages share one column and running text stays
+near 70 characters a line. Before changing any of them, check the fixed
+pixel sizes that live inside a container; `docs/tokens.md` lists the two
+failure modes to watch for.
 
 ### `nav#navbar` + `.nav-links`
 
@@ -61,6 +67,28 @@ Small uppercase label above a page hero (used on About and Writings).
 ---
 
 ## Hero & section headers
+
+### `.location-header` (the greeting)
+
+One line above the hero, set in the mono face rather than the eyebrow sans
+— deliberately the same family, size and tracking as the game's CLICK TO
+PLAY prompt at the foot of the page, so the two read as one voice.
+
+```html
+<div class="location-header" id="greeting"></div>
+<script>/* fills it from the visitor's clock */</script>
+```
+
+The text is written by a short inline script placed **immediately after the
+element**, not by a deferred file. That position is the point: a deferred
+script paints an empty line first and then pops the text in. Buckets are
+5-11 morning, 12-16 afternoon, 17-21 evening, and everything either side of
+midnight late night; it reads the visitor's own hour, so a reader in New
+York at 9pm is greeted with EVENING while it is morning in Bangalore.
+
+This line used to read BANGALORE, INDIA · AVAILABLE FOR WORK. Both signals
+left the page body with it — the city is now carried by the first sentence
+of `.hero-description`, and the hiring signal only by the nav button.
 
 ### `.hero` + `.hero-title` + `.hero-description`
 
@@ -171,6 +199,42 @@ Single-column list. Rows carry no rules of their own — the ruled
 section header above the grid is the only divider.
 
 ---
+
+## Experience timeline (about page)
+
+```html
+<div class="experience-entry">
+  <div class="experience-meta">
+    <h3 class="experience-company">Cond&eacute; Nast</h3>
+    <div class="experience-dates">Dec 2020 &mdash; Jul 2025</div>
+    <div class="experience-role">Principal Product Designer, Design Systems</div>
+  </div>
+  <div class="experience-description">
+    <h4 class="experience-subhead">Optional, for entries covering several engagements</h4>
+    <p>&hellip;</p>
+  </div>
+</div>
+```
+
+Two columns, `2fr / 5fr` with an `xl` gap, stacking to one below 968px.
+
+The meta column carries one serif and two sans lines, not three headings:
+the company name is the only thing that gets the display face, at
+`heading-2xs`; dates drop to `eyebrow-sm` and the role to `body-sm` roman.
+Set as three display voices it read as a wall of bold in a 155px column.
+
+Two spacing traps here, both already sprung once:
+
+- `.experience-role` used to carry a `margin-top` **on top of** the flex
+  gap of the column it sits in, so the block was looser than drawn. The
+  column's `gap` is the only spacing; keep it that way.
+- A `3xl` column gap looks generous at 800px and starves the meta column at
+  640px. Company names wrap when the column drops much under 150px.
+
+`.experience-subhead` is still the serif at 20px, identical to the company
+name beside it — so in an entry that has one, the subhead and the company
+read at equal weight. Worth resolving if the subhead spreads to more
+entries.
 
 ## Case-study / writing article
 

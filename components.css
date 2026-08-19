@@ -202,19 +202,17 @@ body.page--article {
 }
 
 /* ===== LOCATION HEADER ===== */
+/* Set in the same mono face as the game's CLICK TO PLAY line, so the greeting
+   at the top and the prompt at the bottom read as the same voice speaking. */
 .location-header {
-    font-family: var(--semantic-font-eyebrow);
-    font-size: var(--primitive-font-size-sm);
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-xs);
     font-weight: var(--primitive-font-weight-regular);
-    letter-spacing: var(--primitive-letter-spacing-wide);
+    letter-spacing: var(--primitive-letter-spacing-widest);
     text-transform: uppercase;
     color: var(--semantic-color-text-secondary);
     margin-bottom: var(--semantic-spacing-3xl);
     padding-top: var(--semantic-spacing-2xl);
-}
-
-.availability {
-    margin-left: var(--semantic-spacing-sm);
 }
 
 /* ===== HERO SECTION ===== */
