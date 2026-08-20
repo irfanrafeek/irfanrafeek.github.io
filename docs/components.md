@@ -707,21 +707,77 @@ as balancing, not as a different character.
 
 ### Sizing and difficulty
 
-Both derive from the box, not from constants:
+Everything derives from the box, not from constants. The rule the whole
+section rests on: **what a player feels is time, not pixels.** Two boxes
+of different widths are only the same game if they hand out the same
+number of seconds, and that does not happen by leaving pixel counts
+alone — it happens by recomputing them.
 
-- Jump apex is clamped to the headroom actually available, so a jump
-  can never clip out of a short box.
-- Obstacle scale follows the apex.
-- The bench height is then subtracted from the headroom a second time,
-  because a jump can start from a bench top as well as the ground.
-- Speed scales down on narrow screens, where the runway gives less
-  warning.
+The ground line sits a fixed distance from the **top** (`128px`), and
+the tap strip below absorbs whatever is left. It used to be the other
+way round — a fixed 80px strip — which meant a shorter box took its
+20px entirely out of the headroom above the line, where the jump lives.
+The jump lost a quarter of its height on a phone for a layout reason.
+A desktop box still works out to the original 80px strip.
 
-The box is 208px tall, 188px below 768px — of which the bottom 80px is
-tap room, leaving the same play area as before. **Making it shorter
-lowers the jump, which shrinks the obstacles** — it is a gameplay
-change, not just a layout one. Trim the ground offset instead if you
-only want the block to take less room.
+From there:
+
+- Jump apex is clamped to the headroom, so a jump can never clip out.
+- The bench height is subtracted a second time, because a jump can
+  start from a bench top as well as the ground.
+- Obstacle scale follows the apex — **but is capped separately on a
+  narrow box.** These two were coupled, and the coupling has a sting:
+  restoring the jump hands the obstacles the same increase and cancels
+  the entire gain. The skater cannot shrink without becoming
+  illegible, so the world around it does instead.
+- The skater's x is `width * (90 / 576)`, floored at 48. At desktop
+  width this is exactly the 90 it always was. It used to be a literal,
+  which on a phone put the figure a quarter of the way into its own
+  box and halved the run-up.
+- Speed is aimed at `TARGET_REACT` seconds of warning, never faster
+  than width alone would have given. `speedMax` caps the ramp at
+  `FLOOR_REACT`, or a long run walks the warning back to where it
+  started.
+
+#### The metric to tune against
+
+Reaction time is not what ends a run — the **jump window** is. Once
+you have committed, the obstacle must clear the skater's whole body
+before you land:
+
+```
+window = airtime - (skaterWidth + obstacleWidth) / speed
+```
+
+Roughly 0.23s across every width. Check this number, not the warning
+time, after touching anything above.
+
+It has two counter-intuitive properties, and both have already caused
+a wrong fix:
+
+- **Slowing down shrinks it.** A slower obstacle spends longer
+  crossing your body, so you must stay airborne longer relative to it.
+  Buying reaction time by cutting speed alone makes the game harder.
+- **Raising the jump can leave it unchanged**, because obstacle scale
+  follows the apex. Both sides of the ratio move together.
+
+The box is 288px tall, 268px below 768px — of which only the top 128px
+is play area. All the rest is tap room, and it runs down to the "What I
+Do" heading: `#services` carries **no** top padding, and `.skate` is
+taller by exactly that amount. The whitespace between the two was always
+going to be there; putting it inside the game means a tap anywhere in it
+starts a run instead of hitting dead page.
+
+That makes the two rules a pair. If the game ever stops being the
+previous sibling of `#services`, put the `4xl` top padding back and take
+the same amount off `.skate`, or the heading sits flush against whatever
+follows it.
+
+Because the ground line is pinned to the top, height changes below it
+are gameplay-neutral: making the box shorter spends the tap strip first,
+down to a 44px floor, and only then starts lowering the jump. Making it
+taller only ever adds tap room. Moving the line itself is the change
+that alters the game.
 
 ### Score
 

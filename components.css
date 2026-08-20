@@ -463,7 +463,13 @@ body.page--article {
 
 /* ===== SERVICES SECTION ===== */
 #services {
-    padding: var(--semantic-spacing-4xl) 0;
+    /* No top padding, and that is load-bearing rather than an oversight: the
+       skate game sits directly above and is exactly this much taller to make
+       up for it, so a click in the space above this heading reaches the game
+       instead of dead page. The two are a pair — if the game ever stops being
+       the previous sibling, restore the 4xl here and take it back off .skate,
+       or this heading will sit flush against whatever replaces it. */
+    padding: 0 0 var(--semantic-spacing-4xl);
 }
 
 /* Services are three notes lying on the page: square-cornered, no border,
@@ -1615,15 +1621,31 @@ a.project-card {
    =================================================================== */
 
 .skate {
-    /* Mirrors GROUND_Y in scripts/skate.js — the ground sits this far up
-       from the bottom of the box. The space below the line is deliberately
-       generous: on touch it is the easiest part of the box to tap, since
-       nothing moves through it. It replaces the margin this block used to
-       carry, so the overall footprint is unchanged. */
+    /* How far the ground line sits above the bottom of the box. The space
+       below it is deliberately generous: on touch it is the easiest part of
+       the box to tap, since nothing moves through it. It replaces the margin
+       this block used to carry, so the overall footprint is unchanged.
+
+       scripts/skate.js overwrites this on the element every time it measures,
+       because the value is not really a constant: the jump lives in whatever
+       height is left ABOVE the line, so on a shorter box this strip has to
+       give some back rather than keep its full 80px and starve the jump. The
+       declaration here is the desktop answer and the pre-script fallback. */
     --skate-ground-offset: 80px;
     position: relative;
     width: 100%;
-    height: 208px;
+    /* The box runs all the way down to the "What I Do" heading: #services
+       below carries no top padding, and every pixel of that gap is inside
+       this element instead. The whitespace was always going to be there —
+       this way a tap anywhere in it starts the game rather than landing on
+       dead page. The page is no taller overall than when the padding owned
+       the space.
+
+       Safe to change: everything below the ground line is tap room, and
+       resize() pins the line to the TOP of the box, so the jump never
+       notices what happens underneath it. Growing the box UPWARD is the
+       change that alters the game. */
+    height: 288px;
     cursor: pointer;
     outline: none;
     touch-action: manipulation;
@@ -1722,7 +1744,7 @@ a.project-card {
 .skate.is-over .skate-hint-icon { display: block; }
 
 @media (max-width: 768px) {
-    .skate { height: 188px; }
+    .skate { height: 268px; }
 }
 
 @media print {

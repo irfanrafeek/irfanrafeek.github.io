@@ -24,8 +24,8 @@
     var armB = svg.querySelector('.skate-arm-b');
     var obstacleLayer = svg.querySelector('.skate-obstacles');
 
-    var GROUND_Y = 128;         /* recomputed from the element's height */
-    var SKATER_X = 90;
+    var GROUND_Y = 128;         /* pinned to the box's top in resize() */
+    var SKATER_X = 90;          /* recomputed; see resize() */
     var SKATER_W = 28;
     var SKATER_H = 48;
     var SKATER_CX = SKATER_X + SKATER_W / 2;   /* the figure's local origin */
@@ -33,8 +33,20 @@
     var JUMP_APEX = 96;         /* clamped to the headroom actually available */
     var jumpV = -620;
     var SPEED_START = 260;
-    var SPEED_MAX = 460;
+    var SPEED_CEIL = 460;       /* the ramp's ceiling before the track is considered */
+    var speedMax = SPEED_CEIL;  /* the ceiling this particular track can afford */
     var speedScale = 1;         /* narrow screens give less warning, so slow down */
+
+    /* The width this game was designed against — the desktop column. Every
+       size below is expressed against it rather than as a bare pixel count,
+       so a desktop-width box reproduces the original numbers exactly and
+       anything narrower is scaled from them. */
+    var DESIGN_W = 576;
+    /* What a run is actually balanced on. TARGET_REACT is how long the player
+       should get to see an obstacle coming; FLOOR_REACT is the least that may
+       ever decay to once the speed has ramped. Both are seconds. */
+    var TARGET_REACT = 1.55;
+    var FLOOR_REACT = 1.10;
     var scale = 1;              /* obstacle scale, derived from the jump apex */
     var SPEED_RAMP = 6;         /* px/s gained per second played */
 
@@ -299,18 +311,58 @@
         width = root.clientWidth;
         height = root.clientHeight;
         svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
-        GROUND_Y = height - 80;   /* keep in step with --skate-ground-offset */
+
+        /* The strip of empty space below the ground line used to be a fixed
+           80px. That is fine on a desktop box and quietly ruinous on a phone:
+           the box loses 20px of height, the strip does not give any of it back,
+           and the headroom above the line — which is all the jump has to live
+           in — drops by a quarter. So the line is pinned a fixed distance from
+           the TOP instead and the strip absorbs whatever is left over. The jump
+           keeps its full height everywhere; the tap zone below is what flexes,
+           and it is the easiest part of the box to hit anyway. On a desktop-
+           height box this arithmetic returns the original 80. The 44px floor
+           is the point past which there is nothing left to give and the jump
+           starts paying again. */
+        GROUND_Y = Math.min(height - 44, 128);
+        root.style.setProperty('--skate-ground-offset', (height - GROUND_Y) + 'px');
 
         /* A jump must never clip through the top of the box. */
         var headroom = GROUND_Y - SKATER_H - 6;
         var apex0 = Math.max(34, Math.min(JUMP_APEX, headroom));
-        speedScale = Math.max(0.72, Math.min(1, width / 700));
-        /* Obstacles are sized off the jump, so a short box stays clearable. */
+        /* Obstacles are sized off the jump, so a short box stays clearable —
+           but that coupling has a sting on a narrow one. Giving the jump its
+           height back hands the obstacles the same increase and cancels the
+           whole gain, so on a narrow track the two are separated and the
+           obstacles are held down on their own. The skater cannot shrink here
+           without becoming illegible, so the world around it does instead. */
         scale = Math.max(0.55, Math.min(1, (apex0 * 0.4) / TALLEST));
+        scale = Math.min(scale, Math.max(0.75, width / DESIGN_W));
         /* Jumps also start from a bench top, so the clamp has to pay for that
            height as well — otherwise a hop off a bench clips the ceiling. */
         var apex = Math.max(30, Math.min(apex0, headroom - BENCH_H * scale));
         jumpV = -Math.sqrt(2 * GRAVITY * apex);
+
+        /* 90px from the left was chosen while looking at a desktop box, where
+           it leaves five sixths of the width as track. On a phone the same 90px
+           is more than a quarter of the box, so the run-up collapses to half
+           its length while the obstacles keep coming at nearly full speed.
+           Written as a fraction it lands on exactly 90 at desktop width and
+           steps in as the box narrows. */
+        SKATER_X = Math.max(48, Math.min(90, width * (90 / DESIGN_W)));
+        SKATER_CX = SKATER_X + SKATER_W / 2;
+
+        /* Speed follows from how much track there actually is, aimed at a fixed
+           number of seconds of warning rather than at a fraction of the width —
+           what the player feels is time, not pixels. Never faster than the width
+           alone would have run, so a desktop box is left exactly as it was. */
+        var runway = width - SKATER_X;
+        var byWidth = Math.max(0.72, Math.min(1, width / 700));
+        speedScale = Math.max(0.5, Math.min(byWidth, runway / (TARGET_REACT * SPEED_START)));
+        /* The ramp needs the same treatment, or a long run walks the warning
+           back down to where it started. A desktop track is long enough that
+           this never binds there. */
+        speedMax = Math.min(SPEED_CEIL, runway / (FLOOR_REACT * speedScale));
+
         ground.setAttribute('y1', GROUND_Y + 0.5);
         ground.setAttribute('y2', GROUND_Y + 0.5);
         ground.setAttribute('x2', width);
@@ -396,7 +448,7 @@
         last = now;
         elapsed += dt;
 
-        speed = Math.min(SPEED_MAX, SPEED_START + elapsed * SPEED_RAMP) * speedScale * launch();
+        speed = Math.min(speedMax, SPEED_START + elapsed * SPEED_RAMP) * speedScale * launch();
 
         var prevY = y;
         var wasAirborne = airborne;
