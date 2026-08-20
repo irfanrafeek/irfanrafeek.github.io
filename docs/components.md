@@ -504,7 +504,25 @@ body type. These automatically step down at `≤968px` viewports.
 </section>
 ```
 
-Centred block with top + bottom borders.
+Centred block with top + bottom borders. Shared by `index`, `about`,
+`work` and `writings` — a change here lands on four pages.
+
+### Type sizes
+
+|            | ≥969px | ≤968px | ≤640px |
+|------------|--------|--------|--------|
+| `.cta-title` | 30px | 26px | 22px |
+| `.cta-email` | 20px | 20px | 20px |
+| `.cta-label` | 14px | 14px | 14px |
+
+The title sits a clear step below the hero (44px on the home page). It
+was 38px, close enough that the last thing on the page competed with
+the first for the loudest type on the site — which reads as shouting
+rather than as a close. Keep the gap when changing either.
+
+`.cta-email` has no responsive rules. It used to carry two that both
+resolved to 20px once the base came down; steps that do not step are
+worse than no steps, because they look deliberate.
 
 ---
 
@@ -543,6 +561,113 @@ Fixed bottom-right pill that expands on hover/focus. Wired by `scripts/theme.js`
 See [themes.md](./themes.md) for how it persists and applies the choice.
 
 ---
+
+## Photo wall (home page)
+
+Six photographs in `#outside`, between Selected Work and Get In Touch.
+Pays off the camera half of the hero copy the way the skate game pays
+off the longboard half — it is the only promise the page makes twice.
+
+### Structure
+
+`figure.polaroid` → `img.polaroid-photo` + `figcaption.polaroid-caption`,
+in a `.photo-wall` grid. Three up, two up below 640px.
+
+The heading carries **no section number**, unlike 01–03 above it. Those
+three are the argument the page makes, in order; this is a coda after
+it, and numbering it filed it as a fourth exhibit.
+
+The lede is a **sibling** of `.section-header`, never a child: that
+header's inner div is a flex row ending in the hairline rule, so
+anything added inside becomes a third flex item and shoves the rule out
+of the way.
+
+### The paper
+
+Same surface and the same two-layer shadow as the service notes — the
+page already had one paper metaphor and a second one behaving
+differently would read as a different material.
+
+Colours come from `--semantic-color-photo-*`. See `docs/tokens.md` for
+why they are restated identically in every theme block.
+
+### The swing
+
+Hovering a photo swings it to vertical as a damped oscillation: through
+vertical, back a smaller amount, four passes, settling over 620ms. Each
+pass is about 38% of the one before.
+
+Three things make it read as physics rather than as an effect, and each
+was wrong at some point:
+
+- **`transform-origin: 50% -1px` — the pin, not the top edge.** The pin
+  is `::before` at `top: -5px`, 8px across, so its centre is 1px *above*
+  the frame. Rotating about anything else drags the pin along the wall,
+  which is the one thing a pin never does. Verified at 0.01px of drift
+  through a full oscillation; measure it with a 1px marker at
+  `left: 50%; top: -1px` if you change any of this.
+- **The transform is rotation and nothing else.** The vertical stagger
+  is `margin-top`, not `translateY`, or it carries the pin down the wall
+  and lifts it again on hover. Nothing lifts and the shadow holds
+  constant: a photo swinging to vertical does not change its distance
+  from the wall.
+- **The rest angle is `--polaroid-tilt`, not a literal in the
+  transform.** The keyframes are written as proportions of it, so one
+  set serves six photos and each swings as far as its own crookedness
+  earns. A fixed animation swings the barely-tilted frame as hard as the
+  worst-hung one.
+
+Going out is the keyframed swing; coming back is a plain transition,
+since nobody flicks a photo when they take their hand away.
+
+In the reduced-motion block, `animation: none` is the load-bearing
+line — without it the keyframes run whatever the transition says.
+
+The `nth-child` rules are authored at the same specificity as the
+`:hover` rule or they silently outrank it.
+
+### Image ratio
+
+`aspect-ratio: 9 / 10` against photographs shot 4:5, so the frame crops
+about 11% of height, centred. That is a deliberate step towards the
+squarer image area a real polaroid has. **The frame crops the
+photographer's crop** — check a new photo in place rather than trusting
+the thumbnail, particularly anything composed tight to the top or
+bottom edge.
+
+`height: auto` is load-bearing. The `width`/`height` attributes on the
+tag reserve space before load, but the browser maps `height="1350"` to a
+specified CSS height, and a specified height outranks `aspect-ratio` —
+leaving 1350px-tall frames.
+
+### One size, not two
+
+The grid shows the same files the viewer opens. A thumbnail set plus a
+full-size set would save about 137KB on first load, and was rejected:
+six photographs is not enough to justify two of everything, and the
+single set means opening a photo is a cache hit rather than a download.
+Exported at native resolution, quality 76, 300KB for all six.
+
+Revisit that if the wall ever grows past a dozen.
+
+### The viewer
+
+`scripts/photos.js`, on a native `<dialog>`. The focus trap, Escape, and
+the backdrop are the browser's; what is written here is which photo and
+how to move between them.
+
+- The figures are upgraded to controls **in JS**, not in the markup, so
+  without JS they stay plain figures rather than buttons that do
+  nothing.
+- Focus is restored **explicitly** on close, to the photo last viewed.
+  The dialog's own restore returns to whatever was focused when it
+  opened — the wrong frame once someone arrows across, and nothing at
+  all when the click never moved focus.
+- The scrim is painted on the dialog element, not only on `::backdrop`.
+  The dialog already fills the viewport so they are the same surface,
+  but a plain element is one every renderer treats normally.
+- Opaque, and dark in every theme. It is a room built to look at a
+  photograph in; the answer does not change with the site's mood.
 
 ## Skate game (home page)
 

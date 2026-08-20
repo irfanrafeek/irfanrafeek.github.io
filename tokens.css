@@ -98,6 +98,12 @@
   --primitive-font-jetbrains-mono: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
 
   /* TYPOGRAPHY PRIMITIVES - FONT SIZES (Base 16px) */
+  /* The bottom of the ladder climbs in 2px steps, so 2xs continues it rather
+     than inventing a value. It is the smallest size the system offers and is
+     meant for incidental metadata only — a caption, a stamp, a label beside
+     something that carries the actual meaning. Nothing a reader has to read
+     to follow the page should be set at it. */
+  --primitive-font-size-2xs: 10px;
   --primitive-font-size-xs: 12px;
   --primitive-font-size-sm: 14px;
   --primitive-font-size-base: 16px;
@@ -432,6 +438,24 @@
   --semantic-color-text-secondary: var(--primitive-color-neutral-600);
   --semantic-color-text-tertiary: var(--primitive-color-neutral-500);
   --semantic-color-text-inverse: var(--primitive-color-neutral-0);
+
+  /* PHOTO PRINT — the polaroids in #outside.
+     Themeable like everything else: each theme block below restates these, so
+     giving the print a different treatment on one theme is a one-line change
+     there rather than a hunt through components.css.
+
+     Every theme currently points at the same neutrals, which is deliberate —
+     the photograph inside the frame is a fixed image that will not recolour,
+     so today the print stays a print and only the wall behind it changes.
+     The restated lines are the hook for changing that, not dead weight.
+
+     paper is neutral-0 rather than the nearer neutral-50: neutral-50 IS the
+     light theme's page, so the frames would dissolve into it and leave six
+     shadows floating on nothing. */
+  --semantic-color-photo-paper: var(--primitive-color-neutral-0);
+  --semantic-color-photo-emulsion: var(--primitive-color-neutral-200);
+  --semantic-color-photo-caption: var(--primitive-color-neutral-600);
+  --semantic-color-photo-pin: var(--primitive-color-neutral-700);
   --semantic-color-border-primary: var(--primitive-color-neutral-200);
   --semantic-color-border-secondary: var(--primitive-color-neutral-100);
   --semantic-color-border-strong: var(--primitive-color-neutral-400);
@@ -542,6 +566,12 @@
     --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
     --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
   }
+
+  /* Photo print — same values as :root for now; theme it here. */
+  --semantic-color-photo-paper: var(--primitive-color-neutral-0);
+  --semantic-color-photo-emulsion: var(--primitive-color-neutral-200);
+  --semantic-color-photo-caption: var(--primitive-color-neutral-600);
+  --semantic-color-photo-pin: var(--primitive-color-neutral-700);
 }
 
 [data-theme='dark'] {
@@ -564,6 +594,12 @@
   --semantic-shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.3);
   --semantic-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.4);
   --semantic-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.5);
+
+  /* Photo print — same values as :root for now; theme it here. */
+  --semantic-color-photo-paper: var(--primitive-color-neutral-0);
+  --semantic-color-photo-emulsion: var(--primitive-color-neutral-200);
+  --semantic-color-photo-caption: var(--primitive-color-neutral-600);
+  --semantic-color-photo-pin: var(--primitive-color-neutral-700);
 }
 
 /* SEPIA THEME (warm paper / reading) */
@@ -597,6 +633,12 @@
      200ms hover ceiling, so "calm" never becomes "slow to respond". */
   --semantic-motion-hover-duration: var(--primitive-duration-base);
   --semantic-motion-hover-easing: var(--primitive-ease-soft);
+
+  /* Photo print — same values as :root for now; theme it here. */
+  --semantic-color-photo-paper: var(--primitive-color-neutral-0);
+  --semantic-color-photo-emulsion: var(--primitive-color-neutral-200);
+  --semantic-color-photo-caption: var(--primitive-color-neutral-600);
+  --semantic-color-photo-pin: var(--primitive-color-neutral-700);
 }
 
 /* SLATE THEME (cool dim) */
@@ -632,6 +674,12 @@
      so state changes read as switched rather than animated. */
   --semantic-motion-hover-duration: var(--primitive-duration-instant);
   --semantic-motion-hover-easing: var(--primitive-ease-linear);
+
+  /* Photo print — same values as :root for now; theme it here. */
+  --semantic-color-photo-paper: var(--primitive-color-neutral-0);
+  --semantic-color-photo-emulsion: var(--primitive-color-neutral-200);
+  --semantic-color-photo-caption: var(--primitive-color-neutral-600);
+  --semantic-color-photo-pin: var(--primitive-color-neutral-700);
 }
 
 /* ARTICLE TYPE SCALE - mobile (≤968px)

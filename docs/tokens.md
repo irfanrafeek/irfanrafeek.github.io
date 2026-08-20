@@ -77,8 +77,9 @@ Plus status colors: `success`, `error`, `warning` at `50` / `500` / `600`.
 --primitive-font-source-serif  → 'Source Serif 4', 'Source Serif Pro', serif
 --primitive-font-jetbrains-mono → 'JetBrains Mono', 'Monaco', monospace
 
---primitive-font-size-{xs,sm,base,md,lg,xl-sm,xl,2xl,3xl,4xl-sm,4xl,5xl,6xl}
-                       12 14 16   18 20 22    26 30  34  38     44  50  58
+--primitive-font-size-{2xs,xs,sm,base,md,lg,xl-sm,xl,2xl,3xl,4xl-sm,4xl,5xl,6xl}
+                       10  12 14 16   18 20 22    26 30  34  38     44  50  58
+                       ^ incidental metadata only — never running text
 
 --primitive-font-weight-{regular, medium, semibold, bold, extrabold}
                          300      500     600       700   800
@@ -126,6 +127,26 @@ The layer components actually touch.
 
 All color tokens are **theme-aware** — they have different values in
 Light vs Dark vs Editorial vs Code.
+
+#### Photo print
+
+```
+--semantic-color-photo-paper     → neutral-0    the print's white border
+--semantic-color-photo-emulsion  → neutral-200  bare frame, before load
+--semantic-color-photo-caption   → neutral-600  caption ink
+--semantic-color-photo-pin       → neutral-700  the tack
+```
+
+Restated in every theme block, all currently pointing at the same
+neutrals. That sameness is the current design, not a missing step: the
+photograph inside the frame is a fixed image that will not recolour, so
+today the print stays a print and only the wall behind it changes.
+Giving one theme a different print is a one-line edit in that block.
+
+`paper` is `neutral-0`, not the nearer `neutral-50` — `neutral-50` *is*
+the light theme's page colour, so the frames would dissolve into it and
+leave six shadows floating on nothing. Nearest by number is not always
+nearest by function.
 
 ### Spacing / radius / shadow
 

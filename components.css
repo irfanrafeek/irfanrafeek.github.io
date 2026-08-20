@@ -761,7 +761,11 @@ body.page--article {
 
 .cta-title {
     font-family: var(--semantic-font-display);
-    font-size: var(--semantic-type-heading-lg-font-size);
+    /* One step down from heading-lg. This block is the last thing on four
+       pages and it was competing with the hero for the loudest type on the
+       site — which reads as shouting rather than as a close. The whole
+       responsive ladder below moves with it. */
+    font-size: var(--semantic-type-heading-md-font-size);
     font-weight: var(--primitive-font-weight-serif-medium);
     color: var(--semantic-color-text-primary);
     margin-bottom: var(--semantic-spacing-lg);
@@ -771,7 +775,7 @@ body.page--article {
 
 .cta-email {
     font-family: var(--semantic-font-display);
-    font-size: var(--primitive-font-size-xl-sm);
+    font-size: var(--primitive-font-size-lg);
     color: var(--semantic-color-interactive-primary);
     text-decoration: none;
     transition: color var(--semantic-motion-hover);
@@ -1014,11 +1018,7 @@ footer {
     }
 
     .cta-title {
-        font-size: var(--semantic-type-heading-md-font-size);
-    }
-
-    .cta-email {
-        font-size: var(--primitive-font-size-lg);
+        font-size: var(--semantic-type-heading-sm-font-size);
     }
 
     footer {
@@ -1104,10 +1104,6 @@ footer {
 
     .cta-title {
         font-size: var(--primitive-font-size-xl-sm);
-    }
-
-    .cta-email {
-        font-size: var(--semantic-type-heading-2xs-font-size);
     }
 
     .category-scroll {
@@ -1613,6 +1609,363 @@ a.project-card {
         scroll-behavior: auto !important;
     }
 }
+
+/* ===================================================================
+   PHOTO WALL — six polaroids pinned above the contact block.
+   The section pays off a promise the hero copy makes ("I explore
+   unfamiliar streets with my camera") the way the skate game pays off
+   the longboard half of the same sentence.
+   =================================================================== */
+
+#outside {
+    padding: var(--semantic-spacing-4xl) 0 0;
+}
+
+/* A sibling of .section-header, never a child of it: that header's inner div
+   is a flex row ending in the hairline rule, so anything added inside becomes
+   a third flex item and shoves the rule out of the way. */
+#outside .section-header {
+    margin-bottom: var(--semantic-spacing-lg);
+}
+
+.outside-lede {
+    max-width: 34em;
+    margin: 0 0 var(--semantic-spacing-2xl);
+    font-family: var(--semantic-type-body-md-font-family);
+    font-size: var(--semantic-type-body-md-font-size);
+    line-height: var(--semantic-type-body-md-line-height);
+    color: var(--semantic-color-text-secondary);
+}
+
+.photo-wall {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Rows stay a step wider than columns: each frame carries a caption below
+       it, so the vertical gap has that to clear before the next row's pins
+       begin, where the horizontal gap only has paper meeting paper. */
+    gap: var(--semantic-spacing-xl) var(--semantic-spacing-lg);
+    /* Room for the pin above each frame and for the shadow below; the
+       polaroids overhang their tracks in both directions. */
+    padding: 16px 0 30px;
+}
+
+/* Photo paper, and the one surface on the site that does NOT follow the
+   theme. Everything else here is a UI surface and should recolour; a
+   polaroid is a physical object, and the photograph inside it is a fixed
+   image that will not recolour whatever we do. Tinting the frame around a
+   fixed photo just makes the two disagree. So the paper stays paper and the
+   wall behind it is what changes — which is also why a white frame on the
+   dark theme reads as a lit print on a dark wall rather than as a bug.
+
+   The two-layer shadow is the same one the service notes use, so the two
+   paper objects on this page sit on the surface the same way. It does little
+   on the dark themes, where the contrast of white paper carries the edge on
+   its own. */
+.polaroid {
+    position: relative;
+    margin: 0;
+    padding: 12px 12px 0;
+    background-color: var(--semantic-color-photo-paper);
+    border-radius: 1px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10), 0 6px 12px -6px rgba(0, 0, 0, 0.22);
+    /* The pivot is the pin, not the top edge. ::before sits at top: -5px and
+       is 8px across, so its centre is 1px ABOVE the frame — and rotating about
+       anything else drags the pin along the wall as the frame swings, which is
+       the one thing a pin never does. Rotating about its own centre leaves it
+       visually still.
+
+       Only the rotation is animated. A photograph swinging to vertical does
+       not change its distance from the wall, so the shadow holds and the frame
+       does not lift.
+
+       The rest angle lives in --polaroid-tilt rather than in the transform,
+       because the swing below is written as a proportion of it: one set of
+       keyframes then serves six photos, and each swings as far as its own
+       crookedness earns — which is what a real wall does. A fixed animation
+       would swing the barely-tilted frame as hard as the worst-hung one.
+
+       The transition here is only the way back. Going out is the keyframed
+       swing; coming back is a plain settle, since nobody flicks a photo when
+       they take their hand away. */
+    --polaroid-tilt: 0deg;
+    transform: rotate(var(--polaroid-tilt));
+    transform-origin: 50% -1px;
+    transition: transform var(--primitive-duration-slow) var(--primitive-ease-soft);
+}
+
+/* The pin. A small domed tack sitting proud of the paper, with its own tight
+   shadow so it reads as being in front of the frame rather than printed on. */
+.polaroid::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 50%;
+    /* One colour, lit. The two lighter stops are mixed from the same token as
+       the base rather than written out, so the pin cannot drift away from it. */
+    background:
+        radial-gradient(circle at 35% 30%,
+            color-mix(in srgb, var(--semantic-color-photo-pin) 62%, var(--primitive-color-neutral-0)) 0%,
+            color-mix(in srgb, var(--semantic-color-photo-pin) 85%, var(--primitive-color-neutral-0)) 60%,
+            var(--semantic-color-photo-pin) 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+    pointer-events: none;
+}
+
+.polaroid-photo {
+    display: block;
+    width: 100%;
+    /* Not redundant. The width/height attributes on the tag are there so the
+       frame reserves its space before the photo loads, but the browser maps
+       height="900" to a specified CSS height, and a specified height outranks
+       aspect-ratio — leaving 900px-tall frames. This hands the ratio back. */
+    height: auto;
+    /* 0.9 — a little taller than wide. The photographs are shot 4:5 (0.8), so
+       this trims about 11% of their height, centred: roughly 5% off the top
+       and the bottom. That is a deliberate step back towards the squarer
+       image area a real polaroid has, close enough to keep the portraits
+       reading as portraits but square enough to look like film.
+
+       It does mean the frame now crops the photographer's crop, so a photo
+       composed tight to its top or bottom edge will lose something. Check a
+       new photo in place rather than trusting the thumbnail. */
+    aspect-ratio: 9 / 10;
+    object-fit: cover;
+    /* What shows while the photo loads: an empty frame rather than a hole
+       through to the page behind it. */
+    background-color: var(--semantic-color-photo-emulsion);
+}
+
+.polaroid-caption {
+    /* The lip. Its height is the polaroid's whole signature, so it is set
+       rather than left to the text: too tight and the frame reads as a plain
+       bordered image. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Grows rather than clips: the tracking below is fixed, so a long caption
+       in a narrow frame wraps to a second line instead of being squeezed out
+       of step with the rest of the mono voice. */
+    min-height: 40px;
+    padding: 9px 4px;
+    /* Same voice as .greeting and .skate-hint — mono, uppercase, widest
+       tracking — but one rung further down the ladder. Matching only the
+       family left the caption reading as a near-miss of that voice; matching
+       the size too made it compete with the photograph it belongs to. A
+       caption is a stamp on the paper, not a line of copy. */
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-2xs);
+    font-weight: var(--primitive-font-weight-regular);
+    letter-spacing: var(--primitive-letter-spacing-widest);
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--semantic-color-photo-caption);
+    text-align: center;
+}
+
+/* Hung by hand, so no two hang alike. Authored at the same specificity as the
+   hover rule below, or these silently outrank it and nothing straightens —
+   the same trap the service notes carry a warning about.
+
+   The transform is rotation and nothing else. The vertical stagger is a margin
+   rather than a translate, because a translate would carry the pin down the
+   wall with the frame and then lift it again on hover. Where each photo was
+   pinned is a fact about the wall; how it hangs from there is the animation. */
+.photo-wall .polaroid:nth-child(1) { --polaroid-tilt: -1.8deg; }
+.photo-wall .polaroid:nth-child(2) { --polaroid-tilt:  1.2deg; margin-top: 4px; }
+.photo-wall .polaroid:nth-child(3) { --polaroid-tilt: -0.6deg; margin-top: 1px; }
+.photo-wall .polaroid:nth-child(4) { --polaroid-tilt:  1.5deg; margin-top: 2px; }
+.photo-wall .polaroid:nth-child(5) { --polaroid-tilt: -1.1deg; }
+.photo-wall .polaroid:nth-child(6) { --polaroid-tilt:  0.8deg; margin-top: 3px; }
+
+/* A pendulum does not stop the first time it reaches vertical: it passes
+   through, swings back a smaller amount, and repeats until friction has the
+   rest. Each pass here is about 38% of the one before, which reads as a light
+   thing on a pin rather than a heavy one on a hinge.
+
+   Percentages are unevenly spaced on purpose — a swing is slowest at the
+   extremes and quickest through the bottom, and the per-keyframe easing says
+   the same thing again between them. */
+@keyframes polaroid-settle {
+    0%   { transform: rotate(var(--polaroid-tilt));                animation-timing-function: ease-in; }
+    28%  { transform: rotate(calc(var(--polaroid-tilt) * -0.38));  animation-timing-function: ease-in-out; }
+    52%  { transform: rotate(calc(var(--polaroid-tilt) *  0.145)); animation-timing-function: ease-in-out; }
+    72%  { transform: rotate(calc(var(--polaroid-tilt) * -0.055)); animation-timing-function: ease-in-out; }
+    88%  { transform: rotate(calc(var(--polaroid-tilt) *  0.02));  animation-timing-function: ease-out; }
+    100% { transform: rotate(0deg); }
+}
+
+.photo-wall .polaroid:hover,
+.photo-wall .polaroid:focus-visible {
+    animation: polaroid-settle 620ms both;
+}
+
+@media (max-width: 640px) {
+    .photo-wall {
+        grid-template-columns: repeat(2, 1fr);
+        /* Columns stop at md. A tilted frame's bounding box is wider than its
+           track, so at sm the two frames in a row overlap by a few pixels —
+           which reads as a mistake rather than as a deliberate stack. */
+        gap: var(--semantic-spacing-lg) var(--semantic-spacing-md);
+    }
+    .polaroid { padding: 7px 7px 0; }
+    .polaroid-caption { min-height: 34px; padding: 8px 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* :focus-visible listed too, or a keyboard user still gets the swing that
+       the pointer user was spared. `animation: none` is the load-bearing one
+       now — without it the keyframes run regardless of the transition. */
+    .photo-wall .polaroid,
+    .photo-wall .polaroid:hover,
+    .photo-wall .polaroid:focus-visible {
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+}
+
+
+/* --- The photo viewer -----------------------------------------------------
+   A native <dialog>, so most of the hard parts — focus trap, Escape, restoring
+   focus to the frame that opened it — are the browser's and not written here.
+
+   Deliberately dark in every theme, for the same reason the print is light in
+   every theme: this is a room built to look at a photograph in, and the answer
+   to "what colour should the wall be" does not change with the site's mood.
+   ------------------------------------------------------------------------- */
+
+.lightbox {
+    /* dialog ships with a width, a max-width, a border and auto margins. All
+       four fight a full-viewport layout, so all four go. */
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+}
+
+.lightbox[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* The scrim lives on the dialog, not only on ::backdrop. The dialog already
+       fills the viewport, so the two are the same surface visually — but this
+       one is a plain element that every renderer and screenshot pipeline treats
+       normally, where ::backdrop sits in its own layer and is easy to lose.
+       Clicking here still reports the dialog as the target, which is what
+       closes the viewer. Fully opaque, not a tint: at 94% the section heading
+       ghosted through behind the photograph, and anything legible back there
+       competes with the one thing this view exists to show. */
+    background-color: #0e0d0c;
+}
+
+/* Kept as well, so the corners behind a dialog that is ever inset stay dark. */
+.lightbox::backdrop {
+    background-color: #0e0d0c;
+}
+
+.lightbox-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--semantic-spacing-md);
+    margin: 0;
+    padding: var(--semantic-spacing-xl);
+}
+
+.lightbox-image {
+    display: block;
+    /* Fit the viewport rather than fill it — a photograph cropped by the
+       window is the thing this whole view exists to avoid. */
+    max-width: min(92vw, 780px);
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    background-color: var(--semantic-color-photo-emulsion);
+}
+
+.lightbox-caption {
+    /* The same voice as the caption on the paper, one rung up: here it is the
+       only label on screen rather than a stamp under a thumbnail. */
+    font-family: var(--primitive-font-mono);
+    font-size: var(--primitive-font-size-xs);
+    letter-spacing: var(--primitive-letter-spacing-widest);
+    text-transform: uppercase;
+    color: var(--primitive-color-neutral-400);
+}
+
+.lightbox-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 44px, the smallest a touch target should be. */
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--primitive-radius-full);
+    background-color: transparent;
+    color: var(--primitive-color-neutral-400);
+    cursor: pointer;
+    transition: color var(--semantic-motion-hover),
+                background-color var(--semantic-motion-hover);
+}
+
+.lightbox-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.lightbox-btn:hover,
+.lightbox-btn:focus-visible {
+    color: var(--primitive-color-neutral-0);
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.lightbox-btn:focus-visible {
+    outline: 1px solid var(--primitive-color-neutral-400);
+    outline-offset: 2px;
+}
+
+.lightbox-close { top: var(--semantic-spacing-lg); right: var(--semantic-spacing-lg); }
+.lightbox-prev  { left: var(--semantic-spacing-sm); }
+.lightbox-next  { right: var(--semantic-spacing-sm); }
+
+/* The frames only become controls once photos.js has upgraded them, so the
+   pointer and the focus ring appear at the same moment the click starts
+   working — never before. */
+.polaroid[role="button"] { cursor: pointer; }
+
+.polaroid[role="button"]:focus-visible {
+    outline: 2px solid var(--semantic-color-interactive-primary);
+    outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+    .lightbox-figure { padding: var(--semantic-spacing-md); }
+    .lightbox-image { max-height: 68vh; }
+    /* Below the photo rather than over it, where a thumb can reach them and
+       they are not covering the thing being looked at. */
+    .lightbox-prev, .lightbox-next { bottom: var(--semantic-spacing-xl); }
+    .lightbox-prev { left: 22%; }
+    .lightbox-next { right: 22%; }
+}
+
 
 /* ===================================================================
    SKATE — a small playable scene under the About section.

@@ -246,6 +246,74 @@
                 </div>
             </section>
 
+            <!-- Pays off the camera half of the introduction at the top of the
+                 page, the way the skate game pays off the longboard half.
+                 See docs/components.md, "Photo wall". -->
+            <section id="outside">
+                <!-- No section number, unlike 01-03 above. Those three are the
+                     argument the page is making, in order; this is a coda after
+                     it. Numbering it would file it as a fourth exhibit. -->
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Still here?</h2>
+                    </div>
+                </div>
+
+                <p class="outside-lede">Thanks for visiting. While you&rsquo;re here, take a look at a few photos I took along the way.</p>
+
+                <div class="photo-wall">
+                    <figure class="polaroid">
+                        <img class="polaroid-photo" src="photographs/hoi-an-feb-16.webp"
+                             width="1080" height="1350" alt="A rice farmer in a conical hat bends towards the camera and grins, standing waist-deep in a green paddy field." loading="lazy" decoding="async">
+                        <figcaption class="polaroid-caption">Hoi An Feb &rsquo;16</figcaption>
+                    </figure>
+                    <figure class="polaroid">
+                        <img class="polaroid-photo" src="photographs/kolkata-jul-23.webp"
+                             width="1080" height="1350" alt="An umbrella repairer works barefoot at his roadside stall, tapping a spoke into place beneath a canopy of hanging handles." loading="lazy" decoding="async">
+                        <figcaption class="polaroid-caption">Kolkata Jul &rsquo;23</figcaption>
+                    </figure>
+                    <figure class="polaroid">
+                        <img class="polaroid-photo" src="photographs/delhi-nov-23.webp"
+                             width="1080" height="1349" alt="A figure silhouetted at the end of a jetty feeds a swirling flock of gulls at sunrise, the birds mirrored in still water." loading="lazy" decoding="async">
+                        <figcaption class="polaroid-caption">Delhi Nov &rsquo;23</figcaption>
+                    </figure>
+                    <figure class="polaroid">
+                        <img class="polaroid-photo" src="photographs/pushkar-23.webp"
+                             width="780" height="975" alt="A small girl crouches on a ghat at dusk lighting oil lamps, the lights of the far bank blurred behind her." loading="lazy" decoding="async">
+                        <figcaption class="polaroid-caption">Pushkar &rsquo;23</figcaption>
+                    </figure>
+                    <figure class="polaroid">
+                        <img class="polaroid-photo" src="photographs/rome-sep-24.webp"
+                             width="1080" height="1350" alt="A woman sits in a folding chair on a cobbled street holding a sleeping toddler, smiling past the camera." loading="lazy" decoding="async">
+                        <figcaption class="polaroid-caption">Rome Sep &rsquo;24</figcaption>
+                    </figure>
+                    <figure class="polaroid">
+                        <img class="polaroid-photo" src="photographs/firenze-oct-24.webp"
+                             width="1080" height="1350" alt="Two women pause in a crowded street at golden hour, side-lit, a yellow tote bag catching the last of the light." loading="lazy" decoding="async">
+                        <figcaption class="polaroid-caption">Firenze Oct &rsquo;24</figcaption>
+                    </figure>
+                </div>
+
+                <!-- Opened by scripts/photos.js. A native <dialog>, so the focus
+                     trap, the backdrop and Escape-to-close are the browser's job
+                     rather than ours. Inert and invisible without JS. -->
+                <dialog class="lightbox" aria-label="Photograph viewer">
+                    <button class="lightbox-btn lightbox-close" type="button" aria-label="Close">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                    </button>
+                    <button class="lightbox-btn lightbox-prev" type="button" aria-label="Previous photograph">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                    </button>
+                    <figure class="lightbox-figure">
+                        <img class="lightbox-image" alt="">
+                        <figcaption class="lightbox-caption"></figcaption>
+                    </figure>
+                    <button class="lightbox-btn lightbox-next" type="button" aria-label="Next photograph">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </dialog>
+            </section>
+
             <section id="contact" class="cta-section">
                 <div class="cta-label">Get In Touch</div>
                 <h2 class="cta-title">
@@ -269,6 +337,7 @@
     <script src="scripts/nav.js" defer></script>
     <script src="scripts/theme.js" defer></script>
     <script src="scripts/skate.js" defer></script>
+    <script src="scripts/photos.js" defer></script>
     <script>
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
