@@ -1,0 +1,67 @@
+# Builds the static site and deploys it to GitHub Pages.
+#
+# Pages must be set to "Source: GitHub Actions" for this to be the thing that
+# deploys. Until that switch is made, this workflow builds and uploads but the
+# live site keeps coming from the branch.
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  # Fired by the Sanity webhook when content is published.
+  repository_dispatch:
+    types: [sanity-publish]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; a content publish during a code deploy should
+# queue behind it rather than clobber it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # No dependencies to install -- the build is plain Node against the
+      # Sanity HTTP API. If it cannot reach Sanity it falls back to the
+      # committed build/content-snapshot.json rather than failing the deploy.
+      - name: Build
+        run: node build/prerender.js
+
+      - name: Check the build actually produced articles
+        run: |
+          count=$(find dist/writing dist/work -name index.html -mindepth 2 | wc -l)
+          echo "article pages: $count"
+          if [ "$count" -lt 1 ]; then
+            echo "::error::no article pages were generated"
+            exit 1
+          fi
+          grep -q "application/ld+json" $(find dist/writing -name index.html -mindepth 2 | head -1) \
+            || { echo "::error::structured data missing"; exit 1; }
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

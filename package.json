@@ -1,0 +1,10 @@
+{
+  "name": "irfanrafeek-portfolio",
+  "private": true,
+  "description": "Static portfolio. Content lives in Sanity; build/prerender.js bakes it into dist/.",
+  "scripts": {
+    "build": "node build/prerender.js",
+    "build:offline": "node build/prerender.js --offline",
+    "preview": "npm run build && python3 devserver.py 4000 dist"
+  }
+}

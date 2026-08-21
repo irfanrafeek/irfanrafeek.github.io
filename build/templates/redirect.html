@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting — Irfan Rafeek</title>
+    <!-- A forwarding shim for the old ?slug= URLs. The real pages carry the
+         indexing, so this one stays out of the results. -->
+    <meta name="robots" content="noindex, follow">
+    <link rel="stylesheet" href="/tokens.css">
+    <link rel="stylesheet" href="/components.css">
+</head>
+<body>
+    <main>
+        <div class="container container--narrow">
+            <p class="case-summary"
+               data-legacy-redirect="{{BASE}}"
+               data-fallback="{{FALLBACK}}">
+                Taking you to the article… <a href="{{FALLBACK}}">continue</a>
+            </p>
+        </div>
+    </main>
+    <script src="/scripts/legacy-slug-redirect.js"></script>
+</body>
+</html>

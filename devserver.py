@@ -5,7 +5,9 @@ python3 -m http.server serves files literally, so extensionless links like
 /about 404 even though they work fine in production. This adds the same
 fallback Pages uses: /about -> about.html, and a directory -> index.html.
 
-    python3 devserver.py [port]
+    python3 devserver.py [port] [root]
+
+`root` defaults to this folder. Pass `dist` to preview a build.
 """
 
 import os
@@ -34,6 +36,8 @@ class PagesHandler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 4000
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    here = os.path.dirname(os.path.abspath(__file__))
+    root = sys.argv[2] if len(sys.argv) > 2 else here
+    os.chdir(os.path.join(here, root))
     print('Serving http://localhost:%d (extensionless URLs enabled)' % port)
     HTTPServer(('', port), PagesHandler).serve_forever()

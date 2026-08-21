@@ -53,6 +53,27 @@ export const writing = {
       type: 'number',
     },
     {
+      name: 'publishedAt',
+      title: 'Published on',
+      description: 'The real publication date. Search engines and AI answer engines both weight recency, and they need a date — not just a year.',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'updatedAt',
+      title: 'Last meaningfully updated',
+      description: 'Leave blank unless you revise the piece. Used for dateModified.',
+      type: 'datetime',
+    },
+    {
+      name: 'seoDescription',
+      title: 'Search description',
+      description: 'The snippet shown in search results. Falls back to the short description if blank. Aim for 140–160 characters.',
+      type: 'text',
+      rows: 2,
+      validation: (Rule) => Rule.max(160).warning('Google truncates past about 160 characters.'),
+    },
+    {
       name: 'body',
       title: 'Body',
       type: 'portableBody',

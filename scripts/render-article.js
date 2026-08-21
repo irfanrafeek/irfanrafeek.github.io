@@ -1,6 +1,15 @@
-// Renders a single case study / writing into [data-case] based on ?slug= in the URL.
-// Content comes from Sanity as Portable Text with custom media blocks.
-(function () {
+// Shared article renderer. Turns a Sanity document into the article markup.
+//
+// Loaded in two places and it must stay that way: the browser (scripts/case.js,
+// for legacy ?slug= URLs) and Node (build/prerender.js, which bakes the same
+// markup into static files). If this ever gets forked into a build-only copy,
+// the prerendered pages will drift away from the CSS within a month.
+(function (root, factory) {
+    if (typeof module === 'object' && module.exports) module.exports = factory();
+    else root.ArticleRenderer = factory();
+})(typeof self !== 'undefined' ? self : this, function () {
+    'use strict';
+
     var SANITY_PROJECT_ID = 'qgasa874';
     var SANITY_DATASET = 'production';
     var SANITY_API = 'https://' + SANITY_PROJECT_ID + '.api.sanity.io/v2021-10-21/data/query/' + SANITY_DATASET;
@@ -10,8 +19,18 @@
         'writings.json': 'writing',
     };
 
+    // Expand image asset references to CDN URLs with sizing hints via `asset->url`.
+    // Body images get a wider size than gallery items so hero images stay sharp.
+    var BODY_PROJECTION = 'body[]{...,'
+        + '_type == "mediaImage" => {..., "src": asset->url + "?w=1400&auto=format&fit=max"},'
+        + '_type == "mediaGallery" => {..., items[]{..., "src": asset->url + "?w=1400&auto=format&fit=max"}}'
+        + '}';
+
+    var ARTICLE_FIELDS = 'title,"slug":slug.current,year,description,seoDescription,'
+        + 'publishedAt,updatedAt,_createdAt,_updatedAt,tags,"image":image.asset->url,' + BODY_PROJECTION;
+
     function escapeHtml(value) {
-        return String(value)
+        return String(value == null ? '' : value)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
@@ -160,81 +179,26 @@
             + '</header>';
     }
 
-    async function init() {
-        var root = document.querySelector('[data-case]');
-        if (!root) return;
-
-        var source     = root.getAttribute('data-source') || 'projects.json';
-        var backTarget = root.getAttribute('data-back')   || '/work';
-        var backLabel  = root.getAttribute('data-back-label') || 'All work';
-        var kindLabel  = root.getAttribute('data-kind') || 'Case study';
-
-        var slug = new URLSearchParams(window.location.search).get('slug') || '';
-        var docType = SOURCE_TYPE[source] || 'project';
-
-        // Expand image asset references to CDN URLs with sizing hints via `asset->url`.
-        // Body images get a wider size than gallery items so hero images stay sharp.
-        var query = '*[_type==$type&&slug.current==$slug][0]{'
-            + 'title,"slug":slug.current,year,description,tags,'
-            + 'body[]{...,'
-                + '_type == "mediaImage" => {..., "src": asset->url + "?w=1400&auto=format&fit=max"},'
-                + '_type == "mediaGallery" => {..., items[]{..., "src": asset->url + "?w=1400&auto=format&fit=max"}}'
-            + '}'
-            + '}';
-        var url = SANITY_API
-            + '?query=' + encodeURIComponent(query)
-            + '&%24type=' + encodeURIComponent(JSON.stringify(docType))
-            + '&%24slug=' + encodeURIComponent(JSON.stringify(slug));
-
-        var project;
-        try {
-            var res = await fetch(url);
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            var data = await res.json();
-            project = data.result;
-        } catch (err) {
-            console.error('Could not load from Sanity:', err);
-            root.innerHTML = renderNotFound(slug, backTarget, backLabel, kindLabel);
-            return;
-        }
-
-        if (!project) {
-            root.innerHTML = renderNotFound(slug, backTarget, backLabel, kindLabel);
-            return;
-        }
-
-        document.title = project.title + ' — Irfan Rafeek';
-        root.innerHTML = renderArticle(project, backTarget, backLabel);
-        initGalleries(root);
+    // One document by slug. Used by the browser fallback path.
+    function singleQuery() {
+        return '*[_type==$type&&slug.current==$slug][0]{' + ARTICLE_FIELDS + '}';
     }
 
-    function initGalleries(root) {
-        root.querySelectorAll('[data-gallery]').forEach(function (gallery) {
-            var track = gallery.querySelector('[data-gallery-track]');
-            var counter = gallery.querySelector('[data-gallery-counter]');
-            var prev = gallery.querySelector('[data-gallery-prev]');
-            var next = gallery.querySelector('[data-gallery-next]');
-            var total = track.children.length;
-            if (total <= 1) {
-                prev.disabled = next.disabled = true;
-                return;
-            }
-            var index = 0;
-            var update = function () {
-                track.style.transform = 'translateX(-' + (index * 100) + '%)';
-                counter.textContent = (index + 1) + ' / ' + total;
-                prev.disabled = index === 0;
-                next.disabled = index === total - 1;
-            };
-            prev.addEventListener('click', function () { if (index > 0) { index--; update(); } });
-            next.addEventListener('click', function () { if (index < total - 1) { index++; update(); } });
-            update();
-        });
+    // Every document of a type, bodies included. Used by the build.
+    function allQuery(type) {
+        return '*[_type=="' + type + '" && defined(slug.current)]'
+            + '|order(coalesce(sortOrder, 9999) asc, year desc)'
+            + '{' + ARTICLE_FIELDS + ',sortOrder,featured}';
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
+    return {
+        SANITY_API: SANITY_API,
+        SOURCE_TYPE: SOURCE_TYPE,
+        escapeHtml: escapeHtml,
+        renderBody: renderBody,
+        renderArticle: renderArticle,
+        renderNotFound: renderNotFound,
+        singleQuery: singleQuery,
+        allQuery: allQuery,
+    };
+});

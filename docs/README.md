@@ -5,7 +5,9 @@ that power [irfanrafeek.com](https://www.irfanrafeek.com).
 
 ## What this is
 
-A zero-build static portfolio with a **two-tier design token system**.
+A static portfolio with a **two-tier design token system**. Content lives in
+Sanity and is prerendered into static HTML by a build step — see
+[build.md](build.md).
 Components consume semantic tokens, never primitives. Four themes
 (Light, Dark, Editorial, Code) live on top of the same component layer.
 

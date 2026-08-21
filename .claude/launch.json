@@ -2,10 +2,23 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "portfolio-dist",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "devserver.py",
+        "4000",
+        "dist"
+      ],
+      "port": 4000
+    },
+    {
       "name": "portfolio",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["devserver.py", "4000"],
-      "port": 4000
+      "runtimeArgs": [
+        "devserver.py",
+        "4001"
+      ],
+      "port": 4001
     }
   ]
 }
