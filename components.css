@@ -2010,6 +2010,13 @@ a.project-card {
     outline-offset: var(--semantic-spacing-sm);
 }
 
+/* Playing with the mouse should not look like a focused form control. The
+   flag is set by the pointerdown handler in scripts/skate.js and cleared on
+   blur, so keyboard users tabbing in keep the ring above. */
+.skate[data-pointer-focus]:focus-visible {
+    outline: none;
+}
+
 .skate-svg {
     display: block;
     width: 100%;
@@ -2032,6 +2039,16 @@ a.project-card {
 
 /* Limbs read better a touch lighter than the deck they stand on. */
 .skate-figure { stroke-width: 1.4; }
+
+/* The brim is the one filled shape on a figure drawn entirely in strokes: a
+   stroke cannot taper, and the taper is what makes 4px of brim read as a brim
+   rather than a stray line. It follows that its weight is set here in absolute
+   terms — if .skate-figure's stroke-width ever changes, this needs matching by
+   hand. */
+.skate-cap-brim {
+    fill: var(--semantic-color-text-secondary);
+    stroke: none;
+}
 
 .skate-obstacles path {
     fill: none;

@@ -153,7 +153,11 @@
                             <path class="skate-leg-b"></path>
                             <path class="skate-arm-b"></path>
                             <path class="skate-torso"></path>
-                            <circle class="skate-head" r="4.6"></circle>
+                            <!-- Head, cap band and brim share one transform,
+                                 written by poseFigure(). See scripts/skate.js. -->
+                            <ellipse class="skate-head" rx="4.2" ry="5"></ellipse>
+                            <path class="skate-cap" d="M-4.2 0 Q0 -2.5 4.2 0"></path>
+                            <path class="skate-cap-brim" d="M-4.45 -0.71 L-8.16 1.1 L-7.98 1.62 L-3.95 0.71 Z"></path>
                             <path class="skate-leg-f"></path>
                             <path class="skate-arm-f"></path>
                         </g>

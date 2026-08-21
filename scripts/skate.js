@@ -17,6 +17,8 @@
     var skater = svg.querySelector('.skate-skater');
     var deck = svg.querySelector('.skate-deck');
     var head = svg.querySelector('.skate-head');
+    var cap = svg.querySelector('.skate-cap');
+    var capBrim = svg.querySelector('.skate-cap-brim');
     var torso = svg.querySelector('.skate-torso');
     var legF = svg.querySelector('.skate-leg-f');
     var legB = svg.querySelector('.skate-leg-b');
@@ -188,8 +190,17 @@
         torso.setAttribute('d', 'M' + hx + ' ' + hy +
             'Q' + ((hx + sx) / 2 + 2.5) + ' ' + ((hy + sy) / 2) +
             ' ' + sx + ' ' + sy);
-        head.setAttribute('cx', pose[4]);
-        head.setAttribute('cy', pose[5]);
+        /* The head is an oval, so it has to rotate rather than just move, and
+           the cap has to rotate with it — one transform serves all three. A
+           real neck stays more upright than the spine, so the head takes half
+           the lean the shoulder-to-head vector implies; at full lean the brim
+           swings up and stops reading as a brim. */
+        var lean = Math.atan2(pose[4] - sx, sy - pose[5]) * (90 / Math.PI);
+        var headAt = 'translate(' + pose[4] + ' ' + pose[5] + ') rotate(' +
+            lean.toFixed(2) + ')';
+        head.setAttribute('transform', headAt);
+        cap.setAttribute('transform', headAt);
+        capBrim.setAttribute('transform', headAt);
         legF.setAttribute('d', line(0, 6, 8));
         legB.setAttribute('d', line(0, 10, 12));
         armF.setAttribute('d', line(2, 14, 16));
@@ -541,8 +552,21 @@
     }
 
     root.addEventListener('pointerdown', function (e) {
+        /* preventDefault stops the browser focusing the area on its own, so
+           take focus explicitly — otherwise space does nothing after a click
+           and the game looks mouse-only. preventScroll keeps the page still. */
         e.preventDefault();
+        /* Chrome treats a programmatic focus() as keyboard-ish and matches
+           :focus-visible, so taking focus here would draw the focus ring on
+           every click. Flag the pointer origin and let the CSS suppress it;
+           tabbing in sets no flag and still gets the ring. */
+        root.dataset.pointerFocus = '';
+        try { root.focus({ preventScroll: true }); } catch (err) { root.focus(); }
         press();
+    });
+
+    root.addEventListener('blur', function () {
+        delete root.dataset.pointerFocus;
     });
 
     /* Keyboard parity, since the area is focusable. */

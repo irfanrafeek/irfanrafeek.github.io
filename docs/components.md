@@ -740,6 +740,44 @@ board goes from airborne to resting. Resting on a surface re-enters
 the same branch of the physics every frame, so an unguarded check
 holds the landing crouch forever and the rolling pose never returns.
 
+### The head and the cap
+
+The head is the one part not driven by the joint array alone. It is an
+`<ellipse rx="4.2" ry="5">` rather than a circle, so it has an
+orientation and has to *rotate* as well as move — where the old circle
+only needed `cx`/`cy` written each frame. `poseFigure()` builds one
+`translate(...) rotate(...)` string and assigns it to three elements:
+the head, the cap band, and the brim.
+
+The cap is two shapes whose `d` never changes, authored straight into
+`index.html` in a head-local frame (origin at the head's centre, +x the
+direction of travel):
+
+| | |
+| --- | --- |
+| `.skate-cap` | the band, `M-4.2 0 Q0 -2.5 4.2 0` — a stroke |
+| `.skate-cap-brim` | the brim, a four-point wedge — a **fill** |
+
+Two things here are load-bearing and look arbitrary:
+
+**The head takes half the lean, not all of it.** The rotation comes
+from the shoulder-to-head vector and is then halved (hence the
+`90 / Math.PI` where a plain degree conversion would be `180 / Math.PI`).
+A real neck stays more upright than the spine; at the full ~28° lean of
+the rolling pose the brim swings up and stops reading as a brim at all.
+This was the single change that made the cap legible.
+
+**The brim is filled, and it is the only filled shape on the figure.**
+An SVG stroke has one width along its whole length, so a brim drawn as
+a stroke cannot taper — and the taper is what makes four pixels of brim
+read as a brim instead of a stray line. The cost is that its weight is
+absolute: **if `.skate-figure`'s `stroke-width` ever changes, the brim
+will not follow and must be re-cut by hand.**
+
+The band and the head shape are a matched pair. The band's endpoints
+sit on the ellipse (±4.2 at y 0); a different head shape needs a
+different band.
+
 ### Starting a run
 
 Only the untouched scene rests. `rest` is what the page shows before
@@ -922,7 +960,29 @@ wiped.
 ### Accessibility & motion
 
 Focusable with space/enter parity, `:focus-visible` outline, and all
-visual text `aria-hidden` behind the root's `aria-label`. Under
+visual text `aria-hidden` behind the root's `aria-label`.
+
+Space and enter are bound to the game *element*, not to `window` — a
+global handler would jump the skater from anywhere on the page and
+would have to fight the page's own scrolling to do it. That makes focus
+a precondition for keyboard play, and `pointerdown` calls
+`preventDefault()` (which is what stops the page lurching when you
+click the strip) — so the click has to take focus explicitly, or space
+silently does nothing after a click and the game looks mouse-only.
+
+Taking focus in script has a side effect: **Chrome treats a programmatic
+`focus()` as keyboard-originated and matches `:focus-visible`**, so the
+focus ring appears on every mouse click. The fix is to record where
+focus came from — `pointerdown` sets `data-pointer-focus` before
+focusing, one rule suppresses the outline while that flag is present,
+and `blur` clears it. Tabbing in sets no flag and still gets the ring.
+Firefox and Safari never had the bug; there the rule is a no-op.
+
+Pre-existing gap, not introduced by that rule: in browsers without
+`:focus-visible` (Safari before 15.4) both rules are dropped as invalid
+selectors and the base `outline: none` stands, so keyboard users get no
+ring at all. A `@supports not selector(:focus-visible)` fallback would
+close it. Under
 `prefers-reduced-motion` the body bob and the bench sway are both
 suppressed and the idle hint is hidden, leaving a static graphic that
 is still playable on click.
