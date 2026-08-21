@@ -139,7 +139,12 @@
             <!-- Picks up the last line of the introduction above. See scripts/skate.js. -->
             <div class="skate" data-skate tabindex="0" role="button" aria-label="Small skating game. Click or press space to play and to jump.">
                 <svg class="skate-svg" viewBox="0 0 900 160" aria-hidden="true">
+                    <!-- Scenery. Behind the ground line except the grit, which
+                         lies on it. Populated by scripts/skate.js. -->
+                    <g class="skate-sky"></g>
                     <line class="skate-ground" x1="0" y1="128.5" x2="900" y2="128.5"></line>
+                    <g class="skate-grit"></g>
+                    <g class="skate-street"></g>
                     <g class="skate-obstacles"></g>
                     <!-- Joint positions are written by scripts/skate.js; the
                          figure is authored around the board's contact point. -->

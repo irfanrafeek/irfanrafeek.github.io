@@ -2050,6 +2050,68 @@ a.project-card {
     stroke: none;
 }
 
+/* SCENERY — three bands behind the game, none of them collidable. Their
+   tones are a fixed order and the order is the point: the obstacle you must
+   jump is always the darkest thing on the track, the near band sits under it,
+   and the skyline sits under that. Because all three are tokens, that order
+   survives every theme without a per-theme rule. Logic is in scripts/skate.js. */
+
+/* The city is not there until someone plays. An untouched scene is a skater on
+   an empty line — the graphic it has always been — and the skyline fades up as
+   the first push lands, so starting a run builds the world rather than just
+   setting it moving. It never fades back out: once the run has happened the
+   city stays, through the crash and into the next go. .is-playing and .is-over
+   are mutually exclusive and one of them is always set after the first start,
+   so the union of the two is 'has ever been played'.
+
+   The duration is absolute rather than a motion token on purpose. The tokens
+   top out at 320ms because they exist for UI transitions that must not keep a
+   pointer waiting; this is a one-off piece of scene-setting timed against the
+   push-off (PUSH_END, 0.46s in scripts/skate.js) and the speed ramp behind it.
+   The EASING is still the system's, which is the part that carries the feel. */
+.skate-sky {
+    opacity: 0;
+    transition: opacity 1.6s var(--primitive-ease-soft) 0.15s;
+}
+
+.skate.is-playing .skate-sky,
+.skate.is-over .skate-sky {
+    opacity: 1;
+}
+
+/* Nothing to ease into for someone who asked not to be moved: the city is
+   simply there from the start. */
+@media (prefers-reduced-motion: reduce) {
+    .skate-sky { opacity: 1; transition: none; }
+}
+
+/* The far band. Filled rather than stroked: a skyline is mass, and thirty
+   stroked rectangles would out-detail the foreground they sit behind. */
+.skate-sky path {
+    fill: var(--semantic-color-border-primary);
+    stroke: none;
+    opacity: 0.25;
+}
+
+/* On the ground line itself, so it rides at full track speed — anything
+   slower would read as the board sliding. */
+.skate-grit path {
+    fill: none;
+    stroke: var(--semantic-color-border-primary);
+    stroke-width: 1;
+    stroke-linecap: round;
+}
+
+/* The near band. One step lighter than .skate-obstacles below. */
+.skate-street path {
+    fill: none;
+    stroke: var(--semantic-color-border-strong);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.55;
+}
+
 .skate-obstacles path {
     fill: none;
     stroke: var(--semantic-color-text-tertiary);

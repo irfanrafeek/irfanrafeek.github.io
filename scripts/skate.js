@@ -25,6 +25,9 @@
     var armF = svg.querySelector('.skate-arm-f');
     var armB = svg.querySelector('.skate-arm-b');
     var obstacleLayer = svg.querySelector('.skate-obstacles');
+    var skyLayer = svg.querySelector('.skate-sky');
+    var gritLayer = svg.querySelector('.skate-grit');
+    var streetLayer = svg.querySelector('.skate-street');
 
     var GROUND_Y = 128;         /* pinned to the box's top in resize() */
     var SKATER_X = 90;          /* recomputed; see resize() */
@@ -218,6 +221,207 @@
     }
 
     /*
+     * Scenery — three bands behind the game that nothing ever collides with.
+     * They exist for depth only, and they are deliberately cheap: the two far
+     * bands are a single tile drawn twice and wrapped forever, so nothing is
+     * allocated after load, and the near band peaks at two elements on screen.
+     *
+     * The one rule that is not negotiable: decoration never presents a
+     * knee-high silhouette on the ground line. That shape belongs to the
+     * obstacle table, and a decorative bench you cannot grind — next to a real
+     * one you can — teaches the player that the rules are unreliable. Every
+     * shape in SCENERY carries its mass above the skater's head instead.
+     */
+
+    var TILE = 900;             /* one wrap of the far bands, in local units */
+
+    /* A fixed seed: the skyline is the same drawing on every visit. A city
+       that reshuffles on refresh is a different page each time for no gain. */
+    function rng(seed) {
+        return function () {
+            seed = (seed * 1664525 + 1013904223) % 4294967296;
+            return seed / 4294967296;
+        };
+    }
+
+    function rectPath(rx, ry, rw, rh) {
+        return 'M' + rx.toFixed(1) + ' ' + ry.toFixed(1) +
+               ' h' + rw.toFixed(1) + ' v' + (-rh).toFixed(1) +
+               ' h' + (-rw).toFixed(1) + ' Z';
+    }
+
+    /* The skyline is one fused mass rather than a row of separate buildings:
+       a continuous plinth with blocks standing shoulder to shoulder on it.
+       Nothing is drawn on the faces — at this tone face detail stops reading
+       as windows and starts reading as texture, and the silhouette is what
+       carries the whole layer. All the structure is therefore in the profile
+       along the top. */
+    function skylineTile() {
+        var r = rng(20260821);
+        var d = rectPath(0, 0, TILE, 9);        /* plinth */
+        var x = 0, prev = 0;
+
+        while (x < TILE) {
+            var w = 14 + Math.round(r() * 32);
+            if (x + w > TILE) w = TILE - x;
+
+            var h;
+            if (r() < 0.12) {
+                h = 46 + Math.round(r() * 26);          /* tower */
+                w = Math.min(w, 26);
+            } else if (prev && r() < 0.45) {
+                /* Stepping off the neighbour rather than picking a fresh
+                   height is what makes the profile read as a city block
+                   instead of a bar chart. */
+                h = Math.max(12, prev + (r() < 0.5 ? -1 : 1) * (5 + Math.round(r() * 14)));
+                h = Math.min(h, 64);
+            } else {
+                h = 14 + Math.round(r() * 26);
+            }
+
+            d += rectPath(x, -7, w, h);         /* sunk slightly into the plinth */
+
+            if (h > 44 && r() < 0.55) {         /* a crown, towers only */
+                var cw = w * (0.45 + r() * 0.2);
+                d += rectPath(x + (w - cw) / 2, -7 - h, cw, 5 + Math.round(r() * 8));
+            }
+
+            prev = h;
+            x += w;
+            if (r() < 0.18) { x += 3 + Math.round(r() * 7); prev = 0; }   /* a street */
+        }
+        return d;
+    }
+
+    /* Surface imperfections: short dashes at irregular intervals, so the road
+       has something to measure the speed against. */
+    function gritTile() {
+        var r = rng(90210);
+        var d = '', x = 0;
+        while (x < TILE) {
+            x += 20 + r() * 90;
+            var len = 3 + r() * 12;
+            d += 'M' + x.toFixed(1) + ' ' + (r() < 0.5 ? 0 : 2.5) + ' h' + len.toFixed(1);
+            x += len;
+        }
+        return d;
+    }
+
+    /* Same local space as SHAPES below — origin on the ground line, shape
+       extending upwards — but each of these is a bare vertical with its mass
+       overhead, so none of them can be mistaken for something to jump. */
+    var SCENERY = [
+        {   /* street light */
+            w: 30, h: 104, weight: 3,
+            d: 'M2 0 H10 M6 0 V-96 C6 -103 10 -104 17 -104 H24 M24 -104 V-99 M21 -99 H27 L25.5 -95 H22.5 Z'
+        },
+        {   /* sign on a post */
+            w: 22, h: 74, weight: 2,
+            d: 'M8 0 V-74 M2 -74 H16 M2 -74 V-58 H16 V-74 M5 -70 H13 M5 -66 H11 M5 -62 H13'
+        },
+        {   /* tree — a lobed canopy on a bare trunk. Lobes rather than one
+               oval: an oval on a stick reads as a lollipop at this weight. */
+            w: 62, h: 100, weight: 2.5,
+            d: 'M31 0 V-56' +
+               ' M31 -56 C15 -56 8 -66 12 -76 C5 -86 15 -98 26 -94' +
+               ' C31 -101 40 -101 45 -94 C56 -98 65 -86 57 -76' +
+               ' C62 -66 49 -56 31 -56 Z'
+        }
+    ];
+    var SCENERY_TOTAL = SCENERY.reduce(function (sum, s) { return sum + s.weight; }, 0);
+
+    /* Speed as a fraction of the track, per band. Apparent motion falls off
+       with distance, so these numbers ARE the depth. The street band is fast
+       for a mid-ground because it is drawn near-scale — a street light is
+       taller than the skater — and speed has to agree with size or the eye
+       reads an object that looks close but drifts like it is far. */
+    var SKY_RATE = 0.14;
+    var STREET_RATE = 0.65;
+    /* Below this width the near band is clutter rather than depth: three
+       street lights in a 375px box crowd the only track the player has. */
+    var STREET_MIN_W = 480;
+
+    var skyX = 0;
+    var gritX = 0;
+    var scenery = [];
+    var nextScenery = 0;
+    var skyPaths = null;        /* built once, on first layout */
+    var gritPaths = null;
+
+    function makePath(parent, d) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        el.setAttribute('d', d);
+        parent.appendChild(el);
+        return el;
+    }
+
+    function buildScenery() {
+        var sky = skylineTile();
+        var grit = gritTile();
+        skyPaths = [makePath(skyLayer, sky), makePath(skyLayer, sky)];
+        gritPaths = [makePath(gritLayer, grit), makePath(gritLayer, grit)];
+    }
+
+    function clearScenery() {
+        scenery.forEach(function (s) { s.el.remove(); });
+        scenery = [];
+        skyX = 0;
+        gritX = 0;
+        nextScenery = 500;
+    }
+
+    function pickScenery() {
+        var r = Math.random() * SCENERY_TOTAL;
+        for (var i = 0; i < SCENERY.length; i++) {
+            r -= SCENERY[i].weight;
+            if (r <= 0) return SCENERY[i];
+        }
+        return SCENERY[0];
+    }
+
+    function moveScenery(dt) {
+        gritX -= speed * dt;                    /* on the road, so full speed */
+        if (gritX <= -TILE) gritX += TILE;
+        /* The band is drawn scaled, so it has to travel in its own local
+           units or a narrow box would scroll the skyline faster than the
+           track it sits behind. */
+        skyX -= speed * SKY_RATE * dt / scale;
+        if (skyX <= -TILE) skyX += TILE;
+
+        if (width < STREET_MIN_W) return;
+
+        var v = speed * STREET_RATE;
+        nextScenery -= v * dt;
+        if (nextScenery <= 0) {
+            var shape = pickScenery();
+            scenery.push({
+                el: makePath(streetLayer, shape.d),
+                x: width + 40,
+                w: shape.w * scale
+            });
+            nextScenery = 520 + Math.random() * 900;
+        }
+        for (var i = scenery.length - 1; i >= 0; i--) {
+            scenery[i].x -= v * dt;
+            if (scenery[i].x + scenery[i].w < -40) {
+                scenery[i].el.remove();
+                scenery.splice(i, 1);
+            }
+        }
+    }
+
+    function drawScenery() {
+        skyPaths[0].setAttribute('transform', 'translate(' + skyX.toFixed(1) + ' 0)');
+        skyPaths[1].setAttribute('transform', 'translate(' + (skyX + TILE).toFixed(1) + ' 0)');
+        gritPaths[0].setAttribute('transform', 'translate(' + gritX.toFixed(1) + ' 0)');
+        gritPaths[1].setAttribute('transform', 'translate(' + (gritX + TILE).toFixed(1) + ' 0)');
+        scenery.forEach(function (s) {
+            s.el.setAttribute('transform',
+                'translate(' + s.x.toFixed(1) + ' 0) scale(' + scale.toFixed(3) + ')');
+        });
+    }
+
+    /*
      * Obstacles, drawn as single-stroke line icons in a local space whose
      * origin sits on the ground line, with the shape extending upwards.
      * Round joins do the work of rounded corners, so each one is a single
@@ -374,6 +578,17 @@
            this never binds there. */
         speedMax = Math.min(SPEED_CEIL, runway / (FLOOR_REACT * speedScale));
 
+        /* The bands live in a space whose origin is on the ground line, the
+           same convention the obstacles use. */
+        if (!skyPaths) buildScenery();
+        /* The skyline takes the same scale as the obstacles. Left at full
+           size it does not shrink with the box, and on a phone a skyline drawn
+           for a 576px column reads as a wall right behind the skater. */
+        skyLayer.setAttribute('transform',
+            'translate(0 ' + GROUND_Y + ') scale(' + scale.toFixed(3) + ')');
+        gritLayer.setAttribute('transform', 'translate(0 ' + (GROUND_Y + 1) + ')');
+        streetLayer.setAttribute('transform', 'translate(0 ' + GROUND_Y + ')');
+
         ground.setAttribute('y1', GROUND_Y + 0.5);
         ground.setAttribute('y2', GROUND_Y + 0.5);
         ground.setAttribute('x2', width);
@@ -433,6 +648,7 @@
             'translate(' + SKATER_CX + ' ' + (GROUND_Y - y + bob).toFixed(2) + ')' +
             (lean ? ' rotate(' + lean.toFixed(2) + ')' : ''));
         deck.setAttribute('transform', 'rotate(' + tilt.toFixed(2) + ')');
+        drawScenery();
         obstacles.forEach(function (o) {
             o.el.setAttribute('transform',
                 'translate(' + o.x.toFixed(1) + ' ' + GROUND_Y + ') scale(' + scale.toFixed(3) + ')');
@@ -468,6 +684,10 @@
 
         nextSpawn -= dt;
         if (nextSpawn <= 0) makeObstacle();
+
+        /* Parallax is exactly the effect prefers-reduced-motion exists to
+           suppress, so the bands are drawn but never scrolled under it. */
+        if (!reduced.matches) moveScenery(dt);
 
         /* Move the obstacles, and work out what the board is resting on. A
            bench is solid from above and lethal from the side, so the same
@@ -523,6 +743,7 @@
         floorY = 0; airborne = false; sway = 0;
         pushUntil = PUSH_END;
         clearObstacles();
+        clearScenery();
         scheduleSpawn(0);
         shownTime = -1;
         draw();

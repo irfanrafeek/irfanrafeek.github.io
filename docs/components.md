@@ -868,6 +868,92 @@ wider, arms floated up — and a slow `sway` rotates the whole figure by
 just over a degree. Both are subtle on purpose; the point is to read
 as balancing, not as a different character.
 
+### Scenery
+
+Three bands sit behind the game and collide with nothing. They exist
+for depth only, and they are built to cost almost nothing: the two far
+bands are **one tile drawn twice and wrapped forever**, so after load
+nothing is allocated, and the near band peaks at two elements on
+screen.
+
+| Band | Element | Speed | Tone |
+| --- | --- | --- | --- |
+| Grit (road texture) | `.skate-grit`, 2 static paths | 1.0 | `border-primary` |
+| Streetscape | `.skate-street`, spawned | 0.65 | `border-strong` at 55% |
+| Skyline | `.skate-sky`, 2 static paths | 0.14 | `border-primary` at 25% |
+
+**The one rule that is not negotiable:** decoration never presents a
+knee-high silhouette on the ground line. That shape belongs to the
+`SHAPES` table. The obstacle set already owns a bench you grind, a bush
+and a rock, so a decorative bench you *cannot* ride — sitting next to a
+real one you can — teaches the player that the rules are unreliable.
+Every shape in `SCENERY` is therefore a bare vertical carrying its mass
+above the skater's head: street light, sign, tree. This is why the
+reference mockup's bench and hydrant are absent, and it is the first
+thing to re-read before adding anything to that table.
+
+The tone order — obstacles darkest, then streetscape, then skyline —
+is load-bearing for the same reason: **the thing you must jump is
+always the darkest object on the track.** All three are tokens, so the
+order survives every theme without a per-theme rule.
+
+#### Speeds are the depth
+
+Apparent motion falls off with distance, so those ratios *are* how far
+back each band reads. Below about 0.10 a background looks pinned to the
+frame and the depth collapses; above ~0.25 the skyline starts to feel
+like it is on the same street as the skater.
+
+The streetscape's 0.65 is fast for a mid-ground, and deliberately so.
+The usual 0.4–0.6 assumes the mid-ground is *drawn* small, as things at
+that distance would be. These are not — a street light is taller than
+the skater — and **speed has to agree with size or the eye reads an
+object that looks close but drifts like it is far.** If layer 3 is ever
+redrawn smaller, that number has to come down with it.
+
+#### The skyline scales
+
+The band takes the same `scale` factor the obstacles take. Left at full
+size it does not shrink with the box, and on a phone a skyline drawn
+for a 576px column stands up like a wall right behind the skater. The
+consequence is easy to miss: because the band is drawn scaled, it has
+to **travel in its own local units** (`speed * SKY_RATE * dt / scale`)
+or a narrow box scrolls the skyline faster than the track in front of
+it.
+
+Below 480px the streetscape is switched off entirely. Three street
+lights in a 375px box is clutter, not depth.
+
+#### The city arrives with the player
+
+`.skate-sky` starts at `opacity: 0` and fades to 1 on `.is-playing`,
+after a 150ms delay — so the push lands *first* and the skater reads as
+bringing the world with them, rather than the page finishing its load.
+It never fades back out: `.is-playing` and `.is-over` are mutually
+exclusive and one of them is always set after the first start, so the
+union of the two means "has ever been played". That is the whole
+mechanism — **no JavaScript is involved in the fade.**
+
+The 1.6s duration is an absolute value rather than a motion token, and
+that is deliberate. The motion tier tops out at 320ms because it exists
+for UI transitions that must not keep a pointer waiting; this is
+one-off scene-setting timed against the push-off (`PUSH_END`, 0.46s)
+and the speed ramp behind it. The *easing* is still the system's
+`--primitive-ease-soft`.
+
+Under `prefers-reduced-motion` the bands are drawn but never scrolled —
+parallax is exactly the effect that query exists to suppress — and the
+skyline is simply present from the start with no fade.
+
+#### Known: a short run may show no streetscape
+
+The first streetscape item arrives around four seconds in, then every
+5–9 seconds. A run that ends before that shows none at all, so on a
+typical short run the near band is invisible. Left as-is on purpose —
+the sparseness is the design — but if it ever needs fixing, seed one or
+two items on the track in `clearScenery()` rather than shortening the
+interval, which would cost the rarity.
+
 ### Sizing and difficulty
 
 Everything derives from the box, not from constants. The rule the whole
