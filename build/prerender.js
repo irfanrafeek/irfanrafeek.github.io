@@ -32,6 +32,7 @@ const STATIC = [
     'Assets', 'photographs', 'scripts', 'admin',
     'tokens.css', 'components.css', 'CNAME', 'robots.txt',
     'projects.json', 'writings.json',
+    'favicon.ico', 'apple-touch-icon.png',
 ];
 
 // Pages that are copied with their card grids filled in.
