@@ -1025,6 +1025,18 @@ footer {
         flex-direction: column;
         gap: var(--semantic-spacing-lg);
         text-align: center;
+        /* The theme switcher is fixed to the bottom-right corner, so at the
+           very end of the page it sits on top of the last row of links.
+           Reserve its height here rather than moving the switcher. */
+        padding-bottom: calc(var(--semantic-spacing-2xl) + 56px);
+    }
+
+    /* Four links are wider than a phone's footer, so let the row wrap rather
+       than run off the edge. */
+    .social-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--semantic-spacing-md) var(--semantic-spacing-lg);
     }
 
     .section-header {
