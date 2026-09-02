@@ -2187,8 +2187,22 @@ a.project-card {
 
 .skate.is-over .skate-hint-icon { display: block; }
 
+/* The same game at the end of the article that tells the story of building it.
+   The only thing that changes is the height: on the homepage the box runs all
+   the way down to the next heading and swallows that section's top padding,
+   which it has no reason to do inside a reading column. resize() pins the
+   ground line 128px from the TOP either way, so the jump, the obstacles and
+   the speed are identical here — the strip of tap room below the line is the
+   only thing that gets shorter. */
+.case-skate .skate {
+    height: 208px;
+}
+
 @media (max-width: 768px) {
     .skate { height: 268px; }
+    /* Left alone: 208px is already close to the floor resize() will accept
+       before the ground line starts eating into the jump. */
+    .case-skate .skate { height: 208px; }
 }
 
 @media print {

@@ -119,6 +119,28 @@ export const portableBody = {
     },
     {
       type: 'object',
+      name: 'skateGame',
+      title: 'Skating game',
+      description: 'Drops the playable skater from the homepage into the article.',
+      fields: [
+        { name: 'caption', title: 'Caption', type: 'string' },
+        {
+          name: 'label',
+          title: 'Accessible label',
+          type: 'string',
+          description: 'Read out by screen readers. Leave blank for the default.',
+        },
+      ],
+      preview: {
+        select: { subtitle: 'caption' },
+        prepare: ({ subtitle }) => ({
+          title: 'Skating game',
+          subtitle: subtitle ? `🛹 ${subtitle}` : '🛹 Playable',
+        }),
+      },
+    },
+    {
+      type: 'object',
       name: 'mediaEmbed',
       title: 'Embed',
       fields: [

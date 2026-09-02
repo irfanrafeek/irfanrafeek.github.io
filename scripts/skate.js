@@ -1,5 +1,7 @@
 /*
- * A small skater that lives under the About section.
+ * A small skater. It lives under the About section on the homepage and at the
+ * end of the article that tells the story of building it; both host pages give
+ * it nothing but an empty [data-skate] container and this file fills it in.
  * Static and quiet until clicked — see components.css (.skate) for the styling.
  *
  * Everything is drawn in the SVG's own pixel space: the viewBox is resized to
@@ -8,6 +10,50 @@
 (function () {
     var root = document.querySelector('[data-skate]');
     if (!root) return;
+
+    /* The scene's skeleton. Every joint path is empty on purpose: the figure is
+       posed by poseFigure() below, the scenery layers are filled by
+       buildScenery(), and resize() rewrites the viewBox on the first measure.
+       It lives here rather than in the pages that host it so that the homepage
+       and the article that embeds the game cannot drift apart — a host page
+       supplies nothing but the empty container. */
+    var SKELETON = [
+        '<svg class="skate-svg" viewBox="0 0 900 160" aria-hidden="true">',
+        '    <g class="skate-sky"></g>',
+        '    <line class="skate-ground" x1="0" y1="128.5" x2="900" y2="128.5"></line>',
+        '    <g class="skate-grit"></g>',
+        '    <g class="skate-street"></g>',
+        '    <g class="skate-obstacles"></g>',
+        '    <g class="skate-skater">',
+        '        <g class="skate-deck">',
+        '            <path class="skate-board" d="M-16 -4.5 H16"></path>',
+        '            <circle class="skate-wheel" cx="-9" cy="-2" r="2"></circle>',
+        '            <circle class="skate-wheel" cx="10" cy="-2" r="2"></circle>',
+        '        </g>',
+        '        <g class="skate-figure">',
+        '            <path class="skate-leg-b"></path>',
+        '            <path class="skate-arm-b"></path>',
+        '            <path class="skate-torso"></path>',
+        '            <ellipse class="skate-head" rx="4.2" ry="5"></ellipse>',
+        '            <path class="skate-cap" d="M-4.2 0 Q0 -2.5 4.2 0"></path>',
+        '            <path class="skate-cap-brim" d="M-4.45 -0.71 L-8.16 1.1 L-7.98 1.62 L-3.95 0.71 Z"></path>',
+        '            <path class="skate-leg-f"></path>',
+        '            <path class="skate-arm-f"></path>',
+        '        </g>',
+        '    </g>',
+        '</svg>',
+        '<span class="skate-score" aria-hidden="true">',
+        '    <span class="skate-best"></span><span class="skate-time"></span>',
+        '</span>',
+        '<span class="skate-hint" aria-hidden="true">',
+        '    <svg class="skate-hint-icon" viewBox="0 0 24 24" width="11" height="11">',
+        '        <polyline points="23 4 23 10 17 10"></polyline>',
+        '        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>',
+        '    </svg><span class="skate-hint-text"></span>',
+        '</span>'
+    ].join('');
+
+    if (!root.querySelector('.skate-svg')) root.innerHTML = SKELETON;
 
     var svg = root.querySelector('.skate-svg');
     var hint = root.querySelector('.skate-hint-text');

@@ -141,48 +141,11 @@
                 </p>
             </section>
 
-            <!-- Picks up the last line of the introduction above. See scripts/skate.js. -->
-            <div class="skate" data-skate tabindex="0" role="button" aria-label="Small skating game. Click or press space to play and to jump.">
-                <svg class="skate-svg" viewBox="0 0 900 160" aria-hidden="true">
-                    <!-- Scenery. Behind the ground line except the grit, which
-                         lies on it. Populated by scripts/skate.js. -->
-                    <g class="skate-sky"></g>
-                    <line class="skate-ground" x1="0" y1="128.5" x2="900" y2="128.5"></line>
-                    <g class="skate-grit"></g>
-                    <g class="skate-street"></g>
-                    <g class="skate-obstacles"></g>
-                    <!-- Joint positions are written by scripts/skate.js; the
-                         figure is authored around the board's contact point. -->
-                    <g class="skate-skater">
-                        <g class="skate-deck">
-                            <path class="skate-board" d="M-16 -4.5 H16"></path>
-                            <circle class="skate-wheel" cx="-9" cy="-2" r="2"></circle>
-                            <circle class="skate-wheel" cx="10" cy="-2" r="2"></circle>
-                        </g>
-                        <g class="skate-figure">
-                            <path class="skate-leg-b"></path>
-                            <path class="skate-arm-b"></path>
-                            <path class="skate-torso"></path>
-                            <!-- Head, cap band and brim share one transform,
-                                 written by poseFigure(). See scripts/skate.js. -->
-                            <ellipse class="skate-head" rx="4.2" ry="5"></ellipse>
-                            <path class="skate-cap" d="M-4.2 0 Q0 -2.5 4.2 0"></path>
-                            <path class="skate-cap-brim" d="M-4.45 -0.71 L-8.16 1.1 L-7.98 1.62 L-3.95 0.71 Z"></path>
-                            <path class="skate-leg-f"></path>
-                            <path class="skate-arm-f"></path>
-                        </g>
-                    </g>
-                </svg>
-                <span class="skate-score" aria-hidden="true">
-                    <span class="skate-best"></span><span class="skate-time"></span>
-                </span>
-                <span class="skate-hint" aria-hidden="true">
-                    <svg class="skate-hint-icon" viewBox="0 0 24 24" width="11" height="11">
-                        <polyline points="23 4 23 10 17 10"></polyline>
-                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                    </svg><span class="skate-hint-text"></span>
-                </span>
-            </div>
+            <!-- Picks up the last line of the introduction above. The scene
+                 itself is markup-free here: scripts/skate.js owns the skeleton
+                 and fills this container, so the homepage and the article that
+                 embeds the same game stay in step. -->
+            <div class="skate" data-skate tabindex="0" role="button" aria-label="Small skating game. Click or press space to play and to jump."></div>
 
             <section id="services">
                 <div class="section-header">

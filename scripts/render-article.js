@@ -98,6 +98,19 @@
             + '</figure>';
     }
 
+    // The playable skater from the homepage, dropped into an article. Only the
+    // container is emitted: scripts/skate.js owns the scene's markup and fills
+    // this in, exactly as it does on the homepage. build/prerender.js adds that
+    // script to a page only when its body actually carries one of these.
+    function renderSkateGame(block) {
+        var label = block.label
+            || 'Small skating game. Click or press space to play and to jump.';
+        return '<figure class="case-figure case-skate">'
+            + '<div class="skate" data-skate tabindex="0" role="button" aria-label="' + escapeHtml(label) + '"></div>'
+            + (block.caption ? '<figcaption class="case-caption">' + escapeHtml(block.caption) + '</figcaption>' : '')
+            + '</figure>';
+    }
+
     function renderMediaGallery(block) {
         var items = Array.isArray(block.items) ? block.items : [];
         if (!items.length) return '';
@@ -148,6 +161,7 @@
                 case 'mediaVideo':   html += renderMediaVideo(block); break;
                 case 'mediaGallery': html += renderMediaGallery(block); break;
                 case 'mediaEmbed':   html += renderMediaEmbed(block); break;
+                case 'skateGame':    html += renderSkateGame(block); break;
             }
             i++;
         }
@@ -179,6 +193,14 @@
             + '</header>';
     }
 
+    // Whether a body needs scripts/skate.js. The build asks before adding the
+    // tag, so articles without the game do not pay for it.
+    function hasSkateGame(blocks) {
+        return Array.isArray(blocks) && blocks.some(function (b) {
+            return b && b._type === 'skateGame';
+        });
+    }
+
     // One document by slug. Used by the browser fallback path.
     function singleQuery() {
         return '*[_type==$type&&slug.current==$slug][0]{' + ARTICLE_FIELDS + '}';
@@ -196,6 +218,7 @@
         SOURCE_TYPE: SOURCE_TYPE,
         escapeHtml: escapeHtml,
         renderBody: renderBody,
+        hasSkateGame: hasSkateGame,
         renderArticle: renderArticle,
         renderNotFound: renderNotFound,
         singleQuery: singleQuery,

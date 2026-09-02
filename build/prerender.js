@@ -173,7 +173,7 @@ function jsonLd(doc, kind, canonical) {
 function buildArticlePage(template, doc, kind) {
     const canonical = SITE + kind.base + '/' + doc.slug + '/';
     const title = doc.title + ' — ' + AUTHOR;
-    const html = template
+    let html = template
         .replace(/\{\{TITLE\}\}/g, attr(title))
         .replace(/\{\{OG_TITLE\}\}/g, attr(doc.title))
         .replace(/\{\{DESCRIPTION\}\}/g, attr(summaryOf(doc)))
@@ -183,6 +183,13 @@ function buildArticlePage(template, doc, kind) {
         .replace(/\{\{MODIFIED\}\}/g, attr(modifiedDate(doc)))
         .replace(/\{\{JSONLD\}\}/, jsonLd(doc, kind, canonical))
         .replace(/\{\{ARTICLE\}\}/, Article.renderArticle(doc, kind.back, kind.backLabel));
+
+    // The skater is a per-article thing, so its script is too -- no other page
+    // under this template should be made to download it.
+    if (Article.hasSkateGame(doc.body)) {
+        html = html.replace('</body>',
+            '    <script src="/scripts/skate.js" defer></script>\n</body>');
+    }
 
     write(kind.base.replace(/^\//, '') + '/' + doc.slug + '/index.html', html);
     return canonical;
